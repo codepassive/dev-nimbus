@@ -1,0 +1,33 @@
+---------------------------------------------------
+			 	    NIMBUS
+        manage, share and collaborate
+      a cloud-computing operating system
+		  http://nimbus.iamjamoy.com/
+			 copyright © 2009-2010
+---------------------------------------------------
+Nimbus is a Rich Internet Application(RIA) to manage
+share and collaborate on files and data. Nimbus has
+a very powerful API platform built over the jQuery
+codebase. The application also has networking
+capabilities to make sure that efficiency in
+collaboration is achieved.
+---------------------------------------------------
+If you are reading this document, you may be using
+the first prototype of Nimbus. You may find this
+build a bit unstable as it may contain experimental
+implementations of unfinished systems. this software
+is labeled as "ALPHA" as it is only available to a
+select few and to those belonging to the test group
+and the defense panel. The test group and the
+defense panel is in no way affiliated with Nimbus.
+---------------------------------------------------
+Project Details
+Name:	  	Nimbus
+Version:	1.0
+Stage:		Alpha
+License:	GNU/GPLv3. see file LICENSE
+Authors:	John Mark Rocela
+			Mark Lester Filemon
+Copyright:	Nimbus Development Group 2009
+Date:		July 2009
+---------------------------------------------------

@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Environment compatibility check failed &ndash; Nimbus Bootstrap Utility</title>
+	<style type="text/css">
+		body {
+			font-family: arial;
+			font-size: 12px;
+			cursor: default;
+		}
+		.list {
+			font-size: 11px;
+			font-weight: bold;
+			padding: 4px;
+		}
+		.list li {
+			margin-left: 18px;
+		}
+	</style>
+  </head>
+  <body>
+	<div style="font-size:12px;font-family:arial;">
+		<p>Nimbus has encountered errors during startup:</p>
+		<?php
+			echo '<ol class="list">';
+			foreach ($incompatibilities as $inc) {
+				echo '<li>' . $inc[0] . ' <a href="http://docs.nimbusdesktop.org/errors/error_' . $inc[1] . '" target="_new">#' . $inc[1] . '</a></li>';
+			}
+			echo '</ol>';
+			if (!empty($missing)) {
+				echo '<p>Although it will not affect system stability, you might want to fix the following problems.</p>';
+				echo '<ol class="list">';
+				foreach ($missing as $mis) {
+					echo '<li>' . $mis[0] . ' <a href="http://docs.nimbusdesktop.org/errors/error_' . $mis[1] . '" target="_new">#' . $mis[1] . '</a></li>';
+				}
+				echo '</ol>';
+			}
+		?>
+		<p>Please make sure that the problems above be addressed correctly.</p>
+		<p>Contact your Host or upgrade your Server. See <a href="http://docs.nimbusdesktop.org/errors/error_000" target="_blank">documentation</a> for more details.</p>
+	</div>
+  </body>
+</html>
