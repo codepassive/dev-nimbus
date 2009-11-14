@@ -30,10 +30,11 @@ class LibError {
 	 * @param String $line line where the error occured
 	 */
 	public static function register($no, $str, $file, $line){
+		global $language;
 		if (defined('NIMBUS_DEBUG') && NIMBUS_DEBUG === 2) {
-			echo "$str on $file:$line <strong>[#$no]</strong>";
+			printf($language['error_log'], $str, $file, $line, $no);
 		}
-		Log::write(ERROR_LOG_FILE, "$str on $file:$line [$no]");
+		Log::write(ERROR_LOG_FILE, sprintf($language['error_log'], $str, $file, $line, $no));
 	}
 	
 }

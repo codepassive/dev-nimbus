@@ -38,7 +38,7 @@ class Nimbus extends Cloud {
 	 * @return	Boolean
 	 */
 	public function beingCalled(){
-		if (!empty($this->request)) {
+		if (!empty($this->request->items)) {
 			return true;
 		}
 		return false;

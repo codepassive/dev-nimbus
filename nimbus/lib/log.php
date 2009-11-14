@@ -37,7 +37,8 @@ class Log {
 			fwrite($fh, $message);
 			fclose($fh);
 		} else {
-			throw new NimbusException("File $file could not be opened or created.");
+			global $language;
+			throw new NimbusException(sprintf($language['log'], $file));
 		}
 	}
 	

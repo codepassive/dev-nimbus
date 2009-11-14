@@ -62,7 +62,8 @@ class Registry {
 				$_this->_cache[(string) $args[0]] = $args[1];
 			}
 		} else {
-			throw new NimbusException("Registry cannot set a null value to a null pointer.");
+			global $language;
+			throw new NimbusException($language['registry']);
 		}
 	}
 	

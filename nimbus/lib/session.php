@@ -65,9 +65,11 @@ class Session {
 	 * @access	public
 	 */
 	public function start(){
+		global $language;
 		if (!headers_sent() && empty($_SESSION)) {
 			session_start();
 			$this->generateID();
+			Log::write(DEBUG_LOG_FILE, "Session Class " . $language['started']);
 		}
 	}
 
@@ -153,9 +155,11 @@ class Session {
 	 * @access	public
 	 */
 	public function stop(){
+		global $language;
 		session_destroy();
 		$this->regenerateID();
 		$_SESSION = array();
+		Log::write(DEBUG_LOG_FILE, "Session Class " . $language['stopped']);
 	}
 
 }

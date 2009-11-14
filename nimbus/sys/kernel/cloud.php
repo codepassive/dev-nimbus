@@ -55,8 +55,11 @@ class Cloud {
 		$this->language = $language;
 		//Create the request class
 		$this->_request();
-		//Include the library files
+		//Include and instantiate the library files
 		Loader::library(array('session', 'dbo'));
+		$this->session = new Session();
+		$this->session->start();
+		$this->db = new Dbo();
 	}
 
 	/**
@@ -67,21 +70,23 @@ class Cloud {
 	private function _request(){
 		//Create the request class
 		$this->request = new stdClass();
-		//Reset the global $_REQUEST variable
-		$_REQUEST = array();
-		//Set the necessary items to the public properties of the request class
-		$this->request->items = $_REQUEST = array_merge($_GET, $_POST);
-		//Properties to get the $_POST, $_GET and the $_FILES superglobal
-		$this->request->post = $_POST;
-		$this->request->get = $_GET;
-		$this->request->files = $_FILES;
-		//Provide a numerical index for the request items
-		//TODO#00001 - Not comfortable with implementation
-		foreach ($this->request->items as $i => $v) {
-			$this->request->items[] = array('name' => $i, 'value' => $v);
+		if ($_GET || $_POST) {
+			//Reset the global $_REQUEST variable
+			$_REQUEST = array();
+			//Set the necessary items to the public properties of the request class
+			$this->request->items = $_REQUEST = array_merge($_GET, $_POST);
+			//Properties to get the $_POST, $_GET and the $_FILES superglobal
+			$this->request->post = $_POST;
+			$this->request->get = $_GET;
+			$this->request->files = $_FILES;
+			//Provide a numerical index for the request items
+			//TODO#00001 - Not comfortable with implementation
+			foreach ($this->request->items as $i => $v) {
+				$this->request->items[] = array('name' => $i, 'value' => $v);
+			}
+			//Information about the request
+			$this->request->type = $this->request->items[0]['name'];
 		}
-		//Information about the request
-		$this->request->type = $this->request->items[0]['name'];
 	}
 	
 	/**

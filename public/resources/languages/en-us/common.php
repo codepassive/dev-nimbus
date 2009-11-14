@@ -19,7 +19,17 @@
  * includes definitions that is used throughout the system that isn't language
  * specific
  */
+//Common
+$language['started'] = 'started';
+$language['stopped'] = 'stopped';
 
 //Benchmark
 $language['benchmark_output'] = '"%s" generated in %d ms';
+
+//Log
+$language['log'] = 'File %s could not be opened or created.';
+
+//Registry
+$language['registry'] = 'Registry cannot set a null value to a null pointer.';
+
 ?>

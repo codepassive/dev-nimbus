@@ -267,15 +267,32 @@ class Dbo {
 	public function fetchArray($query = null){
 		return $this->fetch($query, PDO::FETCH_NUM);
 	}
-	
+
+	/**
+	 * Count the number of rows in a result set
+	 *
+	 * @access	public
+	 */
 	public function numRows(){
 		return count($this->result);
 	}
-	
+
+	/**
+	 * Count the number of affected rows from the last insert or delere query
+	 *
+	 * @access	public
+	 */
 	public function affectedRows(){
 		return $this->affectedRows = (@$this->query->rowCount()) ? $this->query->rowCount(): 0;
 	}
-	
+
+	/**
+	 * Abstraction method for the insert query
+	 *
+	 * @access	public
+	 * @param	Array $insert associative array to be written to the database
+	 * @param	String $table table to be used for the query
+	 */
 	public function insert($insert = array(), $table = null){
 		$prefix = $this->getPrefix();
 		$table = ($table != null) ? $table: $this->_table;
@@ -293,15 +310,18 @@ class Dbo {
 			}
 			return false;
 		} else {
-			$this->lastError = array('00000', 1, "You are inserting nothing to database table $table.");
-			nLog::register("You are inserting nothing to database $table.");
+			$this->lastError = array('003D', 1, sprintf($language['error_003D'], $table));
+			Log::write(ERROR_LOG_FILE, 'DBO Class: ' . sprintf($language['error_003D'], $table));
 		}
 	}
-	
+
 	/**
-	 * @param1: condition
-	 * @param2: fields
-	 * @param3: table
+	 * Abstraction method for the select query
+	 *
+	 * @access	public
+	 * @param	String $condition the where statement for the selection query
+	 * @param	String $fields fields to be fetched
+	 * @param	String $table table to be used for the query
 	 */
 	public function select(){
 		$prefix = $this->getPrefix();
@@ -325,14 +345,29 @@ class Dbo {
 			return false;
 		}
 	}
-	
+
+	/**
+	 * Abstraction method for the delete query
+	 *
+	 * @access	public
+	 * @param	Integer $id the id of the row to be deleted
+	 * @param	String $table table to be used for the query
+	 */
 	public function delete($id, $table = null){
 		$prefix = $this->getPrefix();
 		$table = ($table != null) ? $table: $this->_table;
 		$id = str_ireplace("WHERE ", " ", $id);
 		return $this->query("DELETE FROM $prefix$table WHERE $id");
 	}
-	
+
+	/**
+	 * Abstraction method for the update query
+	 *
+	 * @access	public
+	 * @param	Array $update associative array to be written to the database
+	 * @param	Integer $id the id of the row to be updated
+	 * @param	String $table table to be used for the query
+	 */
 	public function update($update = array(), $id, $table = null){
 		$prefix = $this->getPrefix();
 		$table = ($table != null) ? $table: $this->_table;
@@ -344,35 +379,63 @@ class Dbo {
 			$id = str_ireplace("WHERE ", " ", $id);
 			return $this->query("UPDATE $prefix$table SET " . implode(",", $values) . " WHERE $id");
 		} else {
-			$this->lastError = array('00000', 1, "You are updating nothing to database table $table.");
-			nLog::register("You are updating nothing to database $table.");
+			$this->lastError = array('004D', 1, sprintf($language['error_004D'], $table));
+			Log::write(ERROR_LOG_FILE, 'DBO Class: ' . sprintf($language['error_004D'], $table));
 		}
 	}
-	
+
+	/**
+	 * Close the database
+	 *
+	 * @access	public
+	 */
 	public function close(){
 		if (is_object($this->_handle)) {
 			$this->_handle = null;
 		} else {
-			$this->lastError = array('00000', 1, "You haven't opened a database yet.");
-			nLog::register("You haven't opened a database yet.");
+			$this->lastError = array('001D', 1, $language['error_001D']);
+			Log::write(ERROR_LOG_FILE, 'DBO Class: ' . $language['error_001D']);
 		}
 	}
-	
+
+	/**
+	 * Clear the DBO class properties
+	 *
+	 * @access	public
+	 */
 	public function clear(){
 		$this->result = $this->query = $this->queryString = $this->lastError = $this->insertID = $this->affectedRows = null;
 	}
-	
+
+	/**
+	 * Use the table specified
+	 *
+	 * @access	public
+	 * @param	String $table table to be used for future queries
+	 */
 	public function usesTable($table){
 		$this->_table = $table;
 	}
-	
+
+	/**
+	 * Set the prefix for the tabled query
+	 *
+	 * @access	public
+	 * @param	String $prefix the prefix used for the queries
+	 */
 	public function setPrefix($prefix = null){
 		$this->prefix = $prefix;
 	}
-	
+
+	/**
+	 * Get the prefix for the tabled query
+	 *
+	 * @access	public
+	 */
 	public function getPrefix(){
 		return $this->prefix;
 	}
-	
+
 }
+
 ?>

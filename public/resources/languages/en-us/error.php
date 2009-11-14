@@ -18,6 +18,7 @@
  * Errors
  * errors are in english to avoid confusion
  */
+$language['error_log'] = '%s on %s:%d <strong>[%d]</strong>';
 //00xA - Requirements
 $language['error_000A'] = 'Nimbus requires PHP 5.3 or later to run properly.';
 $language['error_001A'] = 'Your PHP configuration should support PDO/Sqlite.';
@@ -39,11 +40,7 @@ $language['error_000C'] = 'Loader cannot find the file %s. Make sure you are loa
 $language['error_000D'] = 'You have supplied an invalid Connection String or Configuration Array.';
 $language['error_001D'] = 'You haven\'t opened a database yet.';
 $language['error_002D'] = 'You have a malformed query, DBO::query() cannot continue. This is the error: %s';
-$language['error_003D'] = '';
-$language['error_004D'] = '';
-$language['error_005D'] = '';
-$language['error_006D'] = '';
-$language['error_007D'] = '';
-$language['error_008D'] = '';
+$language['error_003D'] = 'You are inserting nothing to database table %s.';
+$language['error_004D'] = 'You are updating nothing to database table %s.';
 
 ?>

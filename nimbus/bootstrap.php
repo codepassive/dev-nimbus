@@ -15,7 +15,7 @@
  */
 
 //Include common language files
-require_once LANGUAGE_DIR . 'index.php';
+require_once LANGUAGE_DIR . DEFAULT_LANGUAGE . DS . 'index.php';
  
 //Compatibility checks
 require_once SYSTEM_DIR . 'common.php';
