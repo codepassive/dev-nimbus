@@ -19,10 +19,12 @@ define('DS', DIRECTORY_SEPARATOR);
 define('REALROOT', dirname(__FILE__) . DS);
 define('DATAROOT', DS . '..' . DS . 'zMKsl29HstPbvo4UaAm2qJ89' . DS);
 define('NIMBUS_DIR', REALROOT . 'nimbus' . DS);
+define('DATA_DIR', DS . '..' . DS . '.nimbus' . DS);
 define('PUBLIC_DIR', REALROOT . 'public' . DS);
-define('USER_DIR', DATAROOT . 'usr' . DS);
-define('APPLICATION_DIR', NIMBUS_DIR . 'app' . DS);
-define('TEMPORARY_DIR', NIMBUS_DIR . 'tmp' . DS);
+define('USER_DIR', DATA_DIR . 'usr' . DS);
+define('APPLICATION_DIR', DATA_DIR . 'app' . DS);
+define('TEMPORARY_DIR', DATA_DIR . 'tmp' . DS);
+define('DB_DIR', DATA_DIR . 'dat' . DS);
 define('SYSTEM_DIR', NIMBUS_DIR . 'sys' . DS);
 define('LIBRARY_DIR', NIMBUS_DIR . 'lib' . DS);
 define('MODULE_DIR', NIMBUS_DIR . 'mod' . DS);
@@ -35,8 +37,9 @@ define('SCRIPT_DIR', RESOURCE_DIR . 'scripts' . DS);
 
 //Information
 define('NIMBUS_DEBUG', 2); //1 for normal debug, 2 for whole dump debug, 0 for production
-define('NIMBUS_UPDATE_URL', 'http://synapse.nimbusinitiative.org/');
+define('NIMBUS_UPDATE_URL', 'http://synapse.nimbusdesktop.org/');
 
 //Include the Application constants
 include NIMBUS_DIR . 'constant.php';
+
 ?>

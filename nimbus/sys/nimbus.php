@@ -14,4 +14,38 @@
  * @license:		GNU/GPLv3, see LICENSE
  * @version:		1.0.0 Alpha
  */
+
+/**
+ * The front controller for the Cloud Superclass
+ *
+ * @category:   		Cloud
+ */
+class Nimbus extends Cloud {
+
+	/**
+	 * Class constructor
+	 *
+	 * @access	public
+	 */
+	public function __construct(){
+		parent::__construct();
+	}
+
+	/**
+	 * Determines whether the application has a request
+	 *
+	 * @access	public
+	 * @return	Boolean
+	 */
+	public function beingCalled(){
+		if (!empty($this->request)) {
+			return true;
+		}
+		return false;
+	}
+
+}
+
+class Application {public static function launch(){}}
+
 ?>

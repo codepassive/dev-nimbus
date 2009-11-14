@@ -22,15 +22,63 @@
  */
 class Folder extends Filesystem {
 
+	/**
+	 * Lock flag for the currently open file
+	 *
+	 * @access	public
+	 */
 	public $path = null;
+
+	/**
+	 * Lock flag for the currently open file
+	 *
+	 * @access	public
+	 */
     public $sort = false;
+
+	/**
+	 * Lock flag for the currently open file
+	 *
+	 * @access	public
+	 */
     public $mode = 0755;
 	
+	/**
+	 * Lock flag for the currently open file
+	 *
+	 * @access	public
+	 */
 	private $_messages = array();
-	private $_errors = false;
-	private $_directories = array();	
-	private $_files = array();
 
+	/**
+	 * Lock flag for the currently open file
+	 *
+	 * @access	public
+	 */
+	private $_errors = false;
+
+	/**
+	 * Lock flag for the currently open file
+	 *
+	 * @access	public
+	 */
+	private $_directories = array();
+
+	/**
+	 * Lock flag for the currently open file
+	 *
+	 * @access	public
+	 */	
+	private $_files = array();
+	
+	/**
+	 * Class constructor
+	 *
+	 * @access	public
+	 * @param Mixed $path path to the directory to be used
+	 * @param Boolean $create create the file if it does not exist
+	 * @param Mixed $mode permission set for the folder
+	 */
 	public function __construct($path = false, $create = false, $mode = false) {
 		if (empty($path)) {
 			$path = '../';
@@ -49,18 +97,38 @@ class Folder extends Filesystem {
 		}
 	}
 	
+	/**
+	 * Get current working directory
+	 *
+	 * @access	public
+	 */
 	public function wd() {
 		return $this->path;
 	}
 	
+	/**
+	 * Set current working directory
+	 *
+	 * @access	public
+	 * @param String $path path to the directory to be used
+	 */
 	public function cd($path) {
 		$path = $this->realpath($path);
 		if (is_dir($path)) {
 			return $this->path = $path;
 		}
 		return false;
-	}	
+	}
 
+	/**
+	 * Read folder
+	 *
+	 * @access	public
+	 * @param Boolean $sort flag to sort files
+	 * @param Mixed $exceptions an array of files to be ignored while reading
+	 * @param Boolean $fullPath
+	 * @return Array list of files and folders under the current folder
+	 */
 	public function read($sort = true, $exceptions = false, $fullPath = false) {
 		$dirs = $files = array();
 		if (is_array($exceptions)) {
@@ -88,12 +156,26 @@ class Folder extends Filesystem {
 		closedir($dir);
 		return array($dirs, $files);
 	}
-	
+
+	/**
+	 * Find a file or directory through a regex pattern
+	 *
+	 * @access	public
+	 * @param String $regexpPattern the pattern used for the search
+	 * @param Boolean $sort flag to sort the results
+	 */
 	public function find($regexpPattern = '.*', $sort = false) {
 		list($dirs, $files) = $this->read($sort);
 		return array_values(preg_grep('/^' . $regexpPattern . '$/i', $files)); ;
 	}
-	
+
+	/**
+	 * Map a folder and fetch everything under it
+	 *
+	 * @access	public
+	 * @param String $source_dir the directory to be used for the search
+	 * @param Boolean $top_level_only ignore everything that isn't on the top level of the source directory
+	 */
 	public function map($source_dir = null, $top_level_only = false){
 		$source_dir = ($source_dir == null) ? $this->path: $source_dir;
 		if ($fp = @opendir($source_dir)) {
@@ -115,15 +197,29 @@ class Folder extends Filesystem {
 			return $filedata;
 		}
 	}
-	
+
+	/**
+	 * Abstraction to the Folder::__recursive method
+	 *
+	 * @access	public
+	 * @param String $pattern regex pattern used to find items in a directory
+	 * @param Boolean $sort flag to sort the results
+	 */
 	public function recursive($pattern = '.*', $sort = false) {
 		$startsOn = $this->path;
 		$out = $this->__recursive($pattern, $sort);
 		$this->cd($startsOn);
 		return $out;
 	}	
-	
-	private function __recursive($pattern, $sort = false) {
+
+	/**
+	 * Recurse through a directory and fetch an Array result
+	 *
+	 * @access	protected
+	 * @param String $pattern regex pattern used to find items in a directory
+	 * @param Boolean $sort flag to sort the results
+	 */
+	protected function __recursive($pattern, $sort = false) {
 		list($dirs, $files) = $this->read($sort);
 		$found = array();
 
@@ -140,44 +236,87 @@ class Folder extends Filesystem {
 		}
 		return $found;
 	}
-	
+
+	/**
+	 * Check if a path is of a windows(OS) structure
+	 *
+	 * @access	public
+	 * @param String $path path to the directory
+	 */	
 	public function isWindowsPath($path) {
 		if (preg_match('/^[A-Z]:\\\\/i', $path)) {
 			return true;
 		}
 		return false;
 	}
-	
+
+	/**
+	 * Check if a path is absolute
+	 *
+	 * @access	public
+	 * @param String $path path to the directory
+	 */	
 	public function isAbsolute($path) {
 		$match = preg_match('/^\\//', $path) || preg_match('/^[A-Z]:\\\\/i', $path);
 		return $match;
 	}
-	
+
+	/**
+	 * Abstraction to the Folder::correctSlashFor method
+	 *
+	 * @access	public
+	 * @param String $path path to the directory
+	 */	
 	public function normalizePath($path) {
 		return Folder::correctSlashFor($path);
 	}
-	
+
+	/**
+	 * Correct a Backslash
+	 *
+	 * @access	public
+	 * @param String $path path to the directory
+	 */	
 	public function correctSlashFor($path) {
 		if (Folder::isWindowsPath($path)) {
 			return '\\';
 		}
 		return '/';
 	}
-	
+
+	/**
+	 * Add a succeeding slash to a path
+	 *
+	 * @access	public
+	 * @param String $path path to the directory
+	 */	
 	public function slashTerm($path) {
 		if (Folder::isSlashTerm($path)) {
 			return $path;
 		}
 		return $path . Folder::correctSlashFor($path);
 	}
-	
+
+	/**
+	 * Append an element to a path
+	 *
+	 * @access	public
+	 * @param String $path path to the directory
+	 */	
 	public function addPathElement($path, $element) {
 		return Folder::slashTerm($path) . $element;
 	}
-	
+
+	/**
+	 * Check if the current working directory is on the queried path
+	 *
+	 * @access	public
+	 * @param String $path path to the directory
+	 * @param Boolean $reverse flag to reverse the directory and the current working one
+	 */	
 	public function inPath($path = '', $reverse = false) {
 		$dir = Folder::slashTerm($path);
-		$current = Folder::slashTerm($this->pwd());
+		$current = Folder::slashTerm($this->wd());
 
 		if (!$reverse) {
 			$return = preg_match('/^(.*)' . preg_quote($dir, '/') . '(.*)/', $current);
@@ -190,7 +329,16 @@ class Folder extends Filesystem {
 			return false;
 		}
 	}
-	
+
+	/**
+	 * Chmod a file or a folder
+	 *
+	 * @access	public
+	 * @param String $path path to the directory
+	 * @param Boolean $mode the permission
+	 * @param Boolean $recursive flag to recurse through the directory
+	 * @param Array $exceptions files or directories to ignore
+	 */
 	public function chmod($path, $mode = false, $recursive = true, $exceptions = array()) {
 		if (!$mode) {
 			$mode = $this->mode;
@@ -226,7 +374,15 @@ class Folder extends Filesystem {
 		}
 		return false;
 	}
-	
+
+	/**
+	 * Create a tree from a path
+	 *
+	 * @access	public
+	 * @param String $path path to the directory
+	 * @param Mixed $exceptions files or directories to ignore
+	 * @param Boolean $type join the directories and/or files
+	 */	
 	public function tree($path, $exceptions = true, $type = null) {
 		$original = $this->path;
 		$path = rtrim($path, DS);
@@ -254,6 +410,14 @@ class Folder extends Filesystem {
 		return $this->_files;
 	}
 	
+
+	/**
+	 * Merge the directories and files
+	 *
+	 * @access	public
+	 * @param String $path path to the directory
+	 * @param Array $exceptions files or directories to ignore
+	 */	
 	private function __tree($path, $exceptions) {
 		if ($this->cd($path)) {
 			list($dirs, $files) = $this->read(false, $exceptions, true);
@@ -262,6 +426,13 @@ class Folder extends Filesystem {
 		}
 	}
 	
+	/**
+	 * Create a folder
+	 *
+	 * @access	public
+	 * @param String $pathname path to the directory
+	 * @param Mixed $mode the permission
+	 */	
 	public function create($pathname, $mode = false) {
 		if (is_dir($pathname) || empty($pathname)) {
 			return true;
@@ -294,6 +465,13 @@ class Folder extends Filesystem {
 		return true;
 	}
 	
+
+	/**
+	 * Get directory size
+	 *
+	 * @access	public
+	 * @return Integer size of the directory
+	 */	
 	public function dirsize() {
 		$size = 0;
 		$directory = Folder::slashTerm($this->path);
@@ -324,9 +502,16 @@ class Folder extends Filesystem {
 		return $size;
 	}
 	
+
+	/**
+	 * Delete a folder
+	 *
+	 * @access	public
+	 * @param String $path path to the directory
+	 */	
 	public function delete($path = null) {
 		if (!$path) {
-			$path = $this->pwd();
+			$path = $this->wd();
 		}
 		$path = Folder::slashTerm($path);
 		if (is_dir($path) === true) {
@@ -363,7 +548,13 @@ class Folder extends Filesystem {
 		}
 		return true;
 	}
-	
+
+	/**
+	 * Copy a file or folder
+	 *
+	 * @access	public
+	 * @param Array $options directives for the copy procedure
+	 */	
 	public function copy($options = array()) {
 		$to = null;
 		if (is_string($options)) {
@@ -432,7 +623,13 @@ class Folder extends Filesystem {
 		}
 		return true;
 	}
-	
+
+	/**
+	 * Move a file or folder
+	 *
+	 * @access	public
+	 * @param Array $options directives for the move procedure
+	 */	
 	public function move($options) {
 		$to = null;
 		if (is_string($options)) {
@@ -449,34 +646,84 @@ class Folder extends Filesystem {
 		return false;
 	}
 	
+	/**
+	 * Get the messages from the last directory operation
+	 *
+	 * @access	public
+	 * @return String messages for the last directory operation
+	 */	
 	public function messages() {
 		return $this->_messages;
 	}
 	
+	/**
+	 * Get the errors from the last directory operation
+	 *
+	 * @access	public
+	 * @return String errors for the last directory operation
+	 */	
 	public function errors() {
 		return $this->_errors;
 	}
 	
+	/**
+	 * Unix flavor command to read a folder
+	 *
+	 * @access	public
+	 * @param Boolean $sort flag to sort files
+	 * @param Mixed $exceptions an array of files to be ignored while reading
+	 */	
 	public function ls($sort = true, $exceptions = false) {
 		return $this->read($sort, $exceptions);
 	}
 	
+	/**
+	 * Unix flavor command to create a folder
+	 *
+	 * @access	public
+	 * @param String $pathname path to the directory
+	 * @param Mixed $mode the permission
+	 */	
 	public function mkdir($pathname, $mode = 0755) {
 		return $this->create($pathname, $mode);
 	}
 	
+	/**
+	 * Unix flavor command to copy a folder
+	 *
+	 * @access	public
+	 * @param Array $options directives for the copy procedure
+	 */	
 	public function cp($options) {
 		return $this->copy($options);
 	}
-	
+
+	/**
+	 * Unix flavor command to move a folder
+	 *
+	 * @access	public
+	 * @param Array $options directives for the move procedure
+	 */	
 	public function mv($options) {
 		return $this->move($options);
 	}
-	
+
+	/**
+	 * Unix flavor command to delete a folder
+	 *
+	 * @access	public
+	 * @param String $path path to the directory
+	 */	
 	public function rm($path) {
 		return $this->delete($path);
 	}
-	
+
+	/**
+	 * Get the realpath of the path supplied
+	 *
+	 * @access	public
+	 * @param String $path path to the directory
+	 */	
 	function realpath($path) {
 		$path = str_replace('/', DS, trim($path));
 		if (strpos($path, '..') === false) {
@@ -509,7 +756,13 @@ class Folder extends Filesystem {
 		$newpath .= implode(DS, $newparts);
 		return Folder::slashTerm($newpath);
 	}
-	
+
+	/**
+	 * Correct the path to append a slash
+	 *
+	 * @access	public
+	 * @param String $path path to the directory
+	 */	
 	public function isSlashTerm($path) {
 		$lastChar = $path[strlen($path) - 1];
 		return $lastChar === '/' || $lastChar === '\\';

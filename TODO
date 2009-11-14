@@ -1,0 +1,23 @@
+---------------------------------------------------
+			 	    NIMBUS
+        manage, share and collaborate
+      a cloud-computing operating system
+		  http://nimbus.iamjamoy.com/
+			 copyright © 2009-2010
+---------------------------------------------------
+Nimbus is a Rich Internet Application(RIA) to manage
+share and collaborate on files and data. Nimbus has
+a very powerful API platform built over the jQuery
+codebase. The application also has networking
+capabilities to make sure that efficiency in
+collaboration is achieved.
+---------------------------------------------------
+This file contains tasks to be done upon release of
+the next version.
+
+Release Candidate 2
+TODO#	Description
+00001 - Implementation for providing numerical indices on request generation
+00002 - DB Support for sessions
+00003 - Support MySQL, Postgre and others. Only SQLite is currently supported
+---------------------------------------------------

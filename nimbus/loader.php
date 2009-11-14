@@ -33,6 +33,17 @@ class Loader {
 	}
 	
 	/**
+	 * Abstract function to load system classes
+	 *
+	 * @access	public
+	 * @param  String $name file name or path denoted by a / without the .php extension
+	 * @param  Boolean $instantiate flag whether to instantiate a called class
+	 */
+	public static function sys($name, $instantiate = false){
+		Loader::__load($name, SYSTEM_DIR, $instantiate);
+	}
+	
+	/**
 	 * Abstract function to load kernel classes
 	 *
 	 * @access	public
@@ -40,7 +51,7 @@ class Loader {
 	 * @param  Boolean $instantiate flag whether to instantiate a called class
 	 */
 	public static function kernel($name, $instantiate = false){
-		Loader::__load($name, SYSTEM_DIR . 'kernel', $instantiate);
+		Loader::__load($name, SYSTEM_DIR . 'kernel' . DS, $instantiate);
 	}
 	
 	/**
@@ -58,12 +69,16 @@ class Loader {
 				Loader::__load($n, $path);
 			}
 		} else {
-			if (file_exists($path . DS . $name . '.php')) {
-				require_once $path . DS . $name . '.php';
+			if (file_exists($path . $name . '.php')) {
+				require_once $path . $name . '.php';
 				if ($instantiate === true) {
 					return new $name;
 				}
 				return true;
+			}
+			if (NIMBUS_DEBUG > 0) {
+				global $language;
+				Log::write(DEBUG_LOG_FILE, sprintf($language['error_000C'], $path . $name . '.php'));
 			}
 			return false;
 		}

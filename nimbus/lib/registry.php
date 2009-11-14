@@ -24,7 +24,7 @@ class Registry {
 	/**
 	 * The cache where registry values will be stored
 	 *
-	 * @access	public
+	 * @access	private
 	 */
 	private $_cache = array();
 

@@ -50,19 +50,13 @@ $app->benchmark('app', START);
 
 //Check if nimbus is being called for a request
 if ($app->beingCalled()) {
-	switch ($app->callType) {
+	switch ($app->request->type) {
 		//Request identifiers are prefixed with an underscore ( _ ) to avoid variable collision.
 		case "app": //Internal function call to applications
-			Application::launch(
-						$app->request('_name'),
-						$app->request('_action'),
-						$app->request('_params')
-					);
+			Application::launch();
 		break;
 		case "res": //Internal/External resource loader
-			Resource::fetch(
-						$app->request('_path')
-					);
+			Resource::fetch();
 		break;
 		case "token": //Generate an access token
 			new Token();
@@ -73,9 +67,7 @@ if ($app->beingCalled()) {
 		break;
 		case "data": //Raw SQL Query for JS uses, of course, checks for Access Token
 					 //to prevent abuse.
-			new Query(
-						$app->request('_query')
-					);
+			new Query();
 		break;
 	}
 } else {

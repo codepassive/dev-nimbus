@@ -14,6 +14,9 @@
  * @version:		1.0.0 Alpha
  */
 
+//Include common language files
+require_once LANGUAGE_DIR . 'index.php';
+ 
 //Compatibility checks
 require_once SYSTEM_DIR . 'common.php';
 checkCompatibility();
@@ -33,7 +36,8 @@ set_error_handler('_error');
 set_exception_handler('_exception');
 
 //Load the base kernel libraries
-Loader::kernel(array('cloud', 'nimbus'));
+Loader::kernel('cloud');
+Loader::sys('nimbus');
 
 //Include function aliases
 require_once 'alias.php';

@@ -22,9 +22,11 @@
  *   this file will be updated as common.php wont.
  */
 
+//Benchmark Constants
 define('START', 'start');
 define('STOP', 'stop');
 
+//Log Files
 define('ERROR_LOG_FILE', 'logs/error');
 define('DEBUG_LOG_FILE', 'logs/debug');
 ?>

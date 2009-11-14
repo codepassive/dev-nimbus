@@ -26,54 +26,54 @@
 function checkCompatibility(){
 	$incompatibilities = array();
 	$missing = array();
-	
+
 	/**
 	 * Check PHP environment
 	 */
 	if (!version_compare(PHP_VERSION, '5.3', '>=')) {
-		$incompatibilities[] = array('Nimbus requires PHP 5.3 or later to run properly.', '000A');
+		$incompatibilities[] = array($language['compat_error_000A'], '000A');
 	}
 	if (!extension_loaded('sqlite') && !extension_loaded('pdo_sqlite')) {
-		$incompatibilities[] = array('Your PHP configuration should support PDO/Sqlite.', '001A');
+		$incompatibilities[] = array($language['compat_error_001A'], '001A');
 	}
 	if ((!is_writable('/../.nimbus') && !is_readable('/../.nimbus')) && (!is_writable('../nimbus') && !is_readable('../nimbus'))) {
-		$incompatibilities[] = array('Your Installation folder and the .nimbus data folder should have at least 0755 permission to work properly.', '002A');
+		$incompatibilities[] = array($language['compat_error_002A'], '002A');
 	}
 	if (!ini_get('file_uploads')) {
-		$incompatibilities[] = array('Your PHP configuration should support file uploads.', '003A');
+		$incompatibilities[] = array($language['compat_error_003A'], '003A');
 	}
-	
+
 	/**
 	 * Check for Optional Extensions
 	 */
 	if (!extension_loaded('mbstring')) {
-		$missing[] = array('MBSTRING support not detected. MBSTRING will be used along with UTF-8 encoding.', '000B');
+		$missing[] = array($language['compat_error_000B'], '000B');
 	}
 	if (!extension_loaded('ftp')) {
-		$missing[] = array('FTP support not detected. FTP will be used by most project management programs.', '001B');
+		$missing[] = array($language['compat_error_001B'], '001B');
 	}
 	if (!extension_loaded('json')) {
-		$missing[] = array('JSON support not detected. JSON will be used by nimbus internal and external API calls.', '002B');
+		$missing[] = array($language['compat_error_002B'], '002B');
 	}
 	if (!extension_loaded('soap')) {
-		$missing[] = array('SOAP support not detected. SOAP will be used by most project management programs.', '003B');
+		$missing[] = array($language['compat_error_003B'], '003B');
 	}
 	if (!extension_loaded('xml') && !extension_loaded('xmlreader') && !extension_loaded('xmlwriter')) {
-		$missing[] = array('XML support not detected. XML is the most common way of transport, Applications might use this feature.', '004B');
+		$missing[] = array($language['compat_error_004B'], '004B');
 	}
 	if (!extension_loaded('xmlrpc')) {
-		$missing[] = array('XMLRPC support not detected. XMLRPC will be used by most project management programs.', '005B');
+		$missing[] = array($language['compat_error_005B'], '005B');
 	}
 	if (!extension_loaded('zip')) {
-		$missing[] = array('ZIP support not detected. File archiving will not be available.', '006B');
+		$missing[] = array($language['compat_error_006B'], '006B');
 	}
 	if (!extension_loaded('zlib')) {
-		$missing[] = array('ZLIB support not detected. GZIP comperssion will not be available.', '007B');
+		$missing[] = array($language['compat_error_007B'], '007B');
 	}
 	if (!function_exists('mail')) {
-		$missing[] = array('Native Mail function disabled.', '008B');
+		$missing[] = array($language['compat_error_008B'], '008B');
 	}
-	
+
 	/**
 	 * End the application when an incompatibility has been determined
 	 */
