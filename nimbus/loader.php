@@ -29,7 +29,7 @@ class Loader {
 	 * @param  Boolean $instantiate flag whether to instantiate a called class
 	 */
 	public static function library($name, $instantiate = false){
-		Loader::__load($name, LIBRARY_DIR, $instantiate);
+		return Loader::__load($name, LIBRARY_DIR, $instantiate);
 	}
 	
 	/**
@@ -39,8 +39,8 @@ class Loader {
 	 * @param  String $name file name or path denoted by a / without the .php extension
 	 * @param  Boolean $instantiate flag whether to instantiate a called class
 	 */
-	public static function sys($name, $instantiate = false){
-		Loader::__load($name, SYSTEM_DIR, $instantiate);
+	public static function system($name, $instantiate = false){
+		return Loader::__load($name, SYSTEM_DIR, $instantiate);
 	}
 	
 	/**
@@ -51,7 +51,18 @@ class Loader {
 	 * @param  Boolean $instantiate flag whether to instantiate a called class
 	 */
 	public static function kernel($name, $instantiate = false){
-		Loader::__load($name, SYSTEM_DIR . 'kernel' . DS, $instantiate);
+		return Loader::__load($name, SYSTEM_DIR . 'kernel' . DS, $instantiate);
+	}
+	
+	/**
+	 * Abstract function to load modules
+	 *
+	 * @access	public
+	 * @param  String $name file name or path denoted by a / without the .php extension
+	 * @param  Boolean $instantiate flag whether to instantiate a called class
+	 */
+	public static function module($name, $instantiate = false){
+		return Loader::__load($name, MODULE_DIR, $instantiate);
 	}
 	
 	/**

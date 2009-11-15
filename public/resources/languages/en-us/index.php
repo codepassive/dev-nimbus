@@ -20,7 +20,7 @@
  *
  * currently set to:	EN-US
  */
-$language['current'] = 'en-us';
+$language['_current'] = 'en-us';
 
 /**
  * Include the language files

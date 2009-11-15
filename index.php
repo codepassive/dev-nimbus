@@ -44,6 +44,7 @@ require_once NIMBUS_DIR . 'common.php';
 
 //Instantiate the front controller abstraction of the kernel
 $app = new Nimbus();
+$app->init();
 
 //Get the time nimbus started
 $app->benchmark('app', START);
@@ -53,27 +54,33 @@ if ($app->beingCalled()) {
 	switch ($app->request->type) {
 		//Request identifiers are prefixed with an underscore ( _ ) to avoid variable collision.
 		case "app": //Internal function call to applications
+			Loader::system('application');
 			Application::launch();
 		break;
 		case "res": //Internal/External resource loader
+			Loader::system('resource');
 			Resource::fetch();
 		break;
 		case "token": //Generate an access token
 			new Token();
 		break;
 		case "rpc": //RPC capabilities
+			Loader::system('rpc');
 			$rpc = new RPC();
 			$rpc->listen();
 		break;
-		case "data": //Raw SQL Query for JS uses, of course, checks for Access Token
-					 //to prevent abuse.
+		case "data": //Raw SQL Query for JS uses, of course, checks for Access Token to prevent abuse.
+			Loader::system('query');
 			new Query();
 		break;
 	}
 } else {
+	Loader::system('application');
 	Application::launch('desktop');
 }
 
 //Get the time nimbus stopped, and echo out if allowed
 $app->benchmark('app', STOP, NIMBUS_DEBUG);
+echo '<pre>';
+print_r($app);
 ?>

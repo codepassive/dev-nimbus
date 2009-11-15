@@ -14,18 +14,10 @@
  * @license:		GNU/GPLv3, see LICENSE
  * @version:		1.0.0 Alpha
  */
-
+ 
 /**
- * The API Class
- *
- * @category:   		API
+ * Load the security layer
  */
-class API extends Cloud {
-
-	public function __construct(){
-		parent::__construct();
-	}
-
-}
-
+Loader::library(array('security', 'sanitize'));
+new Security();
 ?>

@@ -42,5 +42,9 @@ $language['error_001D'] = 'You haven\'t opened a database yet.';
 $language['error_002D'] = 'You have a malformed query, DBO::query() cannot continue. This is the error: %s';
 $language['error_003D'] = 'You are inserting nothing to database table %s.';
 $language['error_004D'] = 'You are updating nothing to database table %s.';
+//00xE - Cloud class
+$language['error_000E'] = 'Service file does not exist. Please make sure that the %s service  exists on the services folder.';
+$language['error_001E'] = 'Module file does not exist. Please make sure that the %s Module  exists on the modules folder.';
+
 
 ?>

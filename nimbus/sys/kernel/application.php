@@ -9,23 +9,25 @@
  * see LICENSE for more Copyright goodness.
  *
  * @package:		Nimbus
- * @subpackage:		Nimbus_kernel
+ * @subpackage:		Nimbus_system
  * @copyright:		2009-2010, Nimbus Dev Group, All rights reserved.
  * @license:		GNU/GPLv3, see LICENSE
  * @version:		1.0.0 Alpha
  */
 
 /**
- * The API Class
+ * The Application Interface
  *
- * @category:   		API
+ * @category:   		Application
  */
-class API extends Cloud {
-
-	public function __construct(){
-		parent::__construct();
-	}
-
+interface ApplicationInterface {
+	
+	/**
+	 * The instantiator of the application
+	 *
+	 * @access	Public
+	 */
+	public function init();
+	
 }
-
 ?>

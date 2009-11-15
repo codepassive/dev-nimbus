@@ -46,6 +46,4 @@ class Nimbus extends Cloud {
 
 }
 
-class Application {public static function launch(){}}
-
 ?>

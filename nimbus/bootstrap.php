@@ -37,7 +37,7 @@ set_exception_handler('_exception');
 
 //Load the base kernel libraries
 Loader::kernel('cloud');
-Loader::sys('nimbus');
+Loader::system('nimbus');
 
 //Include function aliases
 require_once 'alias.php';

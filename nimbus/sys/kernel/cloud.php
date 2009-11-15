@@ -42,6 +42,16 @@ class Cloud {
 	 * @access	public
 	 */
 	public $config;
+
+	/**
+	 * Holds the scripts that has been loaded onto the cloud
+	 *
+	 * @access	protected
+	 */
+	protected $__loaded = array(
+						'services' => array(),
+						'modules' => array(),
+					);
 	
 	/**
 	 * Variable that holds the benchmarks for the system
@@ -62,8 +72,7 @@ class Cloud {
 		$this->language = $language;
 		//Include and instantiate the library files
 		Loader::library(array('session', 'dbo'));
-		$this->session = new Session();
-		$this->session->start();
+		//Initialize the Database Layer
 		$this->db = new Dbo();
 		//Get configuration
 		$result = $this->db->select(null, null, 'options');
@@ -73,29 +82,92 @@ class Cloud {
 		}
 		//Set Timezone
 		date_default_timezone_set($this->config->timezone);
+	}
+
+	/**
+	 * Instantiator of the superclass. Hides everything from child classes
+	 *
+	 * @access	public
+	 */
+	public function init(){
+		//Start the session
+		$this->session = new Session();
+		$this->session->start();
+		//Load the token manager
+		Loader::system('token');
+		//load the interfaces
+		Loader::kernel(array('services', 'process', 'application'));
 		//Load the initial services
-		$this->service(array_merge(array('sanitize'), unserialize($this->config->init_services)));
+		$this->service(array_merge(array('security'), unserialize($this->config->init_services)));
 		//Create the request class
 		$this->_request();
 		//Load the extensions
 		$this->module(unserialize($this->config->init_modules));
+		//load the API
+		Loader::kernel('api');
 	}
-	
+
+	/**
+	 * Abstract function to load services into the cloud class
+	 *
+	 * @access	public
+	 * @param	Mixed $services a string filename or an array of filenames to be loaded
+	 */
 	public function service($services = null){
-		if ($services) {
-			if (is_array($services)) {
-			
-			} else {
-			
-			}
-		}
+		$this->__load('services', $services);
 	}
+
+	/**
+	 * Abstract function to load modules into the cloud class
+	 *
+	 * @access	public
+	 * @param	Mixed $modules a string filename or an array of filenames to be loaded
+	 */
 	public function module($modules = null){
-		if ($modules) {
-			if (is_array($modules)) {
-			
+		$this->__load('modules', $modules);
+	}
+
+	/**
+	 * Method to load extensions into the cloud class
+	 *
+	 * @access	public
+	 * @param	String $name the namespace for the extensions to load
+	 * @param	Mixed $name a string filename or an array of filenames to be loaded
+	 */
+	protected function __load($name, $files){
+		if ($files) {
+			if (is_array($files)) {
+				foreach ($files as $file) {
+					$this->__load($name, $file);
+				}
 			} else {
-			
+				if (!in_array($files, $this->__loaded[$name])) {
+					global $language;
+					switch ($name) {
+						case "services":
+							if (!Loader::kernel('service' . DS . $files)) {
+								trigger_error(sprintf($language['error_000E'], strtoupper($files)));
+								return false;
+							}
+						break;
+						case "modules":
+							if (!Loader::module($files)) {
+								trigger_error(sprintf($language['error_001E'], strtoupper($files)));
+								return false;
+							}
+						break;
+					}
+					if (class_exists($files)) {
+						define(strtoupper($files) . "_LOADED", 1);
+						$this->__loaded[$name][] = $files;
+						if (method_exists($files, 'getInstance')) {
+							$s = $files::getInstance();
+						} else {
+							$s = new $files();
+						}
+						return $s;
+					}
+				}
 			}
 		}
 	}
