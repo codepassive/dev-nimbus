@@ -28,13 +28,20 @@ class Cloud {
 	 * @access	public
 	 */
 	public $language;
-	
+
 	/**
 	 * Request placeholder
 	 *
 	 * @access	public
 	 */
 	public $request;
+
+	/**
+	 * Configuration placeholder
+	 *
+	 * @access	public
+	 */
+	public $config;
 	
 	/**
 	 * Variable that holds the benchmarks for the system
@@ -53,13 +60,44 @@ class Cloud {
 		$_this = Registry::getInstance();		
 		//Use the current language in the class
 		$this->language = $language;
-		//Create the request class
-		$this->_request();
 		//Include and instantiate the library files
 		Loader::library(array('session', 'dbo'));
 		$this->session = new Session();
 		$this->session->start();
 		$this->db = new Dbo();
+		//Get configuration
+		$result = $this->db->select(null, null, 'options');
+		$this->config = new stdClass();
+		foreach ($result as $name) {
+			$this->config->{$name['option_name']} = $name['option_value'];
+		}
+		//Set Timezone
+		date_default_timezone_set($this->config->timezone);
+		//Load the initial services
+		$this->service(array_merge(array('sanitize'), unserialize($this->config->init_services)));
+		//Create the request class
+		$this->_request();
+		//Load the extensions
+		$this->module(unserialize($this->config->init_modules));
+	}
+	
+	public function service($services = null){
+		if ($services) {
+			if (is_array($services)) {
+			
+			} else {
+			
+			}
+		}
+	}
+	public function module($modules = null){
+		if ($modules) {
+			if (is_array($modules)) {
+			
+			} else {
+			
+			}
+		}
 	}
 
 	/**

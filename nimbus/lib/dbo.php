@@ -187,6 +187,7 @@ class Dbo {
 	 * @param Boolean $exec determines if the query should be executed silently or not
 	 */
 	public function query($query, $variables = array(), $fetch = true, $exec = false){
+		global $language;
 		if (!is_object($this->_handle)) {
 			$this->lastError = array('001D', 1, $language['error_001D']);
 			Log::write(ERROR_LOG_FILE, 'DBO Class: ' . $language['error_001D']);
@@ -338,8 +339,14 @@ class Dbo {
 				if (is_array($fields)) {
 					$fields = implode(",", $fields);
 				}
-				$args[0] = str_ireplace("WHERE ", " ", $args[0]);
-				return $this->query("SELECT $fields FROM $prefix$table WHERE {$args[0]}");
+				if ($args[0]) {
+					if (preg_match("/WHERE/", $args[0])) {
+						$args[0] = str_ireplace("WHERE ", " ", $args[0]);
+					}
+					return $this->query("SELECT $fields FROM $prefix$table WHERE {$args[0]}");
+				} else {
+					return $this->query("SELECT $fields FROM $prefix$table");
+				}
 			}
 		} else {
 			return false;
