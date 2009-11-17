@@ -9,6 +9,7 @@
  * see LICENSE for more Copyright goodness.
  *
  * @package:		Nimbus
+ * @subpackage:		Nimbus_system
  * @copyright:		2009-2010, Nimbus Dev Group, All rights reserved.
  * @license:		GNU/GPLv3, see LICENSE
  * @version:		1.0.0 Alpha
@@ -82,5 +83,31 @@ function checkCompatibility(){
 		exit;
 	}
 }
+
+/**
+ * Function to implement a basic inflector
+ *
+ * @access	public
+ * @poram String $key the associative key for the language array
+ */
+function __($name, $replace = null, $echo = true) {
+	global $language;
+	if (!is_array($replace)) {
+		$replace = array($replace);
+	}
+	if (isset($language[$name])) {
+		if (!empty($replace)) {
+			$lang = call_user_func_array('sprintf', array_merge(array($language[$name]), $replace));
+		} else {
+			$lang = $language[$name];
+		}
+		if ($echo === true) {
+			echo $lang;
+		} else {
+			return $lang;
+		}
+	}
+}
+
 
 ?>

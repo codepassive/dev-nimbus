@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="<?php __('_current'); ?>" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+	<meta http-equiv="Content-type" content="text/html; charset=<?php echo DEFAULT_ENCODING; ?>" />
+    <title><?php __('titlebar_outside', $config->appname); ?></title>
+	<meta name="robots" content="noindex, nofollow" />
+	<?php head(); ?>
+	<link rel="shortcut icon" type="image/x-icon" href="<?php echo $config->styles['favico']; ?>" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $config->styles['common']; ?>" media="all" />
+	<script type="text/javascript">
+		<?php scripts('header'); ?>
+	</script>
+  </head>
+  <body>
+	<?php body(); ?>
+	<noscript><div id="noscript_container"><p><strong><?php __('critical_notice'); ?></strong>: <span><?php __('javascript_disabled'); ?></span></p></div></noscript>
+	<div id="loading_container"><p><strong><?php __('loading'); ?>...</strong></p></div>
+	<div id="screen"></div>
+	<?php scripts('footer'); ?>
+  </body>
+</html>

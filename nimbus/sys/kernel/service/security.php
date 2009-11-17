@@ -9,7 +9,7 @@
  * see LICENSE for more Copyright goodness.
  *
  * @package:		Nimbus
- * @subpackage:		Nimbus_kernel
+ * @subpackage:		Nimbus_services
  * @copyright:		2009-2010, Nimbus Dev Group, All rights reserved.
  * @license:		GNU/GPLv3, see LICENSE
  * @version:		1.0.0 Alpha

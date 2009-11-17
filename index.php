@@ -75,6 +75,9 @@ if ($app->beingCalled()) {
 		break;
 	}
 } else {
+	//Generate the base HTML canvas
+	$app->canvas();
+	//Load the default desktop
 	Loader::system('application');
 	Application::launch('desktop');
 }

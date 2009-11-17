@@ -9,25 +9,36 @@
  * see LICENSE for more Copyright goodness.
  *
  * @package:		Nimbus
- * @subpackage:		Nimbus_kernel
+ * @subpackage:		Nimbus_shell
  * @copyright:		2009-2010, Nimbus Dev Group, All rights reserved.
  * @license:		GNU/GPLv3, see LICENSE
  * @version:		1.0.0 Alpha
  */
+/**
+ * @ignore
+ * This file contains general functions for the Application Canvas. Generates
+ * the header, footer and body elements.
+ */
 
 /**
- * The Application Interface
- *
- * @category:   		Application
+ * Generate the meta, links or scripts to the Head
  */
-interface ApplicationInterface {
-	
-	/**
-	 * The instantiator of the application
-	 *
-	 * @access	Public
-	 */
-	public function init();
-	
+function head(){
+
 }
+
+/**
+ * Generate the HTML to be appended to the body
+ */
+function body(){
+
+}
+
+/**
+ * Generate the Header and Footer javascripts
+ */
+function scripts(){
+
+}
+
 ?>

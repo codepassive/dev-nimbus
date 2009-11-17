@@ -45,6 +45,8 @@ $language['error_004D'] = 'You are updating nothing to database table %s.';
 //00xE - Cloud class
 $language['error_000E'] = 'Service file does not exist. Please make sure that the %s service  exists on the services folder.';
 $language['error_001E'] = 'Module file does not exist. Please make sure that the %s Module  exists on the modules folder.';
+//00xF - Application Class
+$language['error_000F'] = 'Could not load application %s. Please make sure that the Application exists on the app folder.'
 
 
 ?>

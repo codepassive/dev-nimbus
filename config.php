@@ -39,6 +39,7 @@ define('SCRIPT_DIR', RESOURCE_DIR . 'scripts' . DS);
 define('NIMBUS_DEBUG', 2); //1 for normal debug, 2 for whole dump debug, 0 for production
 define('NIMBUS_UPDATE_URL', 'http://synapse.nimbusdesktop.org/');
 define('DEFAULT_LANGUAGE', 'en-us');
+define('DEFAULT_ENCODING', 'utf-8');
 
 //Include the Application constants
 include NIMBUS_DIR . 'constant.php';

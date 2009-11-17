@@ -22,14 +22,31 @@
  */
 class Application extends API {
 
+	/**
+	 * Executes the application's Init method
+	 *
+	 * @access	Public
+	 */
 	public function __construct(){
 		$this->init();
 	}
-	
+
+	/**
+	 * The constructor for an application. Executed first to gain access
+	 * to the application superclass properties
+	 *
+	 * @access	Public
+	 */
 	public function __init(){
 		parent::__construct();
 	}
 
+	/**
+	 * Launches an application from the application directory
+	 *
+	 * @access	Public
+	 * @param	String $name name of the application
+	 */
 	public static function launch($name){
 		if (is_array($name)) {
 			foreach ($name as $n) {
@@ -38,14 +55,16 @@ class Application extends API {
 		} else {
 			$path = APPLICATION_DIR . $name . DS . $name . '.php';
 			if (file_exists($path)) {
+				//Require the Application Index and instantiate the Application superclass
 				require_once $path;
 				$app = new $name();
 				$app->__init();
+				//The actual output is generated with this internal method
 				$app->init();
 			}
 			if (NIMBUS_DEBUG > 0) {
 				global $language;
-				//Log::write(DEBUG_LOG_FILE, sprintf($language['error_000C'], $path . $name . '.php'));
+				Log::write(DEBUG_LOG_FILE, sprintf($language['error_000F'], $name));
 			}
 			return false;
 		}

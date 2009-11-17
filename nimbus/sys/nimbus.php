@@ -30,6 +30,23 @@ class Nimbus extends Cloud {
 	public function __construct(){
 		parent::__construct();
 	}
+	
+	/**
+	 * Includes the base HTML file that will be used to generate the
+	 * application with its base instances.
+	 *
+	 * @access public
+	 */
+	public function canvas(){
+		//Delegate the configuration class
+		$config = $this->config;
+		//Apply the styles
+		Loader::shell('shell');
+		$shell = new Shell();
+		$config = $shell->apply($config);
+		//Include the base HTML file
+		include SYSTEM_DIR . 'shell' . DS . 'common' . DS . 'index.html';
+	}
 
 	/**
 	 * Determines whether the application has a request

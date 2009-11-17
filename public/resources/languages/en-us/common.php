@@ -19,7 +19,16 @@
  * includes definitions that is used throughout the system that isn't language
  * specific
  */
+//Canvas 
+$language['titlebar_outside'] = 'Welcome to %s | Open Source Cloud Desktop';
+$language['titlebar_inside'] = '%s@%s | Open Source Cloud Desktop';
+$language['javascript_disabled'] = 'Sorry, but you need to enable Javascript for Nimbus to work properly. Visit <a href="http://nimbusinitiative.org/">the Nimbus Development page</a> for more information.';
+
+//Error
+$language['critical_notice'] = 'Critical Notice';
+
 //Common
+$language['loading'] = 'Loading';
 $language['started'] = 'started';
 $language['stopped'] = 'stopped';
 

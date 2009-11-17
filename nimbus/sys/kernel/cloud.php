@@ -23,13 +23,6 @@
 class Cloud {
 
 	/**
-	 * Language placeholder
-	 *
-	 * @access	public
-	 */
-	public $language;
-
-	/**
 	 * Request placeholder
 	 *
 	 * @access	public
@@ -67,9 +60,7 @@ class Cloud {
 	 */
 	public function __construct(){
 		global $language;
-		$_this = Registry::getInstance();		
-		//Use the current language in the class
-		$this->language = $language;
+		$_this = Registry::getInstance();
 		//Include and instantiate the library files
 		Loader::library(array('session', 'dbo'));
 		//Initialize the Database Layer
@@ -180,7 +171,7 @@ class Cloud {
 	private function _request(){
 		//Create the request class
 		$this->request = new stdClass();
-		if ($_GET || $_POST) {
+		if (!empty($_GET) || !empty($_POST)) {
 			//Reset the global $_REQUEST variable
 			$_REQUEST = array();
 			//Set the necessary items to the public properties of the request class
@@ -213,7 +204,8 @@ class Cloud {
 		} else {
 			$total_time = microtime(true) - $this->__benchmarks[$id]['start'];
 			if ($output > 0) {
-				printf($this->language['benchmark_output'], $id, round($total_time * 1000));
+				global $language;
+				printf($language['benchmark_output'], $id, round($total_time * 1000));
 			}
 		}
 	}
