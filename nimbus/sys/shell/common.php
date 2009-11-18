@@ -16,29 +16,34 @@
  */
 /**
  * @ignore
- * This file contains general functions for the Application Canvas. Generates
- * the header, footer and body elements.
+ * This file contains general abstract functions for the Application Canvas.
+ * The methods generate the header, footer and body elements.
  */
 
 /**
  * Generate the meta, links or scripts to the Head
  */
 function head(){
-
+	//Call the static shell method head
+	Shell::head();
 }
 
 /**
  * Generate the HTML to be appended to the body
  */
 function body(){
-
+	//Call the static shell method body
+	Shell::body();
 }
 
 /**
  * Generate the Header and Footer javascripts
+ *
+ * @param String $id the identifier from where to fetch the script queue
  */
-function scripts(){
-
+function scripts($id){
+	//Call the static shell method scripts
+	Shell::scripts($id);
 }
 
 ?>

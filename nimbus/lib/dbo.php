@@ -108,11 +108,11 @@ class Dbo {
 	 * @return Object instance of the object
 	 */
 	public static function getInstance(){
-		static $dboInstance;
-		if (!is_object($dboInstance)){
-			$dboInstance = new nDBO();
+		static $_dbo;
+		if (!is_object($_dbo)){
+			$_dbo = new Dbo();
 		}
-		return $dboInstance;
+		return $_dbo;
 	}
 
 	/**

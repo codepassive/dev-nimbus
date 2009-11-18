@@ -3,13 +3,10 @@
   <head>
 	<meta http-equiv="Content-type" content="text/html; charset=<?php echo DEFAULT_ENCODING; ?>" />
     <title><?php __('titlebar_outside', $config->appname); ?></title>
-	<meta name="robots" content="noindex, nofollow" />
 	<?php head(); ?>
 	<link rel="shortcut icon" type="image/x-icon" href="<?php echo $config->styles['favico']; ?>" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $config->styles['common']; ?>" media="all" />
-	<script type="text/javascript">
-		<?php scripts('header'); ?>
-	</script>
+	<?php scripts('header'); ?>
   </head>
   <body>
 	<?php body(); ?>

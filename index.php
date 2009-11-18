@@ -84,6 +84,8 @@ if ($app->beingCalled()) {
 
 //Get the time nimbus stopped, and echo out if allowed
 $app->benchmark('app', STOP, NIMBUS_DEBUG);
+
+//Generate a Vardump
 echo '<pre>';
 print_r($app);
 ?>

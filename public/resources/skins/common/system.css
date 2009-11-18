@@ -17,6 +17,9 @@
 * {
 	outline: 0;
 }
+html {
+	height: 100%;
+}
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
 	margin: 0;
 	padding: 0;
@@ -31,7 +34,7 @@ html {
 	font-size: 1em;
 }
 body {
-	background: #dce8ef url('../../images/wallpapers/default.jpg') no-repeat center scroll;
+	background: #dce8ef url('../../images/wallpapers/default.jpg') no-repeat top center scroll;
 	line-height: 1.5;
 	font-family: 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Tahoma, Arial, Helvetica, Sans-serif;
 	font-size: 62.5%;
@@ -95,8 +98,12 @@ ul li {
 	font: normal 12px Verdana,Tahoma,Arial,Helvetica,Sans-serif;
 	-moz-border-radius-bottomleft: 12px;
 	-moz-border-radius-bottomright: 12px;
-	-khtml-border-radius: 12px;
-	border-radius: 12px;
+	-webkit-border-bottom-left-radius: 12px;
+	-webkit-border-bottom-right-radius: 12px;
+	-khtml-border-bottom-left-radius: 12px;
+	-khtml-border-bottom-right-radius: 12px;
+	border-bottom-left-radius: 12px;
+	border-bottom-right-radius: 12px;
 }
 #noscript_container {
 	color: #000;

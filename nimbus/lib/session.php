@@ -45,11 +45,11 @@ class Session {
 	 * @return Object instance of the object
 	 */
 	public static function getInstance(){
-		static $sessInstance;
-		if (!is_object($sessInstance)){
-			$sessInstance = new nSession();
+		static $_session;
+		if (!is_object($_session)) {
+			$_session = new Session();
 		}
-		return $sessInstance;
+		return $_session;
 	}
 
 	/**
