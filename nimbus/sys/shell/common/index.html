@@ -9,10 +9,10 @@
 	<?php scripts('header'); ?>
   </head>
   <body>
-	<?php body(); ?>
 	<noscript><div id="noscript_container"><p><strong><?php __('critical_notice'); ?></strong>: <span><?php __('javascript_disabled'); ?></span></p></div></noscript>
 	<div id="loading_container"><p><strong><?php __('loading'); ?>...</strong></p></div>
-	<div id="screen"></div>
+	<?php screen(); ?>
+	<div class="screen" id="screen-workspace"></div>
 	<?php scripts('footer'); ?>
   </body>
 </html>

@@ -31,9 +31,9 @@ function head(){
 /**
  * Generate the HTML to be appended to the body
  */
-function body(){
+function screen(){
 	//Call the static shell method body
-	Shell::body();
+	Shell::screen();
 }
 
 /**
