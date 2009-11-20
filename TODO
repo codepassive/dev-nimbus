@@ -20,4 +20,5 @@ TODO#	Description
 00001 - Implementation for providing numerical indices on request generation
 00002 - DB Support for sessions
 00003 - Support MySQL, Postgre and others. Only SQLite is currently supported
+00004 - Path Declaration on Cloud.php#75 seems off. Find a way to put it into proper scope
 ---------------------------------------------------

@@ -9,7 +9,7 @@
  * see LICENSE for more Copyright goodness.
  *
  * @package:		Nimbus
- * @subpackage:		Nimbus_shell
+ * @subpackage:	Nimbus_shell
  * @copyright:		2009-2010, Nimbus Dev Group, All rights reserved.
  * @license:		GNU/GPLv3, see LICENSE
  * @version:		1.0.0 Alpha
@@ -70,6 +70,7 @@ class Shell extends Cloud {
 	 * @access	Public
 	 */
 	public function __construct(){
+		parent::__construct();
 		//Add the default values to meta information
 		$this->__meta = array(
 				array('name' => 'robots', 'content' => 'noindex, nofollow'),
@@ -77,6 +78,24 @@ class Shell extends Cloud {
 				array('name' => 'author', 'content' => 'STI Lipa Thesis Group 4. John Rocela, Mark Filemon'),
 				array('name' => 'description', 'content' => 'Nimbus is an Open-Source Cloud centric desktop in the Browser')
 			);
+		//Add the javascript libraries to be used
+		$this->__script = array(
+					'jquery' => array('src' => $this->config->path['scripts'] . 'jquery/jquery.js', 'version' => JQUERY_JS_VER),
+					'jquery-ui' => array('src' => $this->config->path['scripts'] . 'jquery/jquery-ui.js', 'version' => JQUERY_UI_JS_VER),
+					'jquery-interface' => array('src' => $this->config->path['scripts'] . 'jquery/interface.js', 'version' => JQUERY_INTERFACE_JS_VER),
+					'jquery-plugin-hotkeys' => array('src' => $this->config->path['scripts'] . 'jquery/plugins/hotkeys.js', 'version' => JQUERY_PLUGIN_HOTKEYS_JS_VER),
+					'tinymce' => array('src' => $this->config->path['scripts'] . 'tinymce/tinymce.js', 'version' => TINYMCE_JS_VER),
+					'swfupload' => array('src' => $this->config->path['scripts'] . 'swfupload/swfupload.js', 'version' => SWFUPLOAD_JS_VER),
+					'nimbus-common' => array('src' => $this->config->path['scripts'] . 'nimbus/nimbus-common.js', 'version' => NIMBUS_COMMON_JS_VER),
+					'nimbus' => array('src' => $this->config->path['scripts'] . 'nimbus/nimbus.js', 'version' => NIMBUS_JS_VER),
+				);
+		//Script Location IDs
+		$this->__script['header'] = array(
+								$this->__script['jquery'], //Initially we will include the base javascript class
+								$this->__script['nimbus'],
+								$this->__script['nimbus-common'],
+							);
+		$this->__script['footer'] = array();
 	}
 
 	/**
@@ -90,7 +109,7 @@ class Shell extends Cloud {
 		//Apply to the configuration
 		$config->styles = array(
 				//Common
-				'common' => $config->appurl . 'public/resources/skins/common/system.css',
+				'common' => $config->appurl . 'public/resources/skins/common/system.css?ver=1.0',
 				'favico' => $config->appurl . 'public/resources/images/favico.jpg'
 			);
 		//Return the configuration class
@@ -115,11 +134,16 @@ class Shell extends Cloud {
 		//Build the additional style values
 		if (!empty($_this->__link)) {
 			foreach ($_this->__link as $link) {
-				echo '<link rel="' . $link['rel'] . '" type="' . $link['type'] . '" href="' . $link['href'] . '"' . "\n";
-				if ($link['media']) {
+				echo '<link rel="' . $link['rel'] . '" type="' . $link['type'] . '" href="' . $link['href'];
+				if (isset($link['version'])) {
+					echo '?ver=' . $link['version'] . '"';
+				} else {
+					echo '"';
+				}
+				if (isset($link['media'])) {
 					echo ' media="' . $link['media'] . '"';
 				}
-				echo ' />';
+				echo ' />' . "\n";
 			}
 		}
 	}
@@ -142,7 +166,7 @@ class Shell extends Cloud {
 		if (is_array($name)){
 			//put the array to the meta
 			foreach ($name as $meta) {
-				if (!$_this->_metaExists($meta) && isset($meta['name']) && isset($meta['content'])) {
+				if (!($_this->_metaExists($meta)) && isset($meta['name']) && isset($meta['content'])) {
 					$_this->__meta[] = $meta;
 				}
 			}
@@ -202,17 +226,14 @@ class Shell extends Cloud {
 		//Get the static instance of the Shell object
 		$_this = Shell::getInstance();
 		
-		//Determine whether to get or set a meta name and meta value
 		if (is_array($html)) {
-			//put the array to the meta
 			foreach ($html as $elem) {
-				if (!$_this->_metaExists($elem) && isset($elem['html'])) {
+				if (isset($elem['html'])) {
 					$_this->__body[] = $elem;
 				}
 			}
 		} else {
 			if ($namespace) {
-				//put the name and the content to the meta array
 				$_this->__body[] = array('id' => $namespace, 'html' => $html);
 			} else {
 				$_this->__body[] = array('html' => $html);
@@ -250,15 +271,93 @@ class Shell extends Cloud {
 		//Get the static instance of the Shell object
 		$_this = Shell::getInstance();
 		
-		//Get the location onto which the scripts will be generated
-		switch ($id) {
-			case "header":
-			
-			break;
-			case "footer":
-			
-			break;
+		//Get the location onto which the scripts will be generated		
+		if (!empty($_this->__script[$id])) {
+			foreach ($_this->__script[$id] as $script) {
+				$output = '<script type="text/javascript"';
+				if (isset($script['src']) && !isset($script['content'])) {
+					$output .= ' src="' . $script['src'];
+					if (isset($script['version'])) {
+						$output .= '?ver=' . $script['version'] . '">';
+					} else {
+						$output .= '">';
+					}
+				} else {
+					 $output .= '>' . $script['content'];
+				}
+				echo $output . '</script>' . "\n";
+			}
 		}
+	}
+
+	/**
+	 * Get a script element individually by the script's namespace
+	 *
+	 * @access	Public
+	 */
+	public function script($id, $version){
+		//Get the static instance of the Shell object
+		$_this = Shell::getInstance();
+		
+		$script = $_this->__script[$id];
+		$script = $script[0];
+		if (isset($script)) {
+			$output = '<script type="text/javascript"';
+			if ($script['src'] && !$script['content']) {
+				$output .= ' src="' . $script['src'];
+				if (isset($script['version'])) {
+					$output .= '?ver=' . $script['version'] . '">';
+				} else {
+					$output .= '">';
+				}
+			} else {
+				 $output .= '>' . $script['content'];
+			}
+			echo $output . '</script>' . "\n";
+		}
+	}
+
+	/**
+	 * Sets a Javascript src or content onto a namespace
+	 *
+	 * @access	Public
+	 */
+	/**
+	 * Use in the API as API::shell::javascript();
+	 */
+	public static function javascript($namespace, $src, $version = '1.0'){
+		//Get the static instance of the Shell object
+		$_this = Shell::getInstance();
+		
+		if (is_array($src)) {
+			foreach ($src as $js) {
+				if (!($_this->_scriptExists($js)) && isset($js['src']) || isset($js['content'])) {
+					$_this->__script[$namespace][] = array_merge($js, array('version' => $version));
+				}
+			}
+		} else {
+			if (is_url($src)) {
+				$_this->__script[$namespace][] = array('src' => $src, 'version' => $version);
+			} else {
+				$_this->__script[$namespace][] = array('content' => $src, 'version' => $version);
+			}
+		}
+	}
+
+	/**
+	 * Check if a javascript is set in the namespace already
+	 *
+	 * @access	Private
+	 * @param	Array $script the script to be checked
+	 */
+	private function _scriptExists($script){
+		$result = false;
+		foreach ($this->__script as $s) {
+			if ((($script['src'] == $s['src']) || ($script['content'] == $s['content'])) && $script['version'] == $s['version']) {
+				$result = true;
+			}
+		}
+		return $result;
 	}
 
 }

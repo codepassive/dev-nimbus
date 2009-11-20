@@ -71,6 +71,8 @@ class Cloud {
 		foreach ($result as $name) {
 			$this->config->{$name['option_name']} = $name['option_value'];
 		}
+		//Set the paths	- PATH Declaration is in the wrong place #TODO 0004
+		$this->config->path = array('scripts' => $this->config->appurl . 'public/resources/scripts/', 'skins' => $this->config->appurl . 'public/resources/skins/', 'images' => $this->config->appurl . 'public/resources/images/', 'media' => $this->config->appurl . 'public/resources/media/');
 		//Set Timezone
 		date_default_timezone_set($this->config->timezone);
 	}

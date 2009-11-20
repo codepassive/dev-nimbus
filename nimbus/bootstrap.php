@@ -39,6 +39,9 @@ set_exception_handler('_exception');
 Loader::kernel('cloud');
 Loader::system('nimbus');
 
+//Include Version lists
+include 'version.php';
+
 //Include function aliases
 require_once 'alias.php';
 
