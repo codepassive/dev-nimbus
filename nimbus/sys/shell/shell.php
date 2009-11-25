@@ -86,14 +86,16 @@ class Shell extends Cloud {
 					'jquery-plugin-hotkeys' => array('src' => $this->config->path['scripts'] . 'jquery/plugins/hotkeys.js', 'version' => JQUERY_PLUGIN_HOTKEYS_JS_VER),
 					'tinymce' => array('src' => $this->config->path['scripts'] . 'tinymce/tinymce.js', 'version' => TINYMCE_JS_VER),
 					'swfupload' => array('src' => $this->config->path['scripts'] . 'swfupload/swfupload.js', 'version' => SWFUPLOAD_JS_VER),
-					'nimbus-common' => array('src' => $this->config->path['scripts'] . 'nimbus/nimbus-common.js', 'version' => NIMBUS_COMMON_JS_VER),
+					'behaviors' => array('src' => $this->config->path['scripts'] . 'nimbus/behaviors.js', 'version' => NIMBUS_BEHAVIORS_JS_VER),
 					'nimbus' => array('src' => $this->config->path['scripts'] . 'nimbus/nimbus.js', 'version' => NIMBUS_JS_VER),
 				);
 		//Script Location IDs
 		$this->__script['header'] = array(
 								$this->__script['jquery'], //Initially we will include the base javascript class
+								$this->__script['jquery-ui'],
+								$this->__script['jquery-interface'],
 								$this->__script['nimbus'],
-								$this->__script['nimbus-common'],
+								$this->__script['behaviors'],
 							);
 		$this->__script['footer'] = array();
 	}
@@ -109,7 +111,7 @@ class Shell extends Cloud {
 		//Apply to the configuration
 		$config->styles = array(
 				//Common
-				'common' => $config->appurl . 'public/resources/skins/common/system.css?ver=1.0',
+				'common' => $config->appurl . 'public/resources/skins/common/style.css?ver=1.0',
 				'favico' => $config->appurl . 'public/resources/images/favico.jpg'
 			);
 		//Return the configuration class

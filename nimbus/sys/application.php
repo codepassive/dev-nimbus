@@ -48,6 +48,7 @@ class Application extends API {
 	 * @param	String $name name of the application
 	 */
 	public static function launch($name){
+		//Proceed with launching the application
 		if (is_array($name)) {
 			foreach ($name as $n) {
 				Application::launch($n);

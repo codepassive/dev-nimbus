@@ -132,10 +132,10 @@ class File extends Filesystem {
 	 * @access	public
 	 */
 	public function close(){	
-		if (!is_resource($this->handle)) {
+		if (!is_resource($this->_handle)) {
 			return true;
 		}
-		return fclose($this->handle);
+		return fclose($this->_handle);
 	}
 	
 	/**

@@ -1,0 +1,184 @@
+/** 
+ * Nimbus - Manage, Share & Collaborate
+ *
+ * Nimbus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * see LICENSE for more Copyright goodness.
+ *
+ * @package:		Nimbus
+ * @subpackage:		Nimbus_styles
+ * @copyright:		2009-2010, Nimbus Dev Group, All rights reserved.
+ * @license:			GNU/GPLv3, see LICENSE
+ * @version:			1.0.0 Alpha
+ */
+/* FIRST LOADING SCREEN */
+#screen {
+	display: none;
+}
+#screen,#loading_container,#noscript_container {
+	position: absolute;
+	top: 0;
+}
+#screen,#noscript_container {
+	left: 0;
+	height: 100%;
+	width: 100%;
+}
+#loading_container {
+	left: 50%;
+	padding: 6px 8px 6px 12px;
+	padding-left: 24px;
+	margin-left: -64px;
+	background: rgba(72,72,72,0.4) url('../../images/loading.gif') no-repeat 4px center scroll;
+	color: #fff;
+	font: normal 12px Verdana,Tahoma,Arial,Helvetica,Sans-serif;
+	-moz-border-radius-bottomleft: 12px;
+	-moz-border-radius-bottomright: 12px;
+	-webkit-border-bottom-left-radius: 12px;
+	-webkit-border-bottom-right-radius: 12px;
+	-khtml-border-bottom-left-radius: 12px;
+	-khtml-border-bottom-right-radius: 12px;
+	border-bottom-left-radius: 12px;
+	border-bottom-right-radius: 12px;
+}
+#noscript_container {
+	color: #000;
+	background: #e5eaee;
+	font-family: 'lucida grande','lucida sans unicode',arial,verdana,tahoma,helvetica,sans-serif;
+	padding: 24px;
+	z-index: 1;
+}
+
+/* DEFAULT WINDOW APPEARANCE */
+.window {
+	position: absolute;
+	background: rgba(245, 245, 245, 0.7);
+	border: 1px solid #292a2b;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-khtml-border-radius: 6px;
+	border-radius: 6px;
+	-moz-box-shadow: 0 0 12px #000000;
+}
+.window-title {
+	padding: 4px 6px;
+	font-size: 11px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-khtml-border-radius-topleft: 5px;
+	-khtml-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+.window-title .title-caption {
+	text-shadow: 0 0 4px #ffffff;
+	color: #000000;
+}
+.window-inner {
+	padding: 0 6px 6px;
+	-moz-border-radius-bottomleft: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	-khtml-border-bottom-left-radius: 5px;
+	-khtml-border-bottom-right-radius: 5px;
+	border-radius-bottomleft: 5px;
+	border-radius-bottomright: 5px;
+	height: 100%;
+}
+.window-content-wrapper {
+	border: 1px solid #f2f3f4;
+	padding-bottom: 2px;
+	height: inherit;
+}
+.window-content-outer {
+	background: rgba(255, 255, 255, 0.3);
+	border: 1px solid #66696b;
+	height: inherit;
+}
+.window-content-inner {
+	background: #ffffff;
+	overflow: auto;
+	height: inherit;
+}
+.resizable .handleSE, .resizable  .handleE, .resizable .handleNE, .resizable .handleN, .resizable .handleNW, .resizable .handleW, .resizable .handleSW, .resizable .handleS {
+	position: absolute;
+	width: 8px;
+	height: 8px;
+	overflow: hidden;
+}
+.resizable .handleSE {
+	bottom: 0;
+	right: 0;
+	z-index: 10;
+	cursor: se-resize;
+}
+.resizable .handleE {
+	right: 0;
+	top: 0;
+	height: 100%;
+	cursor: e-resize;
+}
+.resizable .handleNE {
+	top: 0;
+	right: 0;
+	z-index: 10;
+	cursor: ne-resize;
+}
+.resizable .handleN {
+	top: 0;
+	width: 100%;
+	cursor: n-resize;
+}
+.resizable .handleNW {
+	top: 0;
+	left: 0;
+	z-index: 10;
+	cursor: nw-resize;
+}
+.resizable .handleW {
+	left: 0;
+	height: 100%;
+	cursor: w-resize;
+}
+.resizable .handleSW {
+	left: 0;
+	bottom: 0;
+	z-index: 10;
+	cursor: sw-resize;
+}
+.resizable .handleS {
+	bottom: 0;
+	width: 100%;
+	cursor: s-resize;
+}
+.window.maximized {
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	border: 0;
+	margin-left: 0;
+	margin-top: 0;
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	-khtml-border-radius: 0;
+	border-radius: 0;
+	-moz-box-shadow: none;
+}
+.window.maximized .window-inner-inner {
+	padding: 0;
+}
+.window.maximized .window-content-wrapper, .window.maximized .window-content-inner {
+	border: 0;
+}
+.window.maximized .window-content-wrapper {
+	border-top: 1px solid #ffffff;
+}
+.window.maximized .window-content {
+	border-top: 1px solid #333333;
+}

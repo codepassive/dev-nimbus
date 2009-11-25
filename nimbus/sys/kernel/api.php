@@ -22,8 +22,18 @@
  */
 class API extends Cloud {
 
+	/**
+	 * Shell class property for the API. Enables Shell functionality
+	 *
+	 * @access	Public
+	 */
 	public $shell;
 
+	/**
+	 * Class constructor
+	 *
+	 * @access	Public
+	 */
 	public function __construct(){
 		parent::__construct();
 		

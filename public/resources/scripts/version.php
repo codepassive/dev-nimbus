@@ -24,6 +24,6 @@ define('JQUERY_INTERFACE_JS_VER', '1.2');
 define('JQUERY_PLUGIN_HOTKEYS_JS_VER', '0.7.9');
 define('TINYMCE_JS_VER', '3.2.7');
 define('SWFUPLOAD_JS_VER', '2.2.0.1');
-define('NIMBUS_COMMON_JS_VER', '0.1.0');
+define('NIMBUS_BEHAVIORS_JS_VER', '0.1.0');
 define('NIMBUS_JS_VER', '0.1.0');
 ?>

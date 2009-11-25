@@ -25,6 +25,7 @@ define('USER_DIR', DATA_DIR . 'usr' . DS);
 define('APPLICATION_DIR', DATA_DIR . 'app' . DS);
 define('TEMPORARY_DIR', DATA_DIR . 'tmp' . DS);
 define('DB_DIR', DATA_DIR . 'dat' . DS);
+define('CACHE_DIR', DATA_DIR . 'cache' . DS);
 define('SYSTEM_DIR', NIMBUS_DIR . 'sys' . DS);
 define('LIBRARY_DIR', NIMBUS_DIR . 'lib' . DS);
 define('MODULE_DIR', NIMBUS_DIR . 'mod' . DS);

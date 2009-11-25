@@ -11,9 +11,8 @@
  * @subpackage:		Nimbus_styles
  * @copyright:		2009-2010, Nimbus Dev Group, All rights reserved.
  * @license:			GNU/GPLv3, see LICENSE
- * @version:		1.0.0 Alpha
+ * @version:			1.0.0 Alpha
  */
-/* RESET */
 * {
 	outline: 0;
 }
@@ -34,7 +33,7 @@ html {
 	font-size: 1em;
 }
 body {
-	background: #dce8ef url('../../images/wallpapers/default.jpg') no-repeat top center scroll;
+	background: #dce8ef url('../../images/wallpapers/nature_0011.jpg');
 	line-height: 1.5;
 	font-family: 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Tahoma, Arial, Helvetica, Sans-serif;
 	font-size: 62.5%;
@@ -61,54 +60,4 @@ a img {
 }
 ul li {
 	list-style-type: none;
-}
-.clear {
-	clear: both;
-}
-.modal {
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 100%;
-	background: rgba(0,0,0,0.5);
-	z-index: 551;
-}
-
-/* BASE-COMMON */
-#screen {
-	display: none;
-}
-#screen,#loading_container,#noscript_container {
-	position: absolute;
-	top: 0;
-}
-#screen,#noscript_container {
-	left: 0;
-	height: 100%;
-	width: 100%;
-}
-#loading_container {
-	left: 50%;
-	padding: 6px 8px 6px 12px;
-	padding-left: 24px;
-	margin-left: -64px;
-	background: rgba(72,72,72,0.4) url('../../images/loading.gif') no-repeat 4px center scroll;
-	color: #fff;
-	font: normal 12px Verdana,Tahoma,Arial,Helvetica,Sans-serif;
-	-moz-border-radius-bottomleft: 12px;
-	-moz-border-radius-bottomright: 12px;
-	-webkit-border-bottom-left-radius: 12px;
-	-webkit-border-bottom-right-radius: 12px;
-	-khtml-border-bottom-left-radius: 12px;
-	-khtml-border-bottom-right-radius: 12px;
-	border-bottom-left-radius: 12px;
-	border-bottom-right-radius: 12px;
-}
-#noscript_container {
-	color: #000;
-	background: #e5eaee;
-	font-family: 'lucida grande','lucida sans unicode',arial,verdana,tahoma,helvetica,sans-serif;
-	padding: 24px;
-	z-index: 1;
 }
