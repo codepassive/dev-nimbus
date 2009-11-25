@@ -94,8 +94,8 @@ class Shell extends Cloud {
 								$this->__script['jquery'], //Initially we will include the base javascript class
 								$this->__script['jquery-ui'],
 								$this->__script['jquery-interface'],
-								$this->__script['nimbus'],
 								$this->__script['behaviors'],
+								$this->__script['nimbus'],
 							);
 		$this->__script['footer'] = array();
 	}

@@ -207,7 +207,7 @@ class Cloud {
 			$total_time = microtime(true) - $this->__benchmarks[$id]['start'];
 			if ($output > 0) {
 				global $language;
-				printf($language['benchmark_output'], $id, round($total_time * 1000));
+				printf('<!-- ' . $language['benchmark_output'] . ' -->', $id, round($total_time * 1000));
 			}
 		}
 	}

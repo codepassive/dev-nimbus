@@ -13,18 +13,18 @@
  * @license:			GNU/GPLv3, see LICENSE
  * @version:			1.0.0 Alpha
  */
+/**
+ * Initial Directives
+ */
+$(function() {
+	$('#loading_container').hide(0);
+	$('.screen').fadeIn(500);
+});
+/**
+ * Windows
+ */
 (function($) {
 	$(function() {
-		/** DUMMY **/
-		$('#loading_container').hide(0);
-		/**
-		 * Various Fixes
-		 */
-		$('.window').each(function(){
-			var height = ($(this).height() - $(this).find('.window-title').height()) - 18;
-			$(this).find('.window-content-wrapper').height(height);
-		});
-		
 		/**
 		 * Window Behaviors
 		 */
@@ -40,27 +40,59 @@
 				}
 			});
 		//Resizable
-		$('.window.resizable').Resizable({
-			minWidth: 250,
-			minHeight: 150,
-			handlers: {
-				se: '.handleSE',
-				e: '.handleE',
-				ne: '.handleNE',
-				n: '.handleN',
-				nw: '.handleNW',
-				w: '.handleW',
-				sw: '.handleSW',
-				s: '.handleS'
-			},
-			onResize: function(){
-				var height = ($(this).height() - $(this).find('.window-title').height()) - 19;
-				$(this).find('.window-content-wrapper').height(height);
-			},
-			onStop: function(){ //make sure it got resized right
-				var height = ($(this).height() - $(this).find('.window-title').height()) - 19;
-				$(this).find('.window-content-wrapper').height(height);
-			},			
+		resize('all');
+		$(document).resize(function(){resize('all');});
+		$('.window').each(function(){
+			if ($(this).hasClass('resizable')) {
+				$(this).Resizable({
+					minWidth: 250,
+					minHeight: 150,
+					handlers: {
+						se: '#' + $(this).find('.handleSE').attr('id'),
+						e: '#' + $(this).find('.handleE').attr('id'),
+						ne: '#' + $(this).find('.handleNE').attr('id'),
+						n: '#' + $(this).find('.handleN').attr('id'),
+						nw: '#' + $(this).find('.handleNW').attr('id'),
+						w: '#' + $(this).find('.handleW').attr('id'),
+						sw: '#' + $(this).find('.handleSW').attr('id'),
+						s: '#' + $(this).find('.handleS').attr('id')
+					},
+					onResize: function(){
+						resize(this);
+						$(this).find('.window-content-inner').hide(0);
+					},
+					onStop: function(){
+						resize(this);
+						$(this).find('.window-content-inner').show(0);
+					},
+				});
+			}
 		});
+		//Maximize
+		$('.window-title').dblclick(function(){
+			if ($(this).parents('.window').data('isMaximized') == true) {
+				alert(2);
+			} else {
+				$(this).parents('.window').addClass('maximized').draggable('disable').ResizableDestroy().css({top:0,left:0,width:'100%',height:'100%'});
+				$(this).parents('.window').find('.resize-handles').hide(0);
+				$(this).parents('.window').each(function(){resize(this);});
+				$(this).parents('.window').data('isMaximized', true);
+			}
+		});
+		
+		/**
+		 * Function to resize an element upon the resize event
+		 */
+		function resize(elem) {
+			if (elem == 'all') {
+				$('.window').each(function(){
+					resize(this);
+				});
+			} else {
+				var adjustment = ($(elem).hasClass('maximized')) ? 10: 18;
+				var height = ($(elem).height() - $(elem).find('.window-title').height()) - adjustment;
+				$(elem).find('.window-content-wrapper').height(height);
+			}
+		}
 	});
 })(jQuery);

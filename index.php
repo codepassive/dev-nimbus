@@ -86,31 +86,3 @@ if ($app->beingCalled()) {
 $app->benchmark('app', STOP, NIMBUS_DEBUG);
 
 ?>
-
-
-
-
-
-
-
-
-
-<div class="log window draggable resizable">
-	<div class="handleSE"></div><div class="handleE"></div><div class="handleNE"></div><div class="handleN"></div><div class="handleNW"></div><div class="handleW"></div><div class="handleSW"></div><div class="handleS"></div>
-	<div class="window-title">
-		<div class="title-icon"></div>
-		<div class="title-caption">Nimbus Log</div>
-		<div class="title-actions"></div>
-	</div>
-	<div class="window-inner">
-		<div class="window-content-wrapper">
-			<div class="window-content-outer">
-				<div class="window-content-inner">
-					<div class="window-toolbars"><!-- TOOLBAR --></div>
-					<pre><?php print_r($app); ?></pre>
-					<div class="window-statusbar"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>

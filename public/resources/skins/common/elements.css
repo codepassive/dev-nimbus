@@ -13,11 +13,191 @@
  * @license:			GNU/GPLv3, see LICENSE
  * @version:			1.0.0 Alpha
  */
-.log {
-	top: 50%;
-	left: 50%;
-	margin-left: -240px;
-	margin-top: -180px;
-	width: 480px;
-	height: 360px;
+.window {
+	position: absolute;
+	background: rgba(245, 245, 245, 0.2); /* 0.2 - 0.8*/
+	border: 1px solid #292a2b;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-khtml-border-radius: 6px;
+	border-radius: 6px;
+	-moz-box-shadow: 0 0 12px #000000;
+}
+.window-outer {
+	border: 1px solid rgba(255, 255, 255, 0.7);
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	border-radius: 5px;
+	border-bottom: 0;
+}
+.window-inner {
+	padding: 0 6px 6px;
+	-moz-border-radius-bottomleft: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	-khtml-border-bottom-left-radius: 5px;
+	-khtml-border-bottom-right-radius: 5px;
+	border-radius-bottomleft: 5px;
+	border-radius-bottomright: 5px;
+	height: 100%;
+}
+.window-content-wrapper {
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	padding-bottom: 2px;
+	height: inherit;
+}
+.window-content-outer {
+	background: rgba(255, 255, 255, 0.3); /* fixed */
+	border: 1px solid rgba(100, 100, 100, 0.7); /* fixed */
+	height: inherit;
+}
+.window-content-inner {
+	background: #ffffff;
+	overflow: auto;
+	height: inherit;
+}
+.window-title {
+	padding: 4px 6px 4px;
+	font-size: 11px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-khtml-border-radius-topleft: 5px;
+	-khtml-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+	.window-title .title-icon {
+		float: left;
+	}
+		.window-title .title-icon a {
+			display: block;
+			width: 20px;
+			height: 16px;
+		}
+	.window-title .title-caption {
+		text-shadow: 0 0 4px #ffffff;
+		color: #000000;
+		float: left;
+		width: 50%;
+		overflow: hidden;
+	}
+		.window-title .title-caption {
+			float: left;
+		}
+	.window-title .title-actions {
+		position: absolute;
+		right: 4px;
+	}
+		.window-title .title-actions a {
+			float: left;
+			display: block;
+			width: 20px;
+			height: 16px;
+		}
+		.window-title .title-actions .window-feedback {
+			margin-top: 2px;
+			font-size: 9px;
+			width: 80px;
+			color: #000000;
+			text-shadow: 0 0 4px #ffffff;
+			text-decoration: underline;
+		}
+		.window-title .title-actions .window-minimize {
+			background: url('images/window-minimize.png') no-repeat center scroll;
+		}
+		.window-title .title-actions .window-toggle {
+			background: url('images/window-toggle.png') no-repeat center scroll;
+		}
+		.window-title .title-actions .window-close {
+			background: url('images/window-close.png') no-repeat center scroll;
+		}
+		.window-title .title-actions .window-minimize:hover {
+			background: url('images/window-minimize-hover.png') no-repeat center scroll;
+		}
+		.window-title .title-actions .window-toggle:hover {
+			background: url('images/window-toggle-hover.png') no-repeat center scroll;
+		}
+		.window-title .title-actions .window-close:hover {
+			background: url('images/window-close-hover.png') no-repeat center scroll;
+		}
+
+/* Resizable */
+.resizable .handleSE, .resizable  .handleE, .resizable .handleNE, .resizable .handleN, .resizable .handleNW, .resizable .handleW, .resizable .handleSW, .resizable .handleS {
+	position: absolute;
+	width: 8px;
+	height: 8px;
+	overflow: hidden;
+}
+.resizable .handleSE {
+	bottom: 0;
+	right: 0;
+	z-index: 10;
+	cursor: se-resize;
+}
+.resizable .handleE {
+	right: 0;
+	top: 0;
+	height: 100%;
+	cursor: e-resize;
+}
+.resizable .handleNE {
+	top: 0;
+	right: 0;
+	z-index: 10;
+	cursor: ne-resize;
+}
+.resizable .handleN {
+	top: 0;
+	width: 100%;
+	cursor: n-resize;
+}
+.resizable .handleNW {
+	top: 0;
+	left: 0;
+	z-index: 10;
+	cursor: nw-resize;
+}
+.resizable .handleW {
+	left: 0;
+	height: 100%;
+	cursor: w-resize;
+}
+.resizable .handleSW {
+	left: 0;
+	bottom: 0;
+	z-index: 10;
+	cursor: sw-resize;
+}
+.resizable .handleS {
+	bottom: 0;
+	width: 100%;
+	cursor: s-resize;
+}
+
+/* Maximized */
+.window.maximized {
+	border: 0;
+	margin-left: 0;
+	margin-top: 0;
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	-khtml-border-radius: 0;
+	border-radius: 0;
+	-moz-box-shadow: none;
+}
+.window.maximized .window-content-wrapper, .window.maximized .window-content-outer, .window.maximized .window-outer, .window.maximized .window-content-inner {
+	border: 0;
+}
+.window.maximized .window-inner {
+	padding: 0;
+}
+.window.maximized .window-content-outer {
+	border-top: 1px solid #ffffff;
+}
+.window.maximized .window-content-inner {
+	border-top: 1px solid #333333;
 }
