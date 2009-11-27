@@ -40,8 +40,6 @@ class Nimbus extends Cloud {
 	public function canvas(){
 		//Delegate the configuration class
 		$config = $this->config;
-		//Apply the styles
-		Loader::shell('shell');
 		$shell = new Shell();
 		$config = $shell->apply($config);
 		//Include the base HTML file

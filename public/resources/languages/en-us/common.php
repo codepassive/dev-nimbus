@@ -41,4 +41,9 @@ $language['log'] = 'File %s could not be opened or created.';
 //Registry
 $language['registry'] = 'Registry cannot set a null value to a null pointer.';
 
+//User
+$language['username'] = 'Username';
+$language['password'] = 'Password';
+$language['language'] = 'Language';
+
 ?>

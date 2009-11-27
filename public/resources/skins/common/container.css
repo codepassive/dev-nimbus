@@ -11,35 +11,37 @@
  * @subpackage:		Nimbus_styles
  * @copyright:		2009-2010, Nimbus Dev Group, All rights reserved.
  * @license:			GNU/GPLv3, see LICENSE
- * @version:			1.0.0 Alpha
+ * @version:		1.0.0 Alpha
  */
-#loading_container, #noscript_container {
+/**
+ * These contain container declarations that will hold different elements on
+ * the desktop.
+ */
+#loading-container, #noscript-container {
 	position: absolute;
 	top: 0;
 }
-#noscript_container {
+#noscript-container {
 	left: 0;
 	height: 100%;
 	width: 100%;
 }
-#loading_container {
+#loading-container {
 	left: 50%;
+	top: 50%;
 	padding: 6px 8px 6px 12px;
 	padding-left: 24px;
+	margin-top: -50px;
 	margin-left: -64px;
-	background: rgba(72,72,72,0.4) url('../../images/loading.gif') no-repeat 4px center scroll;
+	background: rgba(46, 52, 54, 0.4) url('../../images/loading.gif') no-repeat 4px center scroll;
 	color: #fff;
-	font: normal 12px Verdana,Tahoma,Arial,Helvetica,Sans-serif;
-	-moz-border-radius-bottomleft: 12px;
-	-moz-border-radius-bottomright: 12px;
-	-webkit-border-bottom-left-radius: 12px;
-	-webkit-border-bottom-right-radius: 12px;
-	-khtml-border-bottom-left-radius: 12px;
-	-khtml-border-bottom-right-radius: 12px;
-	border-bottom-left-radius: 12px;
-	border-bottom-right-radius: 12px;
+	font: normal 12px Verdana, Tahoma, Arial, Helvetica, Sans-serif;
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	-khtml-border-radius: 12px;
+	border-radius: 12px;
 }
-#noscript_container {
+#noscript-container {
 	color: #000;
 	background: #e5eaee;
 	font-family: 'lucida grande','lucida sans unicode',arial,verdana,tahoma,helvetica,sans-serif;

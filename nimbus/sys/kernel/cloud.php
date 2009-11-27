@@ -75,6 +75,8 @@ class Cloud {
 		$this->config->path = array('scripts' => $this->config->appurl . 'public/resources/scripts/', 'skins' => $this->config->appurl . 'public/resources/skins/', 'images' => $this->config->appurl . 'public/resources/images/', 'media' => $this->config->appurl . 'public/resources/media/');
 		//Set Timezone
 		date_default_timezone_set($this->config->timezone);
+		//Create the request class
+		$this->_request();
 	}
 
 	/**
@@ -86,14 +88,14 @@ class Cloud {
 		//Start the session
 		$this->session = new Session();
 		$this->session->start();
-		//Load the token manager
-		Loader::system('token');
+		//Load shell
+		Loader::shell('shell');
+		//Load the token and user manager
+		Loader::system(array('token', 'user'));
 		//load the interfaces
 		Loader::kernel(array('services', 'process', 'application'));
 		//Load the initial services
 		$this->service(array_merge(array('security'), unserialize($this->config->init_services)));
-		//Create the request class
-		$this->_request();
 		//Load the extensions
 		$this->module(unserialize($this->config->init_modules));
 		//load the API
@@ -201,13 +203,15 @@ class Cloud {
 	 * @param  Boolean $output determine whether a benchmark should be printed out
 	 */
 	public function benchmark($id, $mark, $output = 0){
-		if ($mark == 'start' && !isset($this->__benchmarks[$id])) {
-			$this->__benchmarks[$id]['start'] = microtime(true);
-		} else {
-			$total_time = microtime(true) - $this->__benchmarks[$id]['start'];
-			if ($output > 0) {
-				global $language;
-				printf('<!-- ' . $language['benchmark_output'] . ' -->', $id, round($total_time * 1000));
+		if (!isset($this->request->items)) {
+			if ($mark == 'start' && !isset($this->__benchmarks[$id])) {
+				$this->__benchmarks[$id]['start'] = microtime(true);
+			} else {
+				$total_time = microtime(true) - $this->__benchmarks[$id]['start'];
+				if ($output > 0) {
+					global $language;
+					printf('<!-- ' . $language['benchmark_output'] . ' -->', $id, round($total_time * 1000));
+				}
 			}
 		}
 	}

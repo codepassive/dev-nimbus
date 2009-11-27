@@ -91,11 +91,12 @@ class Shell extends Cloud {
 				);
 		//Script Location IDs
 		$this->__script['header'] = array(
+								array('content' => "var SERVER_URL = '" . $this->config->appurl . "';"),
 								$this->__script['jquery'], //Initially we will include the base javascript class
 								$this->__script['jquery-ui'],
 								$this->__script['jquery-interface'],
 								$this->__script['behaviors'],
-								$this->__script['nimbus'],
+								$this->__script['nimbus']
 							);
 		$this->__script['footer'] = array();
 	}
@@ -112,7 +113,7 @@ class Shell extends Cloud {
 		$config->styles = array(
 				//Common
 				'common' => $config->appurl . 'public/resources/skins/common/style.css?ver=1.0',
-				'favico' => $config->appurl . 'public/resources/images/favico.jpg'
+				'favico' => $config->appurl . 'public/resources/images/favico.png'
 			);
 		//Return the configuration class
 		return $config;

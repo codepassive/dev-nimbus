@@ -59,7 +59,7 @@ if ($app->beingCalled()) {
 		break;
 		case "res": //Internal/External resource loader
 			Loader::system('resource');
-			Resource::fetch();
+			new Resource();
 		break;
 		case "token": //Generate an access token
 			new Token();
@@ -77,9 +77,6 @@ if ($app->beingCalled()) {
 } else {
 	//Generate the base HTML canvas
 	$app->canvas();
-	//Load the default desktop
-	Loader::system('application');
-	Application::launch('desktop');
 }
 
 //Get the time nimbus stopped, and echo out if allowed

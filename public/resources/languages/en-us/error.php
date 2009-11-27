@@ -46,7 +46,11 @@ $language['error_004D'] = 'You are updating nothing to database table %s.';
 $language['error_000E'] = 'Service file does not exist. Please make sure that the %s service  exists on the services folder.';
 $language['error_001E'] = 'Module file does not exist. Please make sure that the %s Module  exists on the modules folder.';
 //00xF - Application Class
-$language['error_000F'] = 'Could not load application %s. Please make sure that the Application exists on the app folder.'
-
+$language['error_000F'] = 'Could not load application %s. Please make sure that the Application exists on the app folder.';
+$language['error_001F'] = 'View %s could not be loaded from its directory. It might not exist or it cannot be read.';
+//00xG - Permissions
+$language['error_000G'] = 'Warning! You are not granted permission to access this resource.';
+//00xH - Tokens
+$language['error_000H'] = 'Sorry but your request contained an invalid token. Request has been denied.';
 
 ?>

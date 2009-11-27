@@ -21,4 +21,6 @@ TODO#	Description
 00002 - DB Support for sessions
 00003 - Support MySQL, Postgre and others. Only SQLite is currently supported
 00004 - Path Declaration on Cloud.php#75 seems off. Find a way to put it into proper scope
+00005 - Language Getter. language($id). not using global all the time
+00006 - Note that $this->request is not visible in application classes
 ---------------------------------------------------

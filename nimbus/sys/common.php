@@ -21,8 +21,6 @@
  */
 /**
  * Function to check compatibility for the environment
- *
- * @access	public
  */
 function checkCompatibility(){
 	$incompatibilities = array();
@@ -87,7 +85,6 @@ function checkCompatibility(){
 /**
  * Function to implement a basic inflector
  *
- * @access	public
  * @poram String $key the associative key for the language array
  */
 function __($name, $replace = null, $echo = true) {
@@ -112,7 +109,6 @@ function __($name, $replace = null, $echo = true) {
 /**
  * Check if a URL is really a URL
  *
- * @access	public
  * @poram String $url the url to be parsed
  */
 function is_url($url){
@@ -120,6 +116,30 @@ function is_url($url){
 	return (eregi($urlregex, $url));
 }
 
+/**
+ * Generate a hashed string from an input
+ *
+ * @poram String $url the url to be parsed
+ */
+function generateHash($input){
+	return substr(sha1(md5($input)), 0, 9);
+}
+
+/**
+ * Get the request values
+ */
+function request($name){
+	$user = User::getInstance();
+	return (isset($user->request->items[$name])) ? $user->request->items[$name]: false;
+}
+
+/**
+ * Get the configuration Value of the specified name
+ */
+function config($name){
+	$user = User::getInstance();
+	return (isset($user->config->$name)) ? $user->config->$name: false;
+}
 
 
 ?>

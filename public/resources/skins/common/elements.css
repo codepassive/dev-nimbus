@@ -11,11 +11,15 @@
  * @subpackage:		Nimbus_styles
  * @copyright:		2009-2010, Nimbus Dev Group, All rights reserved.
  * @license:			GNU/GPLv3, see LICENSE
- * @version:			1.0.0 Alpha
+ * @version:		1.0.0 Alpha
  */
+/**
+ * These include the different widgets or elements seen in a desktop.
+ */
+/* Window */
 .window {
 	position: absolute;
-	background: rgba(245, 245, 245, 0.2); /* 0.2 - 0.8*/
+	background: rgba(245, 245, 245, 0.2);
 	border: 1px solid #292a2b;
 	-moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
@@ -59,7 +63,7 @@
 	height: inherit;
 }
 .window-title {
-	padding: 4px 6px 4px;
+	padding: 0 6px 4px;
 	font-size: 11px;
 	-moz-border-radius-topleft: 5px;
 	-moz-border-radius-topright: 5px;
@@ -72,6 +76,7 @@
 }
 	.window-title .title-icon {
 		float: left;
+		padding-top: 4px;
 	}
 		.window-title .title-icon a {
 			display: block;
@@ -82,6 +87,7 @@
 		text-shadow: 0 0 4px #ffffff;
 		color: #000000;
 		float: left;
+		padding-top: 4px;
 		width: 50%;
 		overflow: hidden;
 	}
@@ -95,11 +101,10 @@
 		.window-title .title-actions a {
 			float: left;
 			display: block;
-			width: 20px;
-			height: 16px;
+			height: 18px;
 		}
 		.window-title .title-actions .window-feedback {
-			margin-top: 2px;
+			margin-top: 4px;
 			font-size: 9px;
 			width: 80px;
 			color: #000000;
@@ -107,22 +112,27 @@
 			text-decoration: underline;
 		}
 		.window-title .title-actions .window-minimize {
-			background: url('images/window-minimize.png') no-repeat center scroll;
+			background: url('images/window-minimize.png') no-repeat bottom center scroll;
+			width: 27px;
 		}
 		.window-title .title-actions .window-toggle {
-			background: url('images/window-toggle.png') no-repeat center scroll;
+			background: url('images/window-toggle.png') no-repeat bottom center scroll;
+			width: 27px;
 		}
 		.window-title .title-actions .window-close {
-			background: url('images/window-close.png') no-repeat center scroll;
+			background: url('images/window-close.png') no-repeat bottom center scroll;
+			width: 48px;
 		}
 		.window-title .title-actions .window-minimize:hover {
-			background: url('images/window-minimize-hover.png') no-repeat center scroll;
+			background: url('images/window-minimize-hover.png') no-repeat bottom center scroll;
+			-moz-box-shadow: 0 0 12px #2ed8e5;
 		}
 		.window-title .title-actions .window-toggle:hover {
-			background: url('images/window-toggle-hover.png') no-repeat center scroll;
+			background: url('images/window-toggle-hover.png') no-repeat bottom center scroll;
+			-moz-box-shadow: 0 0 12px #2ed8e5;
 		}
 		.window-title .title-actions .window-close:hover {
-			background: url('images/window-close-hover.png') no-repeat center scroll;
+			-moz-box-shadow: 0 0 12px #e17225;
 		}
 
 /* Resizable */

@@ -14,85 +14,76 @@
  * @version:			1.0.0 Alpha
  */
 /**
- * Initial Directives
- */
-$(function() {
-	$('#loading_container').hide(0);
-	$('.screen').fadeIn(500);
-});
-/**
- * Windows
+ * Window Behaviors
  */
 (function($) {
 	$(function() {
-		/**
-		 * Window Behaviors
-		 */
-		//Draggable
-		$('.window.draggable').draggable({
-				handle: '.window-title',
-				stack: {group: '.window', min: 100},
-				start: function(){
-					$(this).find('.window-content-inner').hide(0);
-				},
-				stop: function(){
-					$(this).find('.window-content-inner').show(0);
-				}
-			});
 		//Resizable
-		resize('all');
-		$(document).resize(function(){resize('all');});
-		$('.window').each(function(){
-			if ($(this).hasClass('resizable')) {
-				$(this).Resizable({
-					minWidth: 250,
-					minHeight: 150,
-					handlers: {
-						se: '#' + $(this).find('.handleSE').attr('id'),
-						e: '#' + $(this).find('.handleE').attr('id'),
-						ne: '#' + $(this).find('.handleNE').attr('id'),
-						n: '#' + $(this).find('.handleN').attr('id'),
-						nw: '#' + $(this).find('.handleNW').attr('id'),
-						w: '#' + $(this).find('.handleW').attr('id'),
-						sw: '#' + $(this).find('.handleSW').attr('id'),
-						s: '#' + $(this).find('.handleS').attr('id')
-					},
-					onResize: function(){
-						resize(this);
-						$(this).find('.window-content-inner').hide(0);
-					},
-					onStop: function(){
-						resize(this);
-						$(this).find('.window-content-inner').show(0);
-					},
-				});
-			}
-		});
+		$(document).resize(function(){nimbus.screen.resize('all');});
+
+		//Minimize
+		$('.window-minimize').click(function(){$(this).parents('.window').each(function(){minimizeWindow(this)});});
+		
 		//Maximize
-		$('.window-title').dblclick(function(){
-			if ($(this).parents('.window').data('isMaximized') == true) {
-				alert(2);
-			} else {
-				$(this).parents('.window').addClass('maximized').draggable('disable').ResizableDestroy().css({top:0,left:0,width:'100%',height:'100%'});
-				$(this).parents('.window').find('.resize-handles').hide(0);
-				$(this).parents('.window').each(function(){resize(this);});
-				$(this).parents('.window').data('isMaximized', true);
-			}
-		});
+		$('.window-title').dblclick(function(){$(this).parents('.window').each(function(){maximizeToggleWindow(this)});});
+		$('.window-toggle').click(function(){$(this).parents('.window').each(function(){maximizeToggleWindow(this)});});
+		
+		//Close
+		$('.window-close').click(function(){$(this).parents('.window').each(function(){closeWindow(this)});});
+
+		function closeWindow(elem){
+			//$(elem).Shrink(200);
+			$(elem).fadeOut(200);
+		}
+		
+		function minimizeWindow(elem){
+			$(elem).animate({bottom:0,left:0,width:0,height:0,opacity:0}, 500);
+		}
 		
 		/**
-		 * Function to resize an element upon the resize event
+		 * Function to toggle maximize windows
 		 */
-		function resize(elem) {
-			if (elem == 'all') {
-				$('.window').each(function(){
-					resize(this);
-				});
+		function maximizeToggleWindow(elem){
+			var info = $(elem).data('information');
+			if (info && info.isMaximized == true) {
+				windowSize(elem, 'windowed');
 			} else {
-				var adjustment = ($(elem).hasClass('maximized')) ? 10: 18;
-				var height = ($(elem).height() - $(elem).find('.window-title').height()) - adjustment;
-				$(elem).find('.window-content-wrapper').height(height);
+				windowSize(elem, 'full')
 			}
+		}
+
+		/**
+		 * Function to resize the window to a specific value or make it fullscreen or smallscreen
+		 */
+		function windowSize(elem, width, height) {
+			if (width == 'full') {				
+				//Store information about the window
+				$(elem).data('information', {isMaximized:true, x:$(elem).offset().left, y:$(elem).offset().top, z:$(elem).css('zIndex'), width:$(elem).width(), height:$(elem).height()});
+				//Do full resize
+				$(elem).addClass('maximized').draggable('disable').ResizableDestroy().css({top:0,left:0,width:'100%',height:'100%'});
+				$(elem).find('.resize-handles').hide(0);
+			} else if (width == 'windowed') {
+				var info = $(elem).data('information');
+				//Do windowed resize like last time
+				$(elem).removeClass('maximized').draggable('enable').css({top:info.y+'px',left:info.x+'px',zIndex:info.z,width:info.width+'px',height:info.height+'px'});
+				$(elem).find('.resize-handles').show(0);
+				$(elem).Resizable(resizableOption);
+				$(elem).data('information', {isMaximized:false, x:$(elem).offset().left, y:$(elem).offset().top, z:$(elem).css('zIndex'), width:$(elem).width(), height:$(elem).height()});
+			} else if (height) {
+				var info = $(elem).data('information');
+				//Do windowed resize like last time
+				$(elem).css({width:width+'px',height:height+'px'});
+			} else {
+				return false;
+			}
+			nimbus.screen.resize(elem);
+		}
+		
+		/**
+		 * Function to move an element to a specific location on the screen
+		 */
+		function moveTo(elem, x, y){
+			$(elem).css({top: y + 'px',left: x + 'px'});
 		}
 	});
 })(jQuery);

@@ -111,7 +111,7 @@ class Session {
 	 * @param	String $value the value to be set
 	 * @param	String $scope the scope of the value to be set to avoid collision
 	 */
-	public function set($name, $val, $scope = null){
+	public static function set($name, $val, $scope = null){
 		if ($scope) {
 			$_SESSION[$scope][$name] = $val;
 		} else {
@@ -126,7 +126,7 @@ class Session {
 	 * @param	String $name the name of the value to be removed
 	 * @param	String $scope the scope of the value to be removed if available
 	 */
-	public function remove($name, $scope = null){
+	public static function remove($name, $scope = null){
 		if ($scope) {
 			unset($_SESSION[$scope][$name]);
 		} else {
@@ -141,11 +141,11 @@ class Session {
 	 * @param	String $name the name of the value to be fetched
 	 * @param	String $scope the scope of the value to be fetched if available
 	 */
-	public function get($name, $scope = null){
+	public static function get($name, $scope = null){
 		if ($scope) {
-			return $_SESSION[$scope][$name];
+			return (isset($_SESSION[$scope][$name])) ? $_SESSION[$scope][$name]: false;
 		} else {
-			return $_SESSION[$name];
+			return (isset($_SESSION[$name])) ? $_SESSION[$name]: false;
 		}
 	}
 

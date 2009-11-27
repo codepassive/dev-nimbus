@@ -23,6 +23,13 @@
 class API extends Cloud {
 
 	/**
+	 * Instances of running modules or applications on the system
+	 *
+	 * @access	Public
+	 */
+	public $instances = array();
+
+	/**
 	 * Shell class property for the API. Enables Shell functionality
 	 *
 	 * @access	Public
@@ -39,7 +46,28 @@ class API extends Cloud {
 		
 		//Delegate the classes to usable properties
 		$this->shell = Shell::getInstance();
+		$this->user = User::getInstance();
 		
+	}
+
+	/**
+	 * Register an application onto the instances array
+	 * 
+	 * @access	Public
+	 * @param	String $name name of the application to be registered
+	 * @param	Boolean $global determine if the application is ran globally or by a user
+	 */
+	public function register($name, $global = null){
+		if (!in_array($name, $this->instances)) {
+			$in = array(
+						'name' => $name,
+						'pid' => generateHash($name . $this->config->salt),
+						'started' => time(),
+						'user' => ($global) ? $this->user->current('id'): $this->config->appname
+					);
+			$this->instances[] = $in;
+			return $in;
+		}
 	}
 
 }

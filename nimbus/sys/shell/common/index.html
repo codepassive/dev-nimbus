@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html lang="<?php __('_current'); ?>" xmlns="http://www.w3.org/1999/xhtml">
   <head>
 	<meta http-equiv="Content-type" content="text/html; charset=<?php echo DEFAULT_ENCODING; ?>" />
@@ -9,50 +10,10 @@
 	<?php scripts('header'); ?>
   </head>
   <body>
-	<noscript><div id="noscript_container"><p><strong><?php __('critical_notice'); ?></strong>: <span><?php __('javascript_disabled'); ?></span></p></div></noscript>
-	<div id="loading_container"><p><strong><?php __('loading'); ?>...</strong></p></div>
+	<noscript><div id="noscript-container"><p><strong><?php __('critical_notice'); ?></strong>: <span><?php __('javascript_disabled'); ?></span></p></div></noscript>
+	<div id="loading-container"><p><strong><?php __('loading'); ?>...</strong></p></div>
 	<?php screen(); ?>
-	<div class="screen" id="screen-workspace">
-
-		<!-- TEST -->
-		<div class="log window draggable resizable" id="nimbus-log">
-			<div class="window-outer">
-				<div id="nimbus-log-window-resizeSE" class="handleSE resize-handles"></div><div id="nimbus-log-window-resizeE" class="handleE resize-handles"></div><div id="nimbus-log-window-resizeNE" class="handleNE resize-handles"></div><div id="nimbus-log-window-resizeN" class="handleN resize-handles"></div><div id="nimbus-log-window-resizeNW" class="handleNW resize-handles"></div><div id="nimbus-log-window-resizeW" class="handleW resize-handles"></div><div id="nimbus-log-window-resizeSW" class="handleSW resize-handles"></div><div id="nimbus-log-window-resizeS" class="handleS resize-handles"></div>
-				<div class="window-title">
-					<div class="title-icon">
-						<a href="#context-nimbus-log" class="window-context"><img src="http://work/sti/fb.png" width="16" height="16"/></a>
-					</div>
-					<div class="title-caption">Nimbus Log</div>
-					<div class="title-actions">
-						<a href="http://feedback.nimbusdesktop.org/" target="_new" class="window-feedback">Send Feedback</a>
-						<a href="#minimize-nimbus-log" class="window-minimize"></a>
-						<a href="#toggle-nimbus-log" class="window-toggle"></a>
-						<a href="#close-nimbus-log" class="window-close"></a>
-					</div>
-					<div class="clear"></div>
-				</div>
-				<div class="window-inner">
-					<div class="window-content-wrapper">
-						<div class="window-content-outer">
-							<div class="window-content-inner">
-								<div class="window-toolbars"><!-- TOOLBAR --></div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut velit in nibh ullamcorper dignissim. Nullam ipsum arcu, ornare et facilisis vel, tempor sit amet sapien. Morbi leo neque, viverra sed egestas ut, vulputate eu dolor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla quis nunc at dui venenatis euismod vitae et lorem. Morbi sollicitudin pulvinar sapien vel accumsan. Nunc quis accumsan mi. Cras sollicitudin sagittis nunc eget tincidunt. Curabitur eu lacus velit, non dignissim turpis. Ut molestie augue vel sem euismod feugiat. Vestibulum quis ante dolor. Quisque eu dui lorem, vitae fermentum magna.</p>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut velit in nibh ullamcorper dignissim. Nullam ipsum arcu, ornare et facilisis vel, tempor sit amet sapien. Morbi leo neque, viverra sed egestas ut, vulputate eu dolor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla quis nunc at dui venenatis euismod vitae et lorem. Morbi sollicitudin pulvinar sapien vel accumsan. Nunc quis accumsan mi. Cras sollicitudin sagittis nunc eget tincidunt. Curabitur eu lacus velit, non dignissim turpis. Ut molestie augue vel sem euismod feugiat. Vestibulum quis ante dolor. Quisque eu dui lorem, vitae fermentum magna.</p>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut velit in nibh ullamcorper dignissim. Nullam ipsum arcu, ornare et facilisis vel, tempor sit amet sapien. Morbi leo neque, viverra sed egestas ut, vulputate eu dolor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla quis nunc at dui venenatis euismod vitae et lorem. Morbi sollicitudin pulvinar sapien vel accumsan. Nunc quis accumsan mi. Cras sollicitudin sagittis nunc eget tincidunt. Curabitur eu lacus velit, non dignissim turpis. Ut molestie augue vel sem euismod feugiat. Vestibulum quis ante dolor. Quisque eu dui lorem, vitae fermentum magna.</p>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut velit in nibh ullamcorper dignissim. Nullam ipsum arcu, ornare et facilisis vel, tempor sit amet sapien. Morbi leo neque, viverra sed egestas ut, vulputate eu dolor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla quis nunc at dui venenatis euismod vitae et lorem. Morbi sollicitudin pulvinar sapien vel accumsan. Nunc quis accumsan mi. Cras sollicitudin sagittis nunc eget tincidunt. Curabitur eu lacus velit, non dignissim turpis. Ut molestie augue vel sem euismod feugiat. Vestibulum quis ante dolor. Quisque eu dui lorem, vitae fermentum magna.</p>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut velit in nibh ullamcorper dignissim. Nullam ipsum arcu, ornare et facilisis vel, tempor sit amet sapien. Morbi leo neque, viverra sed egestas ut, vulputate eu dolor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla quis nunc at dui venenatis euismod vitae et lorem. Morbi sollicitudin pulvinar sapien vel accumsan. Nunc quis accumsan mi. Cras sollicitudin sagittis nunc eget tincidunt. Curabitur eu lacus velit, non dignissim turpis. Ut molestie augue vel sem euismod feugiat. Vestibulum quis ante dolor. Quisque eu dui lorem, vitae fermentum magna.</p>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut velit in nibh ullamcorper dignissim. Nullam ipsum arcu, ornare et facilisis vel, tempor sit amet sapien. Morbi leo neque, viverra sed egestas ut, vulputate eu dolor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla quis nunc at dui venenatis euismod vitae et lorem. Morbi sollicitudin pulvinar sapien vel accumsan. Nunc quis accumsan mi. Cras sollicitudin sagittis nunc eget tincidunt. Curabitur eu lacus velit, non dignissim turpis. Ut molestie augue vel sem euismod feugiat. Vestibulum quis ante dolor. Quisque eu dui lorem, vitae fermentum magna.</p>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut velit in nibh ullamcorper dignissim. Nullam ipsum arcu, ornare et facilisis vel, tempor sit amet sapien. Morbi leo neque, viverra sed egestas ut, vulputate eu dolor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla quis nunc at dui venenatis euismod vitae et lorem. Morbi sollicitudin pulvinar sapien vel accumsan. Nunc quis accumsan mi. Cras sollicitudin sagittis nunc eget tincidunt. Curabitur eu lacus velit, non dignissim turpis. Ut molestie augue vel sem euismod feugiat. Vestibulum quis ante dolor. Quisque eu dui lorem, vitae fermentum magna.</p>
-								<div class="window-statusbar"></div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- TEST -->
-
-	</div>
+	<div class="screen" id="screen-workspace"></div>
 	<?php scripts('footer'); ?>
   </body>
 </html>
