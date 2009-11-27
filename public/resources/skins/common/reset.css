@@ -36,7 +36,7 @@ html {
 	font-size: 1em;
 }
 body {
-	background: #3465a4 url('../../images/wallpapers/default.png') no-repeat center scroll;
+	background: #3465a4 url('../../images/wallpapers/default.png') no-repeat center scroll; /* This is the default background */
 	line-height: 1.5;
 	font-family: 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Tahoma, Arial, Helvetica, Sans-serif;
 	font-size: 62.5%;

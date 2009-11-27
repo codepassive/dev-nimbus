@@ -22,46 +22,5 @@
  */
 class Token extends Cloud {
 
-	/**
-	 * Tokens stored for use
-	 *
-	 * @access	Private
-	 */
-	private $_tokens = array();
-
-	/**
-	 * Singleton function
-	 *
-	 * @access	Public
-	 * @return Object instance of the object
-	 */
-	public static function getInstance(){
-		static $_token;
-		if (!is_object($_token)) {
-			$_token = new Token();
-		}
-		return $_token;
-	}
-
-	public function __construct(){}
-	
-	public static function create($name = null){
-		$_this = Token::getInstance();
-		$token = generateHash(microtime());
-		if ($name) {
-			if (!Session::get($name . '_token', $token)) {
-				Session::set($name . '_token', $token);
-				return $_this->_tokens[$name] = $token;
-			}
-			return Session::get($name . '_token');
-		} else {
-			if (!Session::get('token')) {
-				Session::set('token', $token);
-				return $_this->_tokens[$name] = $token;
-			}
-			return Session::get('token');
-		}
-	}
-
 }
 ?>

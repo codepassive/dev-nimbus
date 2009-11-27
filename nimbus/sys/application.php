@@ -55,14 +55,6 @@ class Application extends API {
 	 */
 	public function __construct(){
 		parent::__construct();
-		//Load the API files
-		Loader::api(array(
-				//Base Classes
-				'html', 'js', 'css',
-				//Elements
-				'elements/button', 'elements/checkbox', 'elements/label', 'elements/menu', 'elements/panel', 'elements/progressbar', 'elements/statusbar', 'elements/radio', 'elements/text', 'elements/window',
-			));
-		$this->html = new HTML();
 	}
 
 	/**
@@ -73,12 +65,8 @@ class Application extends API {
 	 */
 	public function __init($force = false){
 		if ($this->user->isAllowed($this->name) || $force === true) {
-			//Register the instance onto the system
-			$this->instance = $this->register($this->name);
 			//The actual output is generated with this internal method
 			$this->init();
-			//Use Javascript Handler File
-			$this->script($this->name);
 		} else {
 			//Return a JSON code that permission check failed
 			global $language;
@@ -126,46 +114,6 @@ class Application extends API {
 			}
 			return false;
 		}
-	}
-
-	/**
-	 * This function loads shell pages for output in an application
-	 * [Available in Applications only]
-	 * 
-	 * @access	Public
-	 * @param	String $location the path of the shell file relative to the application directory
-	 */
-	public function view($location){
-		$location = APPLICATION_DIR . $this->name . DS . $location . '.php';
-		if (file_exists($location) && is_readable($location)) {
-			ob_start();
-			include $location;
-			$this->output .= 'var ' . $this->name . '_view = ' . json_encode(ob_get_contents()) . ";\n";
-			ob_end_clean();
-		} else {
-			global $language;
-			Log::write(ERROR_LOG_FILE, sprintf($language['error_001F'], $location));
-		}
-	}
-
-	public function script($file){
-		$this->output .= file_get_contents(APPLICATION_DIR . $this->name . DS . $file . '.js');
-	}
-	
-	public function json($input, $var = null){
-		if ($var) {
-			$this->output .= 'var ' . $this->name . '_' . $var . ' = ' . json_encode($input) . ";\n";
-		} else {
-			$this->output .= json_encode($input) . "\n";
-		}
-	}
-	
-	public function display(){
-		header('Content-Type: text/javascript');
-		if (!request('action')) {
-			$this->output .= "\n" . $this->name . ".init();";
-		}
-		echo $this->output;
 	}
 
 }

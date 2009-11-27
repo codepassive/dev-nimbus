@@ -58,21 +58,6 @@ class User extends Cloud {
 	public function isAllowed($object){
 		return true;
 	}
-	
-	public function login(){
-		$this->db->usesTable('accounts');
-		$query = $this->db->select("username='" . request('username') . "' AND password='" . md5(request('password') . config('salt')) . "'");
-		if ($query){
-			//Filter out uneccessary information
-			$information = $query[0];
-			$information['id'] = $information['account_id'];
-			unset($information['password']);
-			Session::set('uinfo', $information);
-			//Return if Logging in was successful
-			return true;
-		}
-		return false;
-	}
 
 }
 
