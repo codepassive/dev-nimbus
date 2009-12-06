@@ -93,7 +93,7 @@ class Cloud {
 		//Load the token and user manager
 		Loader::system(array('token', 'user'));
 		//load the interfaces
-		Loader::kernel(array('services', 'process', 'application'));
+		Loader::kernel(array('services', 'application'));
 		//Load the initial services
 		$this->service(array_merge(array('security'), unserialize($this->config->init_services)));
 		//Load the extensions

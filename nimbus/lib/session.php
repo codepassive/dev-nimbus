@@ -18,6 +18,7 @@
  * Class for accessing and creating sessions
  *
  * @category:   		Session
+ * @source:			http://www.devshed.com/c/a/PHP/Storing-PHP-Sessions-in-a-Database/
  */
 /**
  * TODO#00002 - DB Support for sessions
@@ -39,6 +40,20 @@ class Session {
 	private $_sid = null;
 
 	/**
+	 * The session data
+	 *
+	 * @access	private
+	 */
+	private $_session_data = null;
+
+	/**
+	 * The DB instance
+	 *
+	 * @access	protected
+	 */
+	protected $__db;
+
+	/**
 	 * Singleton function
 	 *
 	 * @access	public
@@ -57,7 +72,21 @@ class Session {
 	 *
 	 * @access	public
 	 */
-	public function __construct(){}
+	public function __construct(){
+		$this->__db = new Dbo();
+		// Read the maxlifetime setting from PHP
+		$this->life_time = get_cfg_var("session.gc_maxlifetime");
+
+		// Register this object as the session handler
+		session_set_save_handler(
+			array($this, "open"), 
+			array($this, "close"),
+			array($this, "read"),
+			array($this, "write"),
+			array($this, "destroy"),
+			array($this, "gc")
+		);
+	}
 
 	/**
 	 * Start the session and generate a session ID
@@ -160,6 +189,84 @@ class Session {
 		$this->regenerateID();
 		$_SESSION = array();
 		Log::write(DEBUG_LOG_FILE, "Session Class " . $language['stopped']);
+	}
+
+	/**
+	 * Open the session and do nothing
+	 *
+	 * @access	public
+	 * @param	String $save_path save path used, but ignored because of DB use
+	 * @param	String $session_name session name for the session
+	 */
+	public function open($save_path, $session_name) {
+		global $sess_save_path;
+		$sess_save_path = $save_path;
+		// Don't need to do anything. Just return TRUE.
+		return true;
+	}
+
+	/**
+	 * Close the session
+	 *
+	 * @access	public
+	 */
+	public function close(){
+		return true;
+	}
+
+	/**
+	 * Read session data from the session ID
+	 *
+	 * @access	public
+	 * @param	String $id session ID
+	 */
+	public function read($id){      
+		//Set empty result
+		$this->_session_data = null;		
+		//Fetch session data from the selected database
+		$time = time();
+		$result = $this->__db->select("SELECT `session_data` FROM `sessions` WHERE `session_id` = '$id' AND `expires` > $time");
+		if ($result) {
+			$this->_session_data = $result[0]['session_data'];
+		}
+		return $this->_session_data;
+	}
+
+	/**
+	 * Write session data to a session ID
+	 *
+	 * @access	public
+	 * @param	String $id session ID
+	 * @param	String $data session data
+	 */
+	public function write($id, $data){
+		//Build query
+		$time = time() + $this->life_time;
+		$this->__db->query("INSERT INTO `sessions`(`session_id`, `session_data`, `expires`) VALUES('$id', '$data', $time)");
+		return true;
+	}
+
+	/**
+	 * Destroy session data from a session ID
+	 *
+	 * @access	public
+	 * @param	String $id session ID
+	 */
+	public function destroy($id) {
+		//Build query
+		$this->__db->query("DELETE FROM `sessions` WHERE `session_id` =	'$id'");
+		return true;
+	}
+
+	/**
+	 * Garbage collection method
+	 *
+	 * @access	public
+	 */
+	public function gc(){
+		//Build DELETE query.  Delete all records who have passed the expiration time
+		$this->__db->query("DELETE FROM `sessions` WHERE `expires` < UNIX_TIMESTAMP()");
+		return true;
 	}
 
 }

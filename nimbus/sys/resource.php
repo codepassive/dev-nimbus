@@ -15,27 +15,52 @@
  * @version:		1.0.0 Alpha
  */
 
+/**
+ * Fetch resources from a path
+ *
+ * @category:   		Resource
+ */
 class Resource extends API {
 
+	/**
+	 * The path to a resource
+	 *
+	 * @access	Public
+	 */
 	public $path = null;
 
+	/**
+	 * Class constructor. accepts a path to a specific resource
+	 *
+	 * @access	Public
+	 * @param	String $where path to a resource
+	 */
 	public function __construct($where = null){
 		parent::__construct();
 		$this->path = ($where) ? $where: $this->request->items[0]['value'];
 		$this->fetch();
 	}
-	
+
+	/**
+	 * Fetch method that fetches resources
+	 *
+	 * @access	Public
+	 */
 	public function fetch(){
-		global $mimes;
+		//Determine the protocol that is being requested
 		$where = $this->path;
-		$path = explode("://", $where);
-		Loader::shell('mimes');
+		$path = explode("://", $where);		
+		//Require the mime list
+		require_once SYSTEM_DIR . 'shell' . DS . 'mimes.php';	
+		//Determine whether a request is an http or a resource request and handle accordingly
 		switch ($path[0]) {
+			//Redirect if the request is an http/https/ftp request
 			case "http":
 			case "https":
 			case "ftp":
 				header('Location: ' . $where);
 			break;
+			//Use the application directory as current directory and fetch resources in there
 			case "app":
 				$appname = explode("/", $path[1]);
 				$appname = $appname[0];
@@ -100,6 +125,7 @@ class Resource extends API {
 					}
 				}
 			break;
+			//Fetch resources from a users folder
 			case "user":
 				if ($this->user->isLoggedIn()) {
 					$username = $this->user->current('username');
@@ -161,12 +187,14 @@ class Resource extends API {
 					}
 				}
 			break;
+			//Fetch resources from the Public folder
 			case "public":
 				if (file_exists(PUBLIC_DIR . $path[1])) {
 					$path =  $this->config->appurl . 'public/' . $path[1];
 					header('Location: ' . $path);
 				}
 			break;
+			//Get images and output them with proper content-types as needed
 			case "img":
 			case "image":
 				$type = explode(".", $path[1]);
@@ -195,6 +223,7 @@ class Resource extends API {
 				}
 				imagedestroy($image);
 			break;
+			//Get scripts and output as javascript
 			case "script":
 			case "js":
 				header('Content-type: text/javascript');
@@ -203,6 +232,7 @@ class Resource extends API {
 				}
 				return false;
 			break;
+			//Get css styles and output as css
 			case "css":
 				header('Content-type: text/css');
 				if (file_exists(SKIN_DIR . $path[1])) {
@@ -212,6 +242,6 @@ class Resource extends API {
 			break;
 		}
 	}
-	
+
 }
 ?>

@@ -27,6 +27,6 @@ define('START', 'start');
 define('STOP', 'stop');
 
 //Log Files
-define('ERROR_LOG_FILE', 'logs/error');
-define('DEBUG_LOG_FILE', 'logs/debug');
+define('ERROR_LOG_FILE', 'logs' . DS . 'error');
+define('DEBUG_LOG_FILE', 'logs' . DS . 'debug');
 ?>

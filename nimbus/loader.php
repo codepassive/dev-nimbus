@@ -53,17 +53,6 @@ class Loader {
 	public static function kernel($name, $instantiate = false){
 		return Loader::__load($name, SYSTEM_DIR . 'kernel' . DS, $instantiate);
 	}
-
-	/**
-	 * Abstract function to load the API modules
-	 *
-	 * @access	public
-	 * @param  String $name file name or path denoted by a / without the .php extension
-	 * @param  Boolean $instantiate flag whether to instantiate a called class
-	 */
-	public static function api($name, $instantiate = false){
-		return Loader::__load($name, SYSTEM_DIR . 'kernel' . DS . 'api' . DS, $instantiate);
-	}
 	
 	/**
 	 * Abstract function to load shell classes

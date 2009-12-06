@@ -36,10 +36,10 @@ class API extends Cloud {
 	 */
 	public function __construct(){
 		parent::__construct();
-		
+
 		//Delegate the classes to usable properties
 		$this->shell = Shell::getInstance();
-		
+
 	}
 
 }

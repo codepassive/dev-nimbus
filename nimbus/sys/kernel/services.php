@@ -14,4 +14,20 @@
  * @license:		GNU/GPLv3, see LICENSE
  * @version:		1.0.0 Alpha
  */
+
+/**
+ * The Service Interface
+ *
+ * @category:   		Services
+ */
+interface ServicesInterface {
+	
+	/**
+	 * A service class initiator
+	 *
+	 * @access	Public
+	 */
+	public function init();
+	
+}
 ?>
