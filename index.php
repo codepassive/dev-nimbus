@@ -82,4 +82,13 @@ if ($app->beingCalled()) {
 //Get the time nimbus stopped, and echo out if allowed
 $app->benchmark('app', STOP, NIMBUS_DEBUG);
 
+echo '<pre>';
+$user = new User();
+if ($user->login('admin','forward')){
+	echo "logged in\n";
+} else {
+	echo "invalid\n";
+}
+print_r($user);
+
 ?>

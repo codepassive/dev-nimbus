@@ -119,10 +119,19 @@ function is_url($url){
 /**
  * Generate a hashed string from an input
  *
- * @poram String $url the url to be parsed
+ * @poram String $input the string to be hashed
  */
 function generateHash($input){
 	return substr(sha1(md5($input)), 0, 9);
+}
+
+/**
+ * Generate a password hash from a string
+ *
+ * @poram String $password the password to be hashed
+ */
+function generatePassword($password){
+	return sha1(md5($password . config('salt')));
 }
 
 /**

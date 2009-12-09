@@ -100,7 +100,15 @@ class Application extends API {
 					if (!$action) {
 						$app->__init($app->force);
 					} else {
-						$app->$action();
+						$params = array();
+						$i = 0;
+						foreach ($_GET as $param) {
+							if ($i > 1) {
+								$params[] = $param
+							}
+							$i++;
+						}
+						call_user_func_array(array($app, $action()), $params);
 					}
 					echo $app->display();
 				} else {

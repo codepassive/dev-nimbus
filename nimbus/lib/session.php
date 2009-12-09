@@ -75,7 +75,7 @@ class Session {
 	public function __construct(){
 		$this->__db = new Dbo();
 		// Read the maxlifetime setting from PHP
-		$this->life_time = get_cfg_var("session.gc_maxlifetime");
+		$this->lifetime = get_cfg_var("session.gc_maxlifetime");
 
 		// Register this object as the session handler
 		session_set_save_handler(
@@ -119,8 +119,7 @@ class Session {
 	public function regenerateID(){
 		$this->destroy(session_id());
 		session_regenerate_id();
-		session_id();
-		$this->_sid = session_id();
+		$this->generateID();
 	}
 
 	/**
@@ -241,8 +240,10 @@ class Session {
 	 */
 	public function write($id, $data){
 		//Build query
-		$time = time() + $this->life_time;
-		$this->__db->query("INSERT INTO `sessions`(`session_id`, `session_data`, `expires`) VALUES('$id', '$data', $time)");
+		$time = time() + $this->lifetime;
+		$ip = $_SERVER['REMOTE_ADDR'];
+		$useragent = $_SERVER['HTTP_USER_AGENT'];
+		$this->__db->query("INSERT INTO `sessions`(`session_id`, `session_data`, `expires`, `ip`, `useragent`) VALUES('$id', '$data', $time, '$ip', '$useragent')");
 		return true;
 	}
 
@@ -254,7 +255,9 @@ class Session {
 	 */
 	public function destroy($id) {
 		//Build query
-		$this->__db->query("DELETE FROM `sessions` WHERE `session_id` =	'$id'");
+		$ip = $_SERVER['REMOTE_ADDR'];
+		$useragent = $_SERVER['HTTP_USER_AGENT'];
+		$this->__db->query("DELETE FROM `sessions` WHERE `session_id` =	'$id' AND `ip` = '$ip' AND `useragent` = '$useragent'");
 		return true;
 	}
 
@@ -265,7 +268,8 @@ class Session {
 	 */
 	public function gc(){
 		//Build DELETE query.  Delete all records who have passed the expiration time
-		$this->__db->query("DELETE FROM `sessions` WHERE `expires` < UNIX_TIMESTAMP()");
+		$time = time();
+		$this->__db->query("DELETE FROM `sessions` WHERE `expires` < $time");
 		return true;
 	}
 

@@ -17,7 +17,6 @@
 //Paths
 define('DS', DIRECTORY_SEPARATOR);
 define('REALROOT', dirname(__FILE__) . DS);
-define('DATAROOT', DS . '..' . DS . 'zMKsl29HstPbvo4UaAm2qJ89' . DS);
 define('NIMBUS_DIR', REALROOT . 'nimbus' . DS);
 define('DATA_DIR', DS . '..' . DS . '.nimbus' . DS);
 define('PUBLIC_DIR', REALROOT . 'public' . DS);

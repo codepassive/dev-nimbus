@@ -77,6 +77,8 @@ class Cloud {
 		date_default_timezone_set($this->config->timezone);
 		//Create the request class
 		$this->_request();
+		//Create the session
+		$this->session = new Session();
 	}
 
 	/**
@@ -86,7 +88,6 @@ class Cloud {
 	 */
 	public function init(){
 		//Start the session
-		$this->session = new Session();
 		$this->session->start();
 		//Load shell
 		Loader::shell('shell');
