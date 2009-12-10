@@ -84,11 +84,7 @@ $app->benchmark('app', STOP, NIMBUS_DEBUG);
 
 echo '<pre>';
 $user = new User();
-if ($user->login('admin','forward')){
-	echo "logged in\n";
-} else {
-	echo "invalid\n";
-}
+//$user->login('admin','forward');
 print_r($user);
 
 ?>

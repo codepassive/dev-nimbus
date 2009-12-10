@@ -41,7 +41,7 @@ class User extends Cloud {
 	 *
 	 * @access	Public
 	 */
-	protected $__information = array();
+	protected $__information;
 
 	/**
 	 * The user's meta data
@@ -78,6 +78,12 @@ class User extends Cloud {
 	 */
 	public function __construct(){
 		parent::__construct();
+		if ($this->isLoggedIn()) {
+			$this->__information = (isset($this->__information->id)) ? $this->__information: $this->session->get('user-information');
+			$this->id = $this->__information->account_id;
+			$this->meta();
+			$this->personal();
+		}
 	}
 
 	/**
@@ -86,9 +92,9 @@ class User extends Cloud {
 	 * @access	Public
 	 */
 	public function current($id){
-		$this->__information = (isset($this->__information['id'])) ? $this->__information: $this->session->get('user-information');
-		if (isset($this->__information[$id])) {
-			return $this->__information[$id];
+		$this->__information = (isset($this->__information->id)) ? $this->__information: $this->session->get('user-information');
+		if (isset($this->__information->$id)) {
+			return $this->__information->$id;
 		}
 		return null;
 	}
@@ -101,6 +107,7 @@ class User extends Cloud {
 	 * @params	String $password the password of the user
 	 */
 	public function login($username, $password){
+		$this->logout();
 		$password = generatePassword($password);
 		$result = $this->db->select("username='$username' AND password='$password'", null, 'accounts');
 		$this->__setCurrentUser($result[0]['account_id']);
@@ -112,8 +119,7 @@ class User extends Cloud {
 	 *
 	 * @access	Public
 	 */
-	public function logout($id){
-		$this->session->get('user-information');
+	public function logout(){
 		//Reset the class properties
 		$this->id = $this->username = $this->__information = $this->_meta = $this->_personal = null;
 		$this->session->regenerateID();
@@ -126,6 +132,8 @@ class User extends Cloud {
 	 * @access	Public
 	 */
 	public function register(){
+		$meta = array();
+		$personal = array();
 		$default = array(
 				'username' => '',
 	            'password' => '',
@@ -151,6 +159,31 @@ class User extends Cloud {
 	            'window' => 'a:0:{}',
 	            'shortcuts' => 1
 			);
+		//Insert the User
+		$username = $this->request->post['username'];
+		$password = generatePassword($this->request->post['password']);
+		$created = time();
+		$this->db->query("INSERT INTO accounts(`username`, `password`, `created`, `online`) VALUES('$username', '$password', '$created', 0)");
+		$id = $this->db->insertID;
+		//Go through the request
+		foreach ($this->default as $default) {
+			if (isset($this->request->post['meta_' . $default])) {
+				$meta[$default] = $this->request->post['meta_' . $default];
+			}
+			if (isset($this->request->post['personal_' . $default])) {
+				$personal[$default] = $this->request->post['personal_' . $default];
+			}
+		}
+		//Meta
+		foreach ($meta as $m => $v) {
+			$this->db->query("INSERT INTO meta(`meta_name`, `meta_value`, `meta_owner`, `meta_table`) VALUES('$m', '$v', '$id', 'accounts')");
+		}
+		//Personal
+		foreach ($personal as $p => $v) {
+			$this->db->query("INSERT INTO personalize(`user_id`, `option_name`, `option_value`) VALUES($id, '$p', '$v')");
+		}
+		//return the ID
+		return $id;
 	}
 
 	/**
@@ -160,13 +193,22 @@ class User extends Cloud {
 	 * @params	Integer $id the ID of the user
 	 */
 	protected function __setCurrentUser($id){
+		$this->__information = new stdClass();
 		$result = $this->db->select("account_id=$id", null, 'accounts');
 		//Delegate the properties
 		$this->id = $id;
 		$this->username = $result[0]['username'];
 		//Assign to the information
-		$this->__information = array_merge($result[0], $this->meta(), $this->personal());
+		foreach ($result[0] as $n => $v) {
+			$this->__information->$n = $v;
+		}
+		$this->meta();
+		$this->personal();
+		define('CURRENT_USER_ID', $this->id);
+		unset($this->__information->password);
 		$this->session->set('user-information', $this->__information);
+		//Set a cookie to know that a session is active
+		setcookie('_nimbus_user', 1, time() + config('security'));
 		return true;
 	}
 
@@ -174,9 +216,23 @@ class User extends Cloud {
 	 * Checks against the User ACL if allowed to access an object or not
 	 *
 	 * @access	Public
+	 * @param	String $object the handle name to an object
 	 */
 	public function isAllowed($object){
-		return true;
+		$result = $this->db->select("SELECT * FROM accounts as u,acl as a WHERE u.account_id=a.accessor_id AND a.resource_handle='$object'");
+		if ($result) {
+			return ($result[0]['allow'] == 1);
+		}
+		return false;
+	}
+
+	/**
+	 * Checks if a user is logged in
+	 *
+	 * @access	Public
+	 */
+	public function isLoggedIn(){
+		return (isset($_COOKIE['_nimbus_user']) && $this->session->get('user-information'));
 	}
 
 	/**
@@ -185,15 +241,14 @@ class User extends Cloud {
 	 * @access	Public
 	 */
 	public function meta(){
-		$meta = array();
 		$result = $this->db->select("SELECT * FROM accounts as u,meta as m WHERE u.account_id=m.meta_owner AND m.meta_table='accounts' AND u.account_id=" . $this->id);
 		if ($result) {
 			foreach ($result as $r) {
-				$meta[$r['meta_name']] = $r['meta_value'];
+				$this->__information->{$r['meta_name']} = $this->_meta[$r['meta_name']] = $r['meta_value'];
 			}
 		}
 		//Return the metadata
-		return $this->_meta = $meta;
+		return $this->_meta;
 	}
 
 	/**
@@ -202,15 +257,14 @@ class User extends Cloud {
 	 * @access	Public
 	 */
 	public function personal(){
-		$personal = array();
 		$result = $this->db->select("SELECT * FROM accounts as u,personalize as p WHERE u.account_id=p.user_id AND u.account_id=" . $this->id);
 		if ($result) {
 			foreach ($result as $r) {
-				$personal[$r['option_name']] = $r['option_value'];
+				$this->__information->{$r['option_name']} = $this->_personal[$r['option_name']] = $r['option_value'];
 			}
 		}
 		//Return the personal options
-		return $this->_personal = $personal;
+		return $this->_personal;
 	}
 
 }

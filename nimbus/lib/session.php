@@ -224,7 +224,9 @@ class Session {
 		$this->_session_data = null;		
 		//Fetch session data from the selected database
 		$time = time();
-		$result = $this->__db->select("SELECT `session_data` FROM `sessions` WHERE `session_id` = '$id' AND `expires` > $time");
+		$ip = $_SERVER['REMOTE_ADDR'];
+		$useragent = $_SERVER['HTTP_USER_AGENT'];
+		$result = $this->__db->select("SELECT `session_data` FROM `sessions` WHERE `session_id` = '$id' AND `expires` > $time AND `ip` = '$ip' AND `useragent` = '$useragent'");
 		if ($result) {
 			$this->_session_data = $result[0]['session_data'];
 		}
@@ -243,7 +245,8 @@ class Session {
 		$time = time() + $this->lifetime;
 		$ip = $_SERVER['REMOTE_ADDR'];
 		$useragent = $_SERVER['HTTP_USER_AGENT'];
-		$this->__db->query("INSERT INTO `sessions`(`session_id`, `session_data`, `expires`, `ip`, `useragent`) VALUES('$id', '$data', $time, '$ip', '$useragent')");
+		$uid = (defined('CURRENT_USER_ID')) ? CURRENT_USER_ID: 0;
+		$this->__db->query("INSERT INTO `sessions`(`session_id`, `session_data`, `expires`, `user_id`, `ip`, `useragent`) VALUES('$id', '$data', $time, $uid, '$ip', '$useragent')");
 		return true;
 	}
 
@@ -255,9 +258,7 @@ class Session {
 	 */
 	public function destroy($id) {
 		//Build query
-		$ip = $_SERVER['REMOTE_ADDR'];
-		$useragent = $_SERVER['HTTP_USER_AGENT'];
-		$this->__db->query("DELETE FROM `sessions` WHERE `session_id` =	'$id' AND `ip` = '$ip' AND `useragent` = '$useragent'");
+		$this->__db->query("DELETE FROM `sessions` WHERE `session_id` =	'$id'");
 		return true;
 	}
 
