@@ -26,6 +26,11 @@
 define('START', 'start');
 define('STOP', 'stop');
 
+//Security Level
+define('SECURITY_HIGH', 900);
+define('SECURITY_NORMAL', 1800);
+define('SECURITY_LOW', 3600);
+
 //Log Files
 define('ERROR_LOG_FILE', 'logs' . DS . 'error');
 define('DEBUG_LOG_FILE', 'logs' . DS . 'debug');

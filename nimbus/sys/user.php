@@ -58,20 +58,6 @@ class User extends Cloud {
 	private $_personal = array();
 
 	/**
-	 * Singleton function
-	 *
-	 * @access	Public
-	 * @return Object instance of the object
-	 */
-	public static function getInstance(){
-		static $_user;
-		if (!is_object($_user)) {
-			$_user = new User();
-		}
-		return $_user;
-	}
-
-	/**
 	 * Class constructor
 	 *
 	 * @access	Public

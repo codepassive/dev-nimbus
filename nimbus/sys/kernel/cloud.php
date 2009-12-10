@@ -93,6 +93,8 @@ class Cloud {
 		Loader::shell('shell');
 		//Load the token and user manager
 		Loader::system(array('token', 'user'));
+		//Clear up the token store
+		Token::cleanUp();
 		//load the interfaces
 		Loader::kernel(array('services', 'application'));
 		//Load the initial services
