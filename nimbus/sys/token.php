@@ -41,7 +41,7 @@ class Token extends Cloud {
 	 *
 	 * @access	Public
 	 */
-	public function __construct($generate = true){
+	public function __construct($generate = false){
 		parent::__construct();
 		if ($generate == true) {
 			Token::generate();

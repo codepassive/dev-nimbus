@@ -62,7 +62,7 @@ if ($app->beingCalled()) {
 			new Resource();
 		break;
 		case "token": //Generate an access token
-			new Token();
+			new Token(true);
 		break;
 		case "rpc": //RPC capabilities
 			Loader::system('rpc');

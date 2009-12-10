@@ -20,9 +20,6 @@
  * @category:   		Session
  * @source:			http://www.devshed.com/c/a/PHP/Storing-PHP-Sessions-in-a-Database/
  */
-/**
- * TODO#00002 - DB Support for sessions
- */
 class Session {
 
 	/**
