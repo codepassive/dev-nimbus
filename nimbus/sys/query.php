@@ -28,16 +28,25 @@ class Query extends Cloud {
 	 * @access	Public
 	 */
 	public function __construct(){
+		$result = false;
 		//Check if a token is attached to a request
-		if (isset($this->request->items['token'])) {
+		if (isset($this->request->get['token']) && !isset($this->request->post['query'])) {
 			$token = new Token();
 			//Get the request from the token supplied
 			$request = $token->getRequest($this->request->items['token']);
 			if ($request['query']) {
 				//Return the db query
-				return $this->db->query($request['query']);
+				$result = $this->db->query($request['query']);
 			}
+		} else {
+			$query = $this->request->items['query'];
+			Token::generate(array(
+							'query' => $query
+						));
+			return true;
 		}
+		echo json_encode($result);
+		return true;
 	}
 
 }

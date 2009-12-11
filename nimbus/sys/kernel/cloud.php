@@ -61,6 +61,8 @@ class Cloud {
 	public function __construct(){
 		global $language;
 		$_this = Registry::getInstance();
+		//load the hook manager
+		Loader::kernel('hooks');
 		//Include and instantiate the library files
 		Loader::library(array('session', 'dbo'));
 		//Initialize the Database Layer

@@ -14,4 +14,30 @@
  * @license:		GNU/GPLv3, see LICENSE
  * @version:		1.0.0 Alpha
  */
+
+/**
+ * RPC class that exposes public methods
+ *
+ * @category:   		RPC
+ */
+class RPC extends Cloud {
+
+	/**
+	 * Class constructor
+	 *
+	 * @access	Public
+	 */
+	public function __construct(){
+	
+	}
+	
+	public function expose(){
+	
+	}
+	
+	public function call(){
+	
+	}
+
+}
 ?>
