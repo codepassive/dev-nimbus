@@ -65,9 +65,7 @@ if ($app->beingCalled()) {
 			new Token(true);
 		break;
 		case "rpc": //RPC capabilities
-			Loader::system('rpc');
-			$rpc = new RPC();
-			$rpc->listen();
+			$app->RPC->listen();
 		break;
 		case "data": //Raw SQL Query for JS uses, of course, checks for Access Token to prevent abuse.
 			Loader::system('query');

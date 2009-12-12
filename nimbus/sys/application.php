@@ -104,7 +104,7 @@ class Application extends API {
 						$i = 0;
 						foreach ($_GET as $param) {
 							if ($i > 1) {
-								$params[] = $param
+								$params[] = $param;
 							}
 							$i++;
 						}

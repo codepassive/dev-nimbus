@@ -94,7 +94,9 @@ class Cloud {
 		//Load shell
 		Loader::shell('shell');
 		//Load the token and user manager
-		Loader::system(array('token', 'user'));
+		Loader::system(array('rpc', 'token', 'user'));
+		//Create the RPC property
+		$this->RPC = new RPC();
 		//Clear up the token store
 		Token::cleanUp();
 		//load the interfaces

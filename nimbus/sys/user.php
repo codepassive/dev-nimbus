@@ -94,10 +94,28 @@ class User extends Cloud {
 	 */
 	public function login($username, $password){
 		$this->logout();
+		$result = $this->authenticate($username, $password, true);
+		$this->__setCurrentUser($result['account_id']);
+		return ($result) ? true: false;
+	}
+
+	/**
+	 * Authenticate a username and password from the user database
+	 *
+	 * @access	Public
+	 * @params	String $username the username of the user
+	 * @params	String $password the password of the user
+	 */
+	public function authenticate($username, $password, $return = false){
 		$password = generatePassword($password);
 		$result = $this->db->select("username='$username' AND password='$password'", null, 'accounts');
-		$this->__setCurrentUser($result[0]['account_id']);
-		return ($result) ? true: false;
+		if ($result) {
+			if ($return == true) {
+				return $result[0];
+			}
+			return true;
+		}
+		return false;
 	}
 
 	/**

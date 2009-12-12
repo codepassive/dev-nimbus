@@ -31,6 +31,11 @@ define('SECURITY_HIGH', 900);
 define('SECURITY_NORMAL', 1800);
 define('SECURITY_LOW', 3600);
 
+//RPC Definitions
+define('RPC_METHOD_REST', 'REST');
+define('RPC_METHOD_SOAP', 'SOAP');
+define('RPC_METHOD_XMLRPC', 'XMLRPC');
+
 //Log Files
 define('ERROR_LOG_FILE', 'logs' . DS . 'error');
 define('DEBUG_LOG_FILE', 'logs' . DS . 'debug');

@@ -23,4 +23,5 @@ TODO#	Description
 00004 - Path Declaration on Cloud.php#75 seems off. Find a way to put it into proper scope
 00005 - Language Getter. language($id). not using global all the time
 00006 - Note that $this->request is not visible in application classes
+00007 - Store Header information from a REST response and more Proper CURL handling
 ---------------------------------------------------
