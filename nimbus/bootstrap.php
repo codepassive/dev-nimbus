@@ -15,8 +15,10 @@
  */
 
 //Include common language files
-require_once LANGUAGE_DIR . DEFAULT_LANGUAGE . DS . 'index.php';
- 
+(file_exists(LANGUAGE_DIR . DEFAULT_LANGUAGE . DS . 'index.php'))
+	? require_once LANGUAGE_DIR . DEFAULT_LANGUAGE . DS . 'index.php':
+	  require_once SYSTEM_DIR . 'shell' . DS . 'language' . DS . 'index.php';
+
 //Compatibility checks
 require_once SYSTEM_DIR . 'common.php';
 checkCompatibility();

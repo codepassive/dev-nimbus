@@ -34,6 +34,7 @@ $language['error_005B'] = 'XMLRPC support not detected. XMLRPC will be used by m
 $language['error_006B'] = 'ZIP support not detected. File archiving will not be available.';
 $language['error_007B'] = 'ZLIB support not detected. GZIP comperssion will not be available.';
 $language['error_008B'] = 'Native Mail function disabled.';
+$language['error_009B'] = 'CURL support not detected. CURL requests will not be available.';
 //00xC - Loader
 $language['error_000C'] = 'Loader cannot find the file %s. Make sure you are loading the correct file';
 //00xD - Database

@@ -101,6 +101,8 @@ class RPCClient extends RPC {
 		if ($return) {
 			return ($unserialize == true) ? unserialize($return): $return;
 		}
+		//Set the proper Header
+		header("HTTP/1.0 400 Bad Request");
 		return false;
 	}
 
@@ -116,6 +118,8 @@ class RPCClient extends RPC {
  * The result of the request will be fetched through here, unserialized or not
  * $client->request();
  *
+ * For the REST method, the controller and action must be specified in the URI string
+ * and the action's parameters should be declared as POST
  */
 
 ?>

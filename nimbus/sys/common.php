@@ -72,12 +72,15 @@ function checkCompatibility(){
 	if (!function_exists('mail')) {
 		$missing[] = array($language['compat_error_008B'], '008B');
 	}
+	if (!extension_loaded('curl')) {
+		$missing[] = array($language['compat_error_009B'], '009B');
+	}
 
 	/**
 	 * End the application when an incompatibility has been determined
 	 */
 	if (!empty($incompatibilities)) {
-		include SYSTEM_DIR . 'shell' . DS . 'common' . DS . 'compatibility.html';
+		include SYSTEM_DIR . 'shell' . DS . 'view' . DS . 'compatibility.html';
 		exit;
 	}
 }
@@ -138,7 +141,7 @@ function generatePassword($password){
  * Get the request values
  */
 function request($name){
-	$user = User::getInstance();
+	$user = Cloud::getInstance();
 	return (isset($user->request->items[$name])) ? $user->request->items[$name]: false;
 }
 
@@ -146,7 +149,7 @@ function request($name){
  * Get the configuration Value of the specified name
  */
 function config($name){
-	$user = User::getInstance();
+	$user = Cloud::getInstance();
 	return (isset($user->config->$name)) ? $user->config->$name: false;
 }
 

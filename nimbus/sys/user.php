@@ -111,7 +111,7 @@ class User extends Cloud {
 		$result = $this->db->select("username='$username' AND password='$password'", null, 'accounts');
 		if ($result) {
 			if ($return == true) {
-				return $result[0];
+				return $result[0]['account_id'];
 			}
 			return true;
 		}
@@ -222,8 +222,9 @@ class User extends Cloud {
 	 * @access	Public
 	 * @param	String $object the handle name to an object
 	 */
-	public function isAllowed($object){
-		$result = $this->db->select("SELECT * FROM accounts as u,acl as a WHERE u.account_id=a.accessor_id AND a.resource_handle='$object'");
+	public function isAllowed($object, $id = null){
+		$id = ($id != null) ? $id: 'u.account_id';
+		$result = $this->db->select("SELECT * FROM accounts as u,acl as a WHERE $id=a.accessor_id AND a.resource_handle='$object'");
 		if ($result) {
 			return ($result[0]['allow'] == 1);
 		}

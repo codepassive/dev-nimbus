@@ -43,7 +43,7 @@ class Nimbus extends Cloud {
 		$shell = new Shell();
 		$config = $shell->apply($config);
 		//Include the base HTML file
-		include SYSTEM_DIR . 'shell' . DS . 'common' . DS . 'index.html';
+		include SYSTEM_DIR . 'shell' . DS . 'view' . DS . 'index.html';
 	}
 
 	/**

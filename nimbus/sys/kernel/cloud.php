@@ -45,7 +45,7 @@ class Cloud {
 						'services' => array(),
 						'modules' => array(),
 					);
-	
+
 	/**
 	 * Variable that holds the benchmarks for the system
 	 *
@@ -53,6 +53,20 @@ class Cloud {
 	 */
 	protected $__benchmarks;
 
+	/**
+	 * Singleton function
+	 *
+	 * @access	public
+	 * @return Object instance of the object
+	 */
+	public static function getInstance(){
+		static $_super;
+		if (!is_object($_super)){
+			$_super = new Cloud();
+		}
+		return $_super;
+	}
+	
 	/**
 	 * Class constructor
 	 *

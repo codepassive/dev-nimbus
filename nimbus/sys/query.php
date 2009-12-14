@@ -28,6 +28,10 @@ class Query extends Cloud {
 	 * @access	Public
 	 */
 	public function __construct(){
+		parent::__construct();
+		//Set the proper Header
+		header("HTTP/1.0 200 OK");
+		header('Content-Type: text/javascript');
 		$result = false;
 		//Check if a token is attached to a request
 		if (isset($this->request->get['token']) && !isset($this->request->post['query'])) {
@@ -38,7 +42,8 @@ class Query extends Cloud {
 				//Return the db query
 				$result = $this->db->query($request['query']);
 			}
-		} else {
+		} 
+		if (isset($this->request->get['query'])) {
 			$query = $this->request->items['query'];
 			Token::generate(array(
 							'query' => $query
