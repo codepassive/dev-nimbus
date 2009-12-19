@@ -114,7 +114,7 @@ class Cloud {
 		//Clear up the token store
 		Token::cleanUp();
 		//load the interfaces
-		Loader::kernel(array('services', 'application'));
+		Loader::kernel(array('services', 'application', 'elements'));
 		//Load the initial services
 		$this->service(array_merge(array('security'), unserialize($this->config->init_services)));
 		//Load the extensions

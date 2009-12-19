@@ -1,3 +1,4 @@
+<?php
 /** 
  * Nimbus - Manage, Share & Collaborate
  *
@@ -8,28 +9,23 @@
  * see LICENSE for more Copyright goodness.
  *
  * @package:		Nimbus
- * @subpackage:		Nimbus_styles
+ * @subpackage:	Nimbus_api
  * @copyright:		2009-2010, Nimbus Dev Group, All rights reserved.
- * @license:			GNU/GPLv3, see LICENSE
+ * @license:		GNU/GPLv3, see LICENSE
  * @version:		1.0.0 Alpha
- */
-/**
- * These include the different widgets or elements seen in a desktop.
  */
 
 /**
- * Progressbar
+ * Element Interface
+ *
+ * @category:   		API/Elements
  */
-.progressbar {
-	border: 1px solid rgba(255, 255, 255, 0.5);
-	margin: 2px;
+interface ElementInterface {
+
+	/**
+	 * Render the element onto the browser
+	 */
+	public function render();
+
 }
-.progressbar .inner{
-	background: #555753;
-	border: 1px solid rgba(0, 0, 0, 0.5);
-}
-.progressbar .inner .bar {
-	background: #8ae234;
-	width: 0%;
-	height: 4px;
-}
+?>

@@ -1,3 +1,4 @@
+<?php unset($this); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html lang="<?php __('_current'); ?>" xmlns="http://www.w3.org/1999/xhtml">
@@ -11,7 +12,10 @@
   </head>
   <body>
 	<noscript><div id="noscript-container"><p><strong><?php __('critical_notice'); ?></strong>: <span><?php __('javascript_disabled'); ?></span></p></div></noscript>
-	<div id="loading-container"><p><strong><?php __('loading'); ?>...</strong></p></div>
+	<div id="loading-container">
+		<p><strong><?php __('loading'); ?>...</strong></p>
+		<?php $api->progressbar(); ?>
+	</div>
 	<?php screen(); ?>
 	<div class="screen" id="screen-workspace"></div>
 	<?php scripts('footer'); ?>

@@ -40,8 +40,12 @@ class Nimbus extends Cloud {
 	public function canvas(){
 		//Delegate the configuration class
 		$config = $this->config;
+		//Apply the Configuration store onto a template global var
 		$shell = new Shell();
 		$config = $shell->apply($config);
+		//Delegate the API to a template global var
+		$api = new API();
+		$api = $api->delegate();
 		//Include the base HTML file
 		include SYSTEM_DIR . 'shell' . DS . 'view' . DS . 'index.html';
 	}

@@ -36,10 +36,52 @@ class API extends Cloud {
 	 */
 	public function __construct(){
 		parent::__construct();
-
 		//Delegate the classes to usable properties
 		$this->shell = Shell::getInstance();
+	}
 
+	/**
+	 * Delegate the API $this to a variable
+	 *
+	 * @access	Public
+	 */
+	public function delegate(){
+		unset($this->db, $this->session);
+		//Return the clean $this variable
+		return $this;
+	}
+
+	/**
+	 * Get the API element object
+	 *
+	 * @access:	Public
+	 * @param:	String $id the identifier of the template file
+	 * @param:	Array $options array of options for the element
+	 */
+	function element($id, $options = array()){
+		//Include the Elements Base class
+		include SYSTEM_DIR . 'kernel' . DS . 'api' . DS . 'elements.php';		
+		//Get the class file
+		$file = SYSTEM_DIR . 'kernel' . DS . 'api' . DS . 'elements' . DS . $id . '.php';
+		if (file_exists($file)){
+			include $file;
+			//Create a new Element instance and render it
+			$element = new $id($options);
+			$element->render();
+			//Return the $element for future use
+			return $element;
+		}
+		return false;
+	}
+
+	/**
+	 * Get the Progressbar element
+	 *
+	 * @access:	Public
+	 * @param:	Array $options array of options for the element
+	 */
+	function progressbar($options = array()){
+		$this->element('progressbar', $options);
 	}
 
 }

@@ -47,6 +47,11 @@ class Application extends API {
 	 * Output of the application
 	 */
 	public $output;
+	
+	/**
+	 * Array of exposed functions for RPC usage
+	 */
+	public $expose = array();
 
 	/**
 	 * Class constructor
