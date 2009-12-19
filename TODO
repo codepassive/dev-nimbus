@@ -24,4 +24,5 @@ TODO#	Description
 00005 - Language Getter. language($id). not using global all the time
 00006 - Note that $this->request is not visible in application classes
 00007 - Store Header information from a REST response and more Proper CURL handling
+00008 - 100% width is not 100% on the progressbar element in animate context. on progressbar::change
 ---------------------------------------------------

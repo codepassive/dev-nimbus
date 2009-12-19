@@ -1,5 +1,5 @@
-<div class="progressbar <?php implode(' ', $this->option('classes')); ?>" id="<?php echo $this->option('id'); ?>">
+<div class="progressbar <?php $this->classes(); ?>" id="<?php $this->option('id'); ?>">
 	<div class="inner">
-		<div class="bar" style="width:<?php echo $this->option('width'); ?>%;"></div>
+		<div class="bar" style="width:<?php $this->option('width'); ?>%;"></div>
 	</div>
 </div>

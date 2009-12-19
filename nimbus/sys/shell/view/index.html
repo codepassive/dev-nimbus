@@ -12,10 +12,7 @@
   </head>
   <body>
 	<noscript><div id="noscript-container"><p><strong><?php __('critical_notice'); ?></strong>: <span><?php __('javascript_disabled'); ?></span></p></div></noscript>
-	<div id="loading-container">
-		<p><strong><?php __('loading'); ?>...</strong></p>
-		<?php $api->progressbar(); ?>
-	</div>
+	<div id="loading-container"><p><strong><?php __('loading'); ?>...</strong></p><?php $api->progressbar(); ?></div>
 	<?php screen(); ?>
 	<div class="screen" id="screen-workspace"></div>
 	<?php scripts('footer'); ?>

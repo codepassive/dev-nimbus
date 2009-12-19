@@ -113,14 +113,14 @@ class Cloud {
 		$this->RPC = new RPC();
 		//Clear up the token store
 		Token::cleanUp();
+		//load the API
+		Loader::kernel(array('api', 'elements'));
 		//load the interfaces
-		Loader::kernel(array('services', 'application', 'elements'));
+		Loader::interfaces(array('services', 'application', 'elements'));
 		//Load the initial services
 		$this->service(array_merge(array('security'), unserialize($this->config->init_services)));
 		//Load the extensions
 		$this->module(unserialize($this->config->init_modules));
-		//load the API
-		Loader::kernel('api');
 	}
 
 	/**

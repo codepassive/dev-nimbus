@@ -29,7 +29,7 @@ class progressbar extends Elements implements ElementInterface {
 	 */
 	public function __construct($options = array()){
 		parent::__construct(array(
-						'id' => generateHash(microtime()),
+						'id' => 'progressbar-' . generateHash(microtime()),
 						'classes' => array(),
 						'width' => 0
 					), $options);
@@ -45,6 +45,20 @@ class progressbar extends Elements implements ElementInterface {
 		$file = SKIN_DIR . 'common' . DS . 'templates' . DS. 'progressbar.html';
 		//Include the file
 		include $file;
+	}
+
+	/**
+	 * EXPERIMENTAL! Change the width of the progressbar to a specific percent in width
+	 *
+	 * @access:	Public
+	 * @params:	Integer $percent the percent the progressbar should change to
+	 * @params:	String $id the ID of the progressbar. Optional
+	 *
+	 */
+	public function change($percent = 0, $id = null){
+		//TODO#00008: 100% width is not 100% on the progressbar element in animate context
+		$id = ($id == null) ? $this->ID: $id;
+		$this->shell->javascript('footer', "var pbwidth = $('#{$id}').width();pbwidth = ((pbwidth * {$percent}) / 100) - 2;$('#{$id} .inner .bar').animate({width: pbwidth + 'px'}, 200);");
 	}
 
 }

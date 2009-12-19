@@ -58,9 +58,7 @@ class API extends Cloud {
 	 * @param:	String $id the identifier of the template file
 	 * @param:	Array $options array of options for the element
 	 */
-	function element($id, $options = array()){
-		//Include the Elements Base class
-		include SYSTEM_DIR . 'kernel' . DS . 'api' . DS . 'elements.php';		
+	public function element($id, $options = array()){	
 		//Get the class file
 		$file = SYSTEM_DIR . 'kernel' . DS . 'api' . DS . 'elements' . DS . $id . '.php';
 		if (file_exists($file)){
@@ -80,8 +78,8 @@ class API extends Cloud {
 	 * @access:	Public
 	 * @param:	Array $options array of options for the element
 	 */
-	function progressbar($options = array()){
-		$this->element('progressbar', $options);
+	public function progressbar($options = array()){
+		return $this->element('progressbar', $options);
 	}
 
 }

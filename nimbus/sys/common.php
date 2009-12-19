@@ -115,8 +115,11 @@ function __($name, $replace = null, $echo = true) {
  * @poram String $url the url to be parsed
  */
 function is_url($url){
-    $urlregex = "^(https?|ftp)\:\/\/([a-z0-9+!*(),;?&=\$_.-]+(\:[a-z0-9+!*(),;?&=\$_.-]+)?@)?[a-z0-9+\$_-]+(\.[a-z0-9+\$_-]+)*(\:[0-9]{2,5})?(\/([a-z0-9+\$_-]\.?)+)*\/?(\?[a-z+&\$_.-][a-z0-9;:@/&%=+\$_.-]*)?(#[a-z_.-][a-z0-9+\$_.-]*)?\$";
-	return (eregi($urlregex, $url));
+	$parts = parse_url($url);
+	if (!isset($parts) || !isset($parts['host']) || !empty($parts) || !empty($parts['host'])) {
+		return false;
+	}
+	return true;
 }
 
 /**
