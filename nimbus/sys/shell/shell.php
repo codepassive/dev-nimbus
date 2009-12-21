@@ -91,11 +91,8 @@ class Shell extends Cloud {
 				);
 		//Script Location IDs
 		$this->__script['header'] = array(
-								array('content' => "var SERVER_URL = '" . $this->config->appurl . "';"),
+								array('content' => "var SERVER_URL = '" . $this->config->appurl . "';var BASE_SCRIPTS = " . json_encode(array($this->__script['jquery-ui'], $this->__script['jquery-interface'], $this->__script['behaviors'])) . ";"),
 								$this->__script['jquery'], //Initially we will include the base javascript class
-								$this->__script['jquery-ui'],
-								$this->__script['jquery-interface'],
-								$this->__script['behaviors'],
 								$this->__script['nimbus']
 							);
 		$this->__script['footer'] = array();

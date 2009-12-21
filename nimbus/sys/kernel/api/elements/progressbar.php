@@ -58,7 +58,7 @@ class progressbar extends Elements implements ElementInterface {
 	public function change($percent = 0, $id = null){
 		//TODO#00008: 100% width is not 100% on the progressbar element in animate context
 		$id = ($id == null) ? $this->ID: $id;
-		$this->shell->javascript('footer', "var pbwidth = $('#{$id}').width();pbwidth = ((pbwidth * {$percent}) / 100) - 2;$('#{$id} .inner .bar').animate({width: pbwidth + 'px'}, 200);");
+		$this->shell->javascript('footer', "var progressbar = new Progressbar({id:'$id'});progressbar.change($percent);");
 	}
 
 }

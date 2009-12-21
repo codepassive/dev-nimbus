@@ -12,3 +12,14 @@
  * @license:		GNU/GPLv3, see LICENSE
  * @version:		1.0.0 Alpha
  */
+/**
+ * The progressbar element
+ */
+var Progressbar = function(options){
+	this.id = options.id;
+	this.change = function(percent){
+		var width = $(this.id).width();
+		width = ((width * percent) / 100) - 2;
+		$(this.id + ' .inner .bar').animate({width: width + 'px'}, 200);
+	};
+}
