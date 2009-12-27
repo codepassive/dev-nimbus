@@ -56,12 +56,22 @@ class Token extends Cloud {
 	 */
 	public static function generate($request = null){
 		$_this = Token::getInstance();
+		echo $_this->_generate($request);
+	}
+
+	public static function create($request = null){
+		$_this = Token::getInstance();
+		return $_this->_generate($request);
+	}
+
+	private function _generate($request){
+		$_this = Token::getInstance();
 		$public = generateHash(microtime() . $_this->config->salt);
 		$private = md5($public);
 		$request = (is_array($request)) ? serialize($request): null;
 		$time = time() + SECURITY_HIGH;
 		$_this->db->query("INSERT INTO tokens(`public`, `private`, `request`, `expires`) VALUES('$public', '$private', '$request', $time)");
-		echo json_encode($public);
+		return json_encode($public);	
 	}
 
 	/**

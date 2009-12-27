@@ -46,4 +46,7 @@ $language['username'] = 'Username';
 $language['password'] = 'Password';
 $language['language'] = 'Language';
 
+//Startup
+$language['boot_stopped'] = 'Nimbus is not loading normally<br/>Please check your connection or run the <a href="http://diagnose.nimbusinitiative.org/" target="_new">Nimbus diagnostic tool</a>'
+
 ?>

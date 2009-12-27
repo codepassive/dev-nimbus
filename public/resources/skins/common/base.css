@@ -17,3 +17,10 @@
  * This file contains constant classes used throughout the system. not
  * application or system specific.
  */
+.screen {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+}

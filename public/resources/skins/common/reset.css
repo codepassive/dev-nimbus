@@ -36,7 +36,7 @@ html {
 	font-size: 1em;
 }
 body {
-	background: #2e3436; /* This is the default background */
+	background: #d3d7cf url('../../images/wallpapers/default.png') center scroll; /* This is the default background */
 	line-height: 1.5;
 	font-family: 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Tahoma, Arial, Helvetica, Sans-serif;
 	font-size: 62.5%;
@@ -56,7 +56,7 @@ table, td, th {
 	vertical-align: middle;
 }
 a {
-	color: #2e3436;
+	color: #d3d7cf;
 	text-decoration: none;
 }
 a img {

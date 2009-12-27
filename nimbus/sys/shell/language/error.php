@@ -19,6 +19,10 @@
  * errors are in english to avoid confusion
  */
 $language['error_log'] = '%s on %s:%d <strong>[%d]</strong>';
+//Dialog Window Titles
+$language['warning_title'] = 'Warning! Nimbus needs your Confirmation';
+$language['error_title'] = 'We are sorry. Nimbus encountered an Error';
+$language['information_title'] = 'Notice! Nimbus needs your attention';
 //00xA - Requirements
 $language['error_000A'] = 'Nimbus requires PHP 5.3 or later to run properly.';
 $language['error_001A'] = 'Your PHP configuration should support PDO/Sqlite.';

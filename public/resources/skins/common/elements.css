@@ -16,7 +16,105 @@
 /**
  * These include the different widgets or elements seen in a desktop.
  */
+/**
+ * Modal
+ */
+#screen-modal {
+	background: rgba(0, 0, 0, 0.6);
+	z-index: 900;
+}
 
+/**
+ * Window
+ */
+.window {
+	position: absolute;
+	top: 2%;
+	left: 2%;
+	border: 1px solid rgba(46, 52, 54, 1);
+	background: rgba(255, 255, 255, 0.5);
+	font-size: 11px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-khtml-border-radius: 6px;
+	-moz-box-shadow: 0 0 16px #000;
+	-webkit-box-shadow: 0 0 16px #000;
+    -moz-user-select: -moz-none;
+}
+.window.modal {
+	z-index: 1000;
+}
+	.window .wrapper {
+		border: 1px solid rgba(255, 255, 255, 0.5);
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		-khtml-border-radius: 5px;
+	}
+	.window .titlebar {
+		
+	}
+		.window .titlebar .icon, .window .titlebar .title {
+			float: left;
+		}
+		.window .titlebar .icon {
+			/*width: 24px;
+			height: 24px;*/
+			margin-left: 6px;
+		}
+		.window .titlebar .title {
+			padding: 3px 6px;
+			text-shadow: 0 0 5px #ffffff;
+		}
+		.window .titlebar .actions {
+			float: right;
+		}
+	.window .outer {
+		clear: both;
+		margin: 4px;
+		border: 1px solid rgba(255, 255, 255, 0.5);
+	}
+	.window .inner {
+		border: 1px solid rgba(0, 0, 0, 0.5);
+		background: #ffffff;
+	}
+		.window .inner .content {
+			text-align: center;
+		}
+			.window .inner .content .message {
+				padding: 8px 0px;
+				margin: 8px;
+				cursor: text;
+				-moz-user-select: text;
+			}
+			.window .inner .content .message.information, .window .inner .content .message.error, .window .inner .content .message.warning {
+				text-align: left;
+				padding-left: 40px;
+			}
+			.window .inner .content .message.information {
+				background: url('../../images/icons/Tango/32/status/dialog-information.png') no-repeat left center scroll;
+			}
+			.window .inner .content .message.error {
+				background: url('../../images/icons/Tango/32/status/dialog-error.png') no-repeat left center scroll;
+			}
+			.window .inner .content .message.password {
+				background: url('../../images/icons/Tango/32/status/dialog-password.png') no-repeat left center scroll;
+			}
+			.window .inner .content .message.warning {
+				background: url('../../images/icons/Tango/32/status/dialog-warning.png') no-repeat left center scroll;
+			}
+		.window .inner .buttons {
+			border-top: 1px solid #ccd9ea;
+			background: #f1f5fb;
+			padding: 8px;
+			text-align: center;
+		}
+			.window .inner .buttons a {
+				color: #0066cc;
+			}
+			.window .inner .buttons a:hover {
+				text-decoration: underline;
+			}
+ 
 /**
  * Progressbar
  */
@@ -24,12 +122,12 @@
 	border: 1px solid rgba(255, 255, 255, 0.5);
 	margin: 2px;
 }
-.progressbar .inner{
-	background: #555753;
-	border: 1px solid rgba(0, 0, 0, 0.5);
-}
-.progressbar .inner .bar {
-	background: #8ae234;
-	width: 0%;
-	height: 4px;
-}
+	.progressbar .inner{
+		background: #555753;
+		border: 1px solid rgba(0, 0, 0, 0.5);
+	}
+		.progressbar .inner .bar {
+			background: #8ae234;
+			width: 0%;
+			height: 6px;
+		}

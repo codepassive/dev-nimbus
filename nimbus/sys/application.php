@@ -75,7 +75,7 @@ class Application extends API {
 		} else {
 			//Return a JSON code that permission check failed
 			global $language;
-			echo json_encode(array('error' => $language['error_000G'] . '#000G'));
+			$this->msgbox(array('text' => $language['error_000G'] . ' #000G', 'type' => 'error', 'title' => $language['error_title'], 'noChoice' => true));
 			exit();
 		}
 	}
@@ -118,7 +118,7 @@ class Application extends API {
 					echo $app->display();
 				} else {
 					global $language;
-					echo json_encode(array('message' => $language['error_000H']));
+					$this->msgbox(array('text' => $language['error_000H'], 'type' => 'error', 'title' => $language['error_title'], 'buttons' => array('OK')));
 				}
 			}
 			if (NIMBUS_DEBUG > 0) {
@@ -127,6 +127,64 @@ class Application extends API {
 			}
 			return false;
 		}
+	}
+
+	/**
+	 * This function loads shell pages for output in an application
+	 * 
+	 * @access	Public
+	 * @param	String $location the path of the shell file relative to the application directory
+	 */
+	public function view($location){
+		$location = APPLICATION_DIR . $this->name . DS . $location . '.php';
+		if (file_exists($location) && is_readable($location)) {
+			ob_start();
+			include $location;
+			$this->output .= 'var ' . $this->name . '_view = ' . json_encode(ob_get_contents()) . ";\n";
+			ob_end_clean();
+		} else {
+			global $language;
+			Log::write(ERROR_LOG_FILE, sprintf($language['error_001F'], $location));
+		}
+	}
+
+	/**
+	 * This function loads script files for Application use
+	 * 
+	 * @access	Public
+	 * @param	String $filename relative to the application directory
+	 */
+	public function script($file){
+		$this->output .= file_get_contents(APPLICATION_DIR . $this->name . DS . $file . '.js');
+	}
+
+	/**
+	 * Takes any variable and encodes it to JSON format
+	 * 
+	 * @access	Public
+	 * @param	String $input the variable to be encoded
+	 * @param	String $var the variable name
+	 */
+	public function json($input, $var = null){
+		if ($var) {
+			$this->output .= 'var ' . $this->name . '_' . $var . ' = ' . json_encode($input) . ";\n";
+		} else {
+			$this->output .= json_encode($input) . "\n";
+		}
+	}
+
+	/**
+	 * This function displays the application and initializes it
+	 * 
+	 * @access	Public
+	 */
+	public function display(){
+		header('Content-Type: text/javascript');
+		$this->script($this->name);
+		if (!request('action')) {
+			$this->output .= "\n" . $this->name . ".init();";
+		}
+		echo $this->output;
 	}
 
 }

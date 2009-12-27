@@ -48,7 +48,7 @@ class progressbar extends Elements implements ElementInterface {
 	}
 
 	/**
-	 * EXPERIMENTAL! Change the width of the progressbar to a specific percent in width
+	 * Change the width of the progressbar to a specific percent in width
 	 *
 	 * @access:	Public
 	 * @params:	Integer $percent the percent the progressbar should change to
@@ -56,7 +56,6 @@ class progressbar extends Elements implements ElementInterface {
 	 *
 	 */
 	public function change($percent = 0, $id = null){
-		//TODO#00008: 100% width is not 100% on the progressbar element in animate context
 		$id = ($id == null) ? $this->ID: $id;
 		$this->shell->javascript('footer', "var progressbar = new Progressbar({id:'$id'});progressbar.change($percent);");
 	}

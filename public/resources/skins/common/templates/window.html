@@ -1,0 +1,24 @@
+<div id="<?php $this->option('id'); ?>" class="window <?php $this->classes(); ?>">
+	<div class="wrapper">
+		<div class="titlebar">
+			<div class="icon"><?php echo ($this->flag('hasIcon') === true) ? '<img src="' . $this->flag('icon') . '" border="0" width="16" height="16" alt="' . $this->flag('title') . '" />': '';  ?></div>
+			<div class="title"><?php $this->option('title'); ?></div>
+			<div class="actions">
+				<?php echo ($this->flag('pinnable') === true) ? '<a href="javascript:void(0);" class="action action-pinnable"></a>': '';  ?>
+				<?php echo ($this->flag('minimizable') === true) ? '<a href="javascript:void(0);" class="action action-minimizable"></a>': '';  ?>
+				<?php echo ($this->flag('toggable') === true) ? '<a href="javascript:void(0);" class="action action-toggable"></a>': '';  ?>
+				<?php echo ($this->flag('closable') === true) ? '<a href="javascript:void(0);" class="action action-closable"></a>': '';  ?>
+			</div>
+		</div>
+		<div class="outer">
+			<div class="inner">
+				<div class="toolbars-top"><?php $this->toolbars('top'); ?></div>
+				<div class="content">
+					<?php $this->content(); ?>
+				</div>
+				<?php echo ($this->flag('buttons') === true) ? '<div class="buttons">' . $this->buttons() . '</div>': '';  ?>
+				<div class="toolbars-bottom"><?php $this->toolbars('bottom'); ?></div>
+			</div>
+		</div>
+	</div>
+</div>

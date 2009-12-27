@@ -91,6 +91,21 @@ class Elements extends API {
 	}
 
 	/**
+	 * Return an option for the element
+	 *
+	 * @access:	Public
+	 * @param:	String $id the option name
+	 * @param:	String $id the value of the option name
+	 */
+	public function flag($id, $value = null){
+		if ($value == null) {
+			return $this->__option($id);
+		} else {
+			$this->__option($id, $value);
+		}
+	}
+
+	/**
 	 * Get the classes for the Element
 	 *
 	 * @access:	Public

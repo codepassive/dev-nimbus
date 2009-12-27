@@ -67,6 +67,9 @@ if ($app->beingCalled()) {
 		case "rpc": //RPC capabilities
 			$app->RPC->listen();
 		break;
+		case "service": //Load services
+			$app->service($app->request->get['service']);
+		break;
 		case "data": //Raw SQL Query for JS uses, of course, checks for Access Token to prevent abuse
 			Loader::system('query');
 			new Query();

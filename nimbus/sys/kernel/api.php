@@ -30,12 +30,21 @@ class API extends Cloud {
 	public $shell;
 
 	/**
+	 * User class property for the API. Enables User methods
+	 *
+	 * @access	Public
+	 */
+	public $user;
+
+	/**
 	 * Class constructor
 	 *
 	 * @access	Public
 	 */
 	public function __construct(){
 		parent::__construct();
+		//Delegate the User class to usable properties
+		$this->user = new User();
 		//Delegate the classes to usable properties
 		$this->shell = Shell::getInstance();
 	}
@@ -80,6 +89,43 @@ class API extends Cloud {
 	 */
 	public function progressbar($options = array()){
 		return $this->element('progressbar', $options);
+	}
+
+	/**
+	 * Get the Window element
+	 *
+	 * @access:	Public
+	 * @param:	Array $options array of options for the element
+	 */
+	public function window($options = array()){
+		return $this->element('window', $options);
+	}
+	
+	public function msgbox($options = array()){
+		//Set Proper Header
+		header('Content-Type: text/javascript');
+		header('HTTP/1.0 200 OK');
+		//Start Output Buffering
+		ob_start();
+		//Generate an ID for the message box
+		$id = 'message-box-' . generateHash(microtime());
+		//Create the Window
+		$windop = array('id' => $id, 'classes' => array('message-box'), 'type' => 1, 'x' => 'center', 'y' => 'center', 'name' => $id, 'title' => $options['title'], 'content' => array('<div class="message ' . $options['type'] . '">' . $options['text'] . '</div>'), 'visible' => true, 'resizable' => false, 'draggable' => false, 'pinnable' => false, 'minimizable' => false, 'toggable' => false, 'hasIcon' => false);
+		if ($options['noChoice'] == true) {
+			$windop = array_merge($windop, array('closable' => false, 'modal' => true));
+		} else {
+			$windop = array_merge($windop, array('closable' => true));
+		}
+		$this->window($windop);
+		//Get the contents from the Output Buffer
+		$output = ob_get_contents();
+		ob_end_clean();
+		//Echo out the msgbox script
+		if (isset($options['modal']) && $options['modal'] == true) {
+			echo "Nimbus.msgbox(" . json_encode(array('id' => $id, 'modal' => true, 'content' => $output)) . ");\n";
+		} else {
+			echo "Nimbus.msgbox(" . json_encode(array('id' => $id, 'content' => $output)) . ");\n";
+		}
 	}
 
 }
