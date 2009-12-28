@@ -17,7 +17,7 @@
  */
 var Nimbus,
 	//General Namespaces
-	Desktop, Application, Data, Connect, Utility, Extend,
+	HTML, Desktop, Application, Data, Connect, Utility, Extend,
 	//Window Namespaces
 	Window, Toolbar, Context, Menu, Frame,
 	//Window Element Namespaces
@@ -43,7 +43,7 @@ var Nimbus,
 		/**
 		 * Store for the Libraries to be used
 		 */
-		libraries: ['application'],
+		libraries: ['html', 'desktop', 'application'],
 
 		/**
 		 * Store for the elements to be loaded
@@ -75,7 +75,7 @@ var Nimbus,
 			$.getScript(SERVER_URL + '/?service=language');
 			
 			//Do something if one of the scripts are not loading
-			setTimeout("Nimbus.message.bootStopped()", 15000);
+			setTimeout("Nimbus.messages.bootStopped()", 15000);
 			
 			//Get the progressbar element since it is the first element to be used on the system
 			$.getScript(SERVER_URL + 'public/resources/scripts/nimbus/elements/progressbar.js', function(){				
@@ -87,7 +87,7 @@ var Nimbus,
 							//Set the loaded flag for the system
 							Nimbus.isLoaded = true;
 							//Load the Login application
-							Application.load('login', function(){
+							Nimbus.Application.load('login', function(){
 								//Once the application has been loaded, Ease out the loading container
 								$('#loading-container').fadeOut(500);
 							});
@@ -141,22 +141,6 @@ var Nimbus,
 			$('#' + options.id).hide();
 			$('#' + options.id).fadeIn(200);
 		},
-
-		/**
-		 * Set of methods for static messages for Nimbus
-		 */
-		message: {
-			/**
-			 * Event that a script cannot be loaded because of a slow connection or no connection at all
-			 */
-			bootStopped: function(){
-				//Check first if the system has Loaded
-				if (Nimbus.isLoaded == false) {
-					//Output a boot_stopped message
-					$('#loading-container p strong').html(Nimbus.language.boot_stopped);
-				}
-			}
-		},
 		
 		/**
 		 * Enable the modal screen if needed
@@ -174,7 +158,23 @@ var Nimbus,
 				//Remove the friggin' modal screen
 				$('#screen-modal').remove();
 			}
-		}
+		},
+
+		/**
+		 * Set of methods for static messages for Nimbus
+		 */
+		messages: {
+			/**
+			 * Event that a script cannot be loaded because of a slow connection or no connection at all
+			 */
+			bootStopped: function(){
+				//Check first if the system has Loaded
+				if (Nimbus.isLoaded == false) {
+					//Output a boot_stopped message
+					$('#loading-container p strong').html(Nimbus.language.boot_stopped);
+				}
+			}
+		},
 		
 	}
 })(jQuery);

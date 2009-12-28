@@ -37,6 +37,13 @@ class API extends Cloud {
 	public $user;
 
 	/**
+	 * Instances of running modules or applications on the system
+	 *
+	 * @access	Public
+	 */
+	public $instances = array();
+
+	/**
 	 * Class constructor
 	 *
 	 * @access	Public
@@ -45,7 +52,7 @@ class API extends Cloud {
 		parent::__construct();
 		//Delegate the User class to usable properties
 		$this->user = new User();
-		//Delegate the classes to usable properties
+		//Delegate the Shell class to usable properties
 		$this->shell = Shell::getInstance();
 	}
 
@@ -61,6 +68,26 @@ class API extends Cloud {
 	}
 
 	/**
+	 * Register an application onto the instances array
+	 * 
+	 * @access	Public
+	 * @param	String $name name of the application to be registered
+	 * @param	Boolean $global determine if the application is ran globally or by a user
+	 */
+	public function register($name, $global = null){
+		if (!in_array($name, $this->instances)) {
+			$in = array(
+						'name' => $name,
+						'pid' => generateHash($name . $this->config->salt),
+						'started' => time(),
+						'user' => ($global) ? $this->user->current('id'): $this->config->appname
+					);
+			$this->instances[] = $in;
+			return $in;
+		}
+	}
+
+	/**
 	 * Get the API element object
 	 *
 	 * @access:	Public
@@ -71,7 +98,7 @@ class API extends Cloud {
 		//Get the class file
 		$file = SYSTEM_DIR . 'kernel' . DS . 'api' . DS . 'elements' . DS . $id . '.php';
 		if (file_exists($file)){
-			include $file;
+			include_once $file;
 			//Create a new Element instance and render it
 			$element = new $id($options);
 			$element->render();

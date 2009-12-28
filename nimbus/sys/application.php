@@ -45,11 +45,15 @@ class Application extends API {
 	
 	/**
 	 * Output of the application
+	 *
+	 * @access	Public
 	 */
-	public $output;
+	public $output = '(function(){';
 	
 	/**
 	 * Array of exposed functions for RPC usage
+	 *
+	 * @access	Public
 	 */
 	public $expose = array();
 
@@ -60,6 +64,13 @@ class Application extends API {
 	 */
 	public function __construct(){
 		parent::__construct();
+		//Load the API files
+		Loader::api(array(
+				//Base Classes
+				'html'
+			));
+		//Delegate the HTML API class to usable properties
+		$this->html = new HTML();
 	}
 
 	/**
@@ -70,6 +81,8 @@ class Application extends API {
 	 */
 	public function __init($force = false){
 		if ($this->user->isAllowed($this->name) || $force === true) {
+			//Register the instance onto the system
+			$this->instance = $this->register($this->name);
 			//The actual output is generated with this internal method
 			$this->init();
 		} else {
@@ -182,7 +195,7 @@ class Application extends API {
 		header('Content-Type: text/javascript');
 		$this->script($this->name);
 		if (!request('action')) {
-			$this->output .= "\n" . $this->name . ".init();";
+			$this->output .= "\n" . $this->name . ".init();})();";
 		}
 		echo $this->output;
 	}

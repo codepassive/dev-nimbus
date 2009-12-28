@@ -13,7 +13,7 @@
  * @version:		1.0.0 Alpha
  */
 (function(){
-	Application = {
+	Application = Nimbus.Application = {
 		load: function(name, callback){
 			$.getScript(SERVER_URL + '/?app=' + name, function(){
 				callback();

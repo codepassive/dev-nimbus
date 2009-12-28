@@ -96,9 +96,6 @@
 			.window .inner .content .message.error {
 				background: url('../../images/icons/Tango/32/status/dialog-error.png') no-repeat left center scroll;
 			}
-			.window .inner .content .message.password {
-				background: url('../../images/icons/Tango/32/status/dialog-password.png') no-repeat left center scroll;
-			}
 			.window .inner .content .message.warning {
 				background: url('../../images/icons/Tango/32/status/dialog-warning.png') no-repeat left center scroll;
 			}

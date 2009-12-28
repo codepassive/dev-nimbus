@@ -224,6 +224,7 @@ class User extends Cloud {
 	 */
 	public function isAllowed($object, $id = null){
 		$id = ($id != null) ? $id: '0';
+		$object = strtolower($object);
 		$result = $this->db->select("SELECT * FROM accounts as u,acl as a WHERE $id=a.accessor_id AND a.resource_handle='$object'");
 		if ($result) {
 			return ($result[0]['allow'] == 1);

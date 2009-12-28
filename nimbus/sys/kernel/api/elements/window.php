@@ -38,7 +38,7 @@ class window extends Elements implements ElementInterface {
 			'width' => 0,
 			'minWidth' => null,
 			'maxWidth' => null,
-			'icon' => config('appurl') . 'public/resources/images/icons/Tango/16/apps/utilities-text-editor.png',
+			'icon' => config('appurl') . 'public/resources/images/icons/Tango/16/apps/accessories-text-editor.png',
 			'x' => 0,
 			'y' => 0,
 			'z' => 0,

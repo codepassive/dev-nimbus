@@ -65,7 +65,7 @@ class Resource extends API {
 				$appname = explode("/", $path[1]);
 				$appname = $appname[0];
 				$id = $this->user->current('id');
-				$id = ($id) ? $id: null;
+				$id = ($id) ? $id: null;;
 				if ($this->user->isAllowed($appname)) {
 					if (file_exists(APPLICATION_DIR . $path[1])) {
 						$info = pathinfo(APPLICATION_DIR . $path[1]);
