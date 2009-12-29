@@ -16,23 +16,14 @@
 /**
  * These include the different widgets or elements seen in a desktop.
  */
-/**
- * Modal
- */
-#screen-modal {
-	background: rgba(0, 0, 0, 0.6);
-	z-index: 900;
-}
 
 /**
  * Window
  */
 .window {
 	position: absolute;
-	top: 2%;
-	left: 2%;
-	border: 1px solid rgba(46, 52, 54, 1);
-	background: rgba(255, 255, 255, 0.5);
+	border: 1px solid #333333;
+	background: rgba(255, 255, 255, 0.5) url('images/window.png') repeat-x center scroll;
 	font-size: 11px;
 	-moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
@@ -78,7 +69,7 @@
 		background: #ffffff;
 	}
 		.window .inner .content {
-			text-align: center;
+			text-align: left;
 		}
 			.window .inner .content .message {
 				padding: 8px 0px;
@@ -111,6 +102,59 @@
 			.window .inner .buttons a:hover {
 				text-decoration: underline;
 			}
+
+/**
+ * Textbox
+ */
+input[type=text], input[type=password] {
+	padding: 4px;
+	margin: 4px 0;
+	border: 1px solid #2e3436;
+	background: #ffffff url('images/textbox.png') repeat-x top left scroll;
+	font-family: inherit;
+	font-size: 11px;
+	text-shadow: 0 1px 1px #ffffff;
+}
+input:focus {
+	background: #f1e691;
+}
+
+/**
+ * Selectbox
+ */
+select {
+	padding: 4px;
+	margin: 4px 0;
+	border: 1px solid #2e3436;
+	background: #ffffff url('images/textbox.png') repeat-x top left scroll;
+	font-family: inherit;
+	font-size: 11px;
+	text-shadow: 0 1px 1px #ffffff;
+}
+
+/**
+ * Button
+ */
+input[type=button], input[type=submit] {
+	margin: 0 !important;
+	padding: 4px;
+	border: 1px solid #2e3436;
+	background: #ffffff url('images/button.png') repeat-x center scroll;
+	font-family: inherit;
+	font-size: 11px;
+	text-shadow: 0 1px 1px #ffffff;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-khtml-border-radius: 3px;
+}
+
+/**
+ * Modal
+ */
+#screen-modal {
+	background: rgba(0, 0, 0, 0.6);
+	z-index: 900;
+}
  
 /**
  * Progressbar
@@ -124,7 +168,7 @@
 		border: 1px solid rgba(0, 0, 0, 0.5);
 	}
 		.progressbar .inner .bar {
-			background: #8ae234;
+			background: #babdb6 url('images/progressbar.png') repeat-x top left scroll;
 			width: 0%;
-			height: 6px;
+			height: 12px;
 		}

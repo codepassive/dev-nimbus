@@ -19,10 +19,14 @@
  */
 #loading-container {
 	position: absolute;
-	color: #d3d7cf;
+	color: #ffffff;
 	left: 50%;
 	top: 50%;
 	width: 400px;
 	text-align: center;
 	margin: -20px 0 0 -200px;
 }
+	#loading-container a {
+		color: #ffffff;
+		font-style: italic;
+	}

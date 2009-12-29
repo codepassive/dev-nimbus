@@ -90,6 +90,7 @@ var Nimbus,
 							Nimbus.Application.load('login', function(){
 								//Once the application has been loaded, Ease out the loading container
 								$('#loading-container').fadeOut(500);
+								$('.screen').show();
 							});
 						}
 				});
@@ -133,7 +134,7 @@ var Nimbus,
 		 * Method that generates a seperate window without regard to the current environment
 		 */
 		msgbox: function(options){
-			$('#screen-workspace').before(options.content);
+			$('#screen-workspace-' + Nimbus.Desktop.currentWorkspace).before(options.content);
 			//Create the window handle for use
 			var window = new Window({id:options.id});
 			window.fix(); //and fix the position of the window
@@ -151,7 +152,7 @@ var Nimbus,
 				//Check if the modal screen hasn't already been placed
 				if ($('#screen-modal').length == 0) {
 					//Show the modal screen
-					$('#screen-workspace').before('<div class="screen" id="screen-modal"></div>');
+					$('#screen-workspace-' + Nimbus.Desktop.currentWorkspace).before('<div class="screen" id="screen-modal"></div>');
 					$('#screen-modal').fadeIn(200);
 				}
 			} else {

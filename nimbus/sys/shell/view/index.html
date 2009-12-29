@@ -12,9 +12,10 @@
   </head>
   <body>
 	<noscript><div id="noscript-container"><p><strong><?php __('critical_notice'); ?></strong>: <span><?php __('javascript_disabled'); ?></span></p></div></noscript>
-	<div id="loading-container"><p><strong><?php __('loading'); ?>...</strong></p><?php $api->progressbar(array('id' => 'system_loader')); ?></div>
+	<div id="loading-container"><p><strong>&nbsp;</strong></p><?php $api->progressbar(array('id' => 'system_loader')); ?></div>
 	<?php screen(); ?>
-	<div class="screen" id="screen-workspace"></div>
+	<div class="screen" id="screen-workspace-1"></div>
+	<div class="screen-background" id="screen-background-1"></div><div class="screen-background" id="screen-background-2"></div>
 	<?php scripts('footer'); ?>
   </body>
 </html>
