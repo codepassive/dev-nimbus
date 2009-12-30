@@ -21,6 +21,13 @@
  * @category:   		API/Elements
  */
 class Elements extends API {
+	
+	/**
+	 * Name of the Element
+	 *
+	 * @access:	Public
+	 */
+	public $name;
 
 	/**
 	 * The default option values for the element
@@ -44,6 +51,13 @@ class Elements extends API {
 	public $ID;
 
 	/**
+	 * The Javascript handle of the element
+	 *
+	 * @access:	Public
+	 */
+	public $handle;
+
+	/**
 	 * Class constructor
 	 *
 	 * @access:	Public
@@ -57,6 +71,24 @@ class Elements extends API {
 		
 		//Set the elements Properties
 		$this->ID = (isset($this->options['id'])) ? $this->options['id']: $this->_defaults['id'];
+		//Set the elements Properties
+		$this->handle = (isset($this->options['handle'])) ? $this->options['handle']: null;
+	}
+
+	/**
+	 * Include and Render the element
+	 *
+	 * @access:	Public
+	 */
+	public function render(){
+		//Build the path to the file
+		$file = SKIN_DIR . 'common' . DS . 'templates' . DS. $this->name . '.html';
+		//Include the file
+		ob_start();
+		include $file;
+		$output = ob_get_contents();
+		ob_end_clean();
+		return $output;
 	}
 
 	/**

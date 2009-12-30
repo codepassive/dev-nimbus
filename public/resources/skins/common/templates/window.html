@@ -16,7 +16,7 @@
 				<div class="content">
 					<?php $this->content(); ?>
 				</div>
-				<?php echo ($this->flag('buttons') === true) ? '<div class="buttons">' . $this->buttons() . '</div>': '';  ?>
+				<?php echo ($this->flag('buttons')) ? '<div class="buttons">' . $this->buttons() . '</div>': '';  ?>
 				<div class="toolbars-bottom"><?php $this->toolbars('bottom'); ?></div>
 			</div>
 		</div>

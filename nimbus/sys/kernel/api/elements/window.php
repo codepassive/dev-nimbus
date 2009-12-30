@@ -21,6 +21,13 @@
  * @category:   		API/Elements
  */
 class window extends Elements implements ElementInterface {
+	
+	/**
+	 * Name of the Element
+	 *
+	 * @access:	Public
+	 */
+	public $name = 'window';
 
 	/**
 	 * Class constructor
@@ -88,19 +95,7 @@ class window extends Elements implements ElementInterface {
 	}
 
 	/**
-	 * Include and Render the element
-	 *
-	 * @access:	Public
-	 */
-	public function render(){
-		//Build the path to the file
-		$file = SKIN_DIR . 'common' . DS . 'templates' . DS. 'window.html';
-		//Include the file
-		include $file;
-	}
-
-	/**
-	 * TEMPORARY: Display the contents from the content store
+	 * Display the contents from the content store
 	 *
 	 * @access:	Public
 	 */
@@ -109,18 +104,44 @@ class window extends Elements implements ElementInterface {
 	}
 
 	/**
-	 * PLACEHOLDER: Display the toolbars from the toolbar store
+	 * Display the toolbars from the toolbar store
 	 *
 	 * @access:	Public
 	 */
-	public function toolbars(){}
+	public function toolbars($id){
+		$toolbars = $this->flag('toolbars');
+		if (isset($toolbars[$id])) {
+			echo implode("", $toolbars[$id]);
+		}
+	}
 
 	/**
-	 * PLACEHOLDER: Display buttons in order of arrangement in the buttons array
+	 * Display buttons in order of arrangement in the buttons array
 	 *
 	 * @access:	Public
 	 */
-	public function buttons(){}
+	public function buttons(){
+		$output = '';
+		$buttons = $this->flag('buttons');
+		$i = 1;
+		foreach ($buttons as $button) {
+			if (is_array($button)) {
+				//For the OK or proceed button
+				if ($i == 1) {
+					$hash = generateHash(microtime());
+					$id = $this->handle . '-button-' . $hash;
+					$output .= '<input type="button" value="' . $button[0] . '" id="' . $id . '" class="proceed"/>';
+					if ($button[1]) {
+						Application::bindEvent('click', $id, $this->handle, $button[1]);
+					}
+				}
+			} else {
+				$output .= $button;
+			}
+			$i++;
+		}
+		return $output;
+	}
 
 }
 

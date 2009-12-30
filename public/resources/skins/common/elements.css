@@ -93,8 +93,7 @@
 		.window .inner .buttons {
 			border-top: 1px solid #ccd9ea;
 			background: #f1f5fb;
-			padding: 8px;
-			text-align: center;
+			padding: 8px 14px;
 		}
 			.window .inner .buttons a {
 				color: #0066cc;

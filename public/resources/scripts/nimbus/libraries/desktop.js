@@ -31,11 +31,25 @@
 				$('#' + view_id).hide().fadeIn(500);
 			}
 		},
-		
+
+		/**
+		 * Backgrounds to be used in the background cycles
+		 */
 		background: [],
+
+		/**
+		 * The Current Background Index
+		 */
 		currentBackground: 0,
+
+		/**
+		 * The Current Background Screen visible
+		 */
 		currentBackgroundVisible: 1,
-		
+
+		/**
+		 * Change the Background of the current visible background screen
+		 */
 		background: function(background, interval){
 			if (background.constructor == Array) {
 				Nimbus.Desktop.backgrounds = background;
@@ -46,6 +60,10 @@
 				$('#screen-background-' + Nimbus.Desktop.currentBackgroundVisible).css({background:"url('" + background + "') no-repeat center scroll"}).fadeIn(1000);
 			}
 		},
+
+		/**
+		 * Private method to be used by the Public background method to cycle through the backgrounds in the backgrounds store
+		 */
 		_background: function(){
 			var visible = (Nimbus.Desktop.currentBackgroundVisible == 2) ? 1: 2;
 			$('#screen-background-' + visible).fadeOut(1000);

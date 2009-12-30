@@ -48,7 +48,7 @@ class Application extends API {
 	 *
 	 * @access	Public
 	 */
-	public $output = '(function(){';
+	public $output = "(function(){\n";
 	
 	/**
 	 * Array of exposed functions for RPC usage
@@ -117,6 +117,7 @@ class Application extends API {
 					$action = request('action');
 					if (!$action) {
 						$app->__init($app->force);
+						$app->view($app->main());
 					} else {
 						$params = array();
 						$i = 0;
@@ -143,18 +144,43 @@ class Application extends API {
 	}
 
 	/**
-	 * This function loads shell pages for output in an application
+	 * This function loads the main window method for output in an application
+	 * 
+	 * @access	Public
+	 * @param	Mixed $location the path of the shell file relative to the application directory
+	 */
+	public function view($location = null){
+		//Check if the main window method is present and the location is null
+		if (!method_exists($this->name, 'main') && $location == null) {
+			$location = APPLICATION_DIR . $this->name . DS . $location . '.php';
+			if (file_exists($location) && is_readable($location)) {
+				ob_start();
+				include_once $location;
+				$this->output .= 'var ' . $this->name . '_view = ' . json_encode(ob_get_contents()) . ";\n";
+				ob_end_clean();
+			} else {
+				global $language;
+				Log::write(ERROR_LOG_FILE, sprintf($language['error_001F'], $location));
+			}
+		} else {
+			$this->output .= 'var ' . $this->name . '_view = ' . json_encode($location->render()) . ";\n";
+		}
+	}
+
+	/**
+	 * This function loads the shell file for inclusion in a content context
 	 * 
 	 * @access	Public
 	 * @param	String $location the path of the shell file relative to the application directory
 	 */
-	public function view($location){
+	public function useTemplate($location){
 		$location = APPLICATION_DIR . $this->name . DS . $location . '.php';
 		if (file_exists($location) && is_readable($location)) {
 			ob_start();
-			include $location;
-			$this->output .= 'var ' . $this->name . '_view = ' . json_encode(ob_get_contents()) . ";\n";
+			include_once $location;
+			$output = ob_get_contents();
 			ob_end_clean();
+			return $output;
 		} else {
 			global $language;
 			Log::write(ERROR_LOG_FILE, sprintf($language['error_001F'], $location));
@@ -165,7 +191,7 @@ class Application extends API {
 	 * This function loads script files for Application use
 	 * 
 	 * @access	Public
-	 * @param	String $filename relative to the application directory
+	 * @param	String $file relative to the application directory
 	 */
 	public function script($file){
 		$this->output .= file_get_contents(APPLICATION_DIR . $this->name . DS . $file . '.js');
@@ -194,10 +220,33 @@ class Application extends API {
 	public function display(){
 		header('Content-Type: text/javascript');
 		$this->script($this->name);
+		//Display the Events
+		$this->output .= $this->events();
 		if (!request('action')) {
-			$this->output .= "\n" . $this->name . ".init();})();";
+			$this->output .= "\n//Initialize the App\n" . $this->name . ".init();\n})();";
 		}
+		//Display the Output
 		echo $this->output;
+	}
+	
+	public function events(){
+		$e = Registry::get($this->name . '-events');
+		if ($e) {
+			$output = "\n//Events\n";
+			unset($e[0]);
+			$output .= implode("\n", $e);
+			return $output;
+		}
+		return;
+	}
+	
+	public static function bindEvent($event, $id, $handle, $function){
+		$events = Registry::get($handle . '-events');
+		$script = "$('#{$id}').live('{$event}', function(){{$handle}.{$function}()});";
+		if (!in_array($script, $events)) {
+			$events[] = $script;
+		}
+		Registry::set($handle . '-events', $events);
 	}
 
 }
