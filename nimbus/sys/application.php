@@ -83,6 +83,10 @@ class Application extends API {
 		if ($this->user->isAllowed($this->name) || $force === true) {
 			//Register the instance onto the system
 			$this->instance = $this->register($this->name);
+			//Load View and set its style
+			foreach ($this->styles as $style) {
+				$this->html->link($style);
+			}
 			//The actual output is generated with this internal method
 			$this->init();
 		} else {
