@@ -30,10 +30,7 @@ var Nimbus,
 /**
  * Nimbus Desktop API
  */
-(function($){
-	/**
-	 * Create the Nimbus Object
-	 */
+(function(){
 	Nimbus = {
 		/**
 		 * Version of the Javascript API
@@ -43,12 +40,17 @@ var Nimbus,
 		/**
 		 * Store for the Libraries to be used
 		 */
-		libraries: ['html', 'desktop', 'application'],
+		libraries: ['html', 'desktop', 'application', 'connect'],
 
 		/**
 		 * Store for the elements to be loaded
 		 */
 		elements: ['window'],
+		
+		/**
+		 * Session token for the current user
+		 */
+		token: null,
 		
 		/**
 		 * Flag to show that Nimbus is loaded completely
@@ -178,4 +180,4 @@ var Nimbus,
 		},
 		
 	}
-})(jQuery);
+})();

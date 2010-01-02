@@ -45,6 +45,8 @@ $language['registry'] = 'Registry cannot set a null value to a null pointer.';
 $language['username'] = 'Username';
 $language['password'] = 'Password';
 $language['language'] = 'Language';
+$language['login_incorrect'] = 'You have supplied incorrect Login credentials. Please make sure you have entered the correct Username and Password combination';
+$language['login_missing'] = 'Please fill In the required fields above. You cannot login if either the username or password is left blank';
 
 //Startup
 $language['boot_stopped'] = 'Nimbus is not loading normally<br/>Please check your connection or run the <a href="http://diagnose.nimbusinitiative.org/" target="_new">Nimbus diagnostic tool</a>'

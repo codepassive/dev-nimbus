@@ -37,6 +37,13 @@ class Application extends API {
 	public $name;
 
 	/**
+	 * The javascript handle of the application
+	 *
+	 * @access	Public
+	 */
+	public $api_handle;
+
+	/**
 	 * Determines whether the application will have a forced allow permission to a user or not
 	 *
 	 * @access	Public
@@ -48,7 +55,7 @@ class Application extends API {
 	 *
 	 * @access	Public
 	 */
-	public $output = "(function(){\n";
+	public $output = null;
 	
 	/**
 	 * Array of exposed functions for RPC usage
@@ -56,6 +63,13 @@ class Application extends API {
 	 * @access	Public
 	 */
 	public $expose = array();
+
+	/**
+	 * Styles used by the application
+	 *
+	 * @access	Public
+	 */
+	public $styles = array();
 
 	/**
 	 * Class constructor
@@ -85,7 +99,7 @@ class Application extends API {
 			$this->instance = $this->register($this->name);
 			//Load View and set its style
 			foreach ($this->styles as $style) {
-				$this->html->link($style);
+				$this->html->link($this->config->appurl . '?res=' . $style);
 			}
 			//The actual output is generated with this internal method
 			$this->init();
@@ -122,21 +136,31 @@ class Application extends API {
 					if (!$action) {
 						$app->__init($app->force);
 						$app->view($app->main());
+						//Use the Native Script
+						$app->script($app->api_handle);
+						//Display the Events
+						$app->output .= $app->events();
+						if (!request('action')) {
+							$app->output .= "\n//Initialize the App\n" . $app->api_handle . ".init();";
+						}
 					} else {
 						$params = array();
-						$i = 0;
-						foreach ($_GET as $param) {
-							if ($i > 1) {
-								$params[] = $param;
+						if (!empty($_GET)) {
+							$i = 0;
+							foreach ($_GET as $param) {
+								if ($i > 1) {
+									$params[] = $param;
+								}
+								$i++;
 							}
-							$i++;
 						}
-						call_user_func_array(array($app, $action()), $params);
+						call_user_func_array(array($app, $action), $params);
 					}
 					echo $app->display();
 				} else {
-					global $language;
-					$this->msgbox(array('text' => $language['error_000H'], 'type' => 'error', 'title' => $language['error_title'], 'buttons' => array('OK')));
+					//DO SOME MAGIC
+					//global $language;
+					//$this->msgbox(array('text' => $language['error_000H'], 'type' => 'error', 'title' => $language['error_title'], 'buttons' => array('OK')));
 				}
 			}
 			if (NIMBUS_DEBUG > 0) {
@@ -160,14 +184,16 @@ class Application extends API {
 			if (file_exists($location) && is_readable($location)) {
 				ob_start();
 				include_once $location;
-				$this->output .= 'var ' . $this->name . '_view = ' . json_encode(ob_get_contents()) . ";\n";
+				$this->output .= 'var ' . $this->api_handle . '_view = ' . json_encode(ob_get_contents()) . ";\n";
 				ob_end_clean();
 			} else {
 				global $language;
 				Log::write(ERROR_LOG_FILE, sprintf($language['error_001F'], $location));
 			}
 		} else {
-			$this->output .= 'var ' . $this->name . '_view = ' . json_encode($location->render()) . ";\n";
+			if (method_exists($location, 'render')) {
+				$this->output .= 'var ' . $this->api_handle . '_view = ' . json_encode($location->render()) . ";\n";
+			}
 		}
 	}
 
@@ -210,7 +236,7 @@ class Application extends API {
 	 */
 	public function json($input, $var = null){
 		if ($var) {
-			$this->output .= 'var ' . $this->name . '_' . $var . ' = ' . json_encode($input) . ";\n";
+			$this->output .= 'var ' . $this->api_handle . '_' . $var . ' = ' . json_encode($input) . ";\n";
 		} else {
 			$this->output .= json_encode($input) . "\n";
 		}
@@ -222,19 +248,14 @@ class Application extends API {
 	 * @access	Public
 	 */
 	public function display(){
+		//Set the Header
 		header('Content-Type: text/javascript');
-		$this->script($this->name);
-		//Display the Events
-		$this->output .= $this->events();
-		if (!request('action')) {
-			$this->output .= "\n//Initialize the App\n" . $this->name . ".init();\n})();";
-		}
 		//Display the Output
 		echo $this->output;
 	}
 	
 	public function events(){
-		$e = Registry::get($this->name . '-events');
+		$e = Registry::get($this->api_handle . '-events');
 		if ($e) {
 			$output = "\n//Events\n";
 			unset($e[0]);
@@ -246,7 +267,7 @@ class Application extends API {
 	
 	public static function bindEvent($event, $id, $handle, $function){
 		$events = Registry::get($handle . '-events');
-		$script = "$('#{$id}').live('{$event}', function(){{$handle}.{$function}()});";
+		$script = "$('#{$id}').live('{$event}', function(){{$handle}.{$function}(this)});";
 		if (!in_array($script, $events)) {
 			$events[] = $script;
 		}

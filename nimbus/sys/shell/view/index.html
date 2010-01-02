@@ -9,7 +9,7 @@
 	<link rel="shortcut icon" type="image/x-icon" href="<?php echo $config->styles['favico']; ?>" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $config->styles['common']; ?>" media="all" />
 	<?php scripts('header'); ?>
-  </head>
+	</head>
   <body>
 	<noscript><div id="noscript-container"><p><strong><?php __('critical_notice'); ?></strong>: <span><?php __('javascript_disabled'); ?></span></p></div></noscript>
 	<div id="loading-container"><p><strong>&nbsp;</strong></p><?php $api->progressbar(array('id' => 'system_loader')); ?></div>

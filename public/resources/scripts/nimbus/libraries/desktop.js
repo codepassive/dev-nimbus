@@ -25,11 +25,15 @@
 		/**
 		 * Add an element to the current workspace
 		 */
-		add: function(content, view_id){
+		load: function(content, view_id){
 			$('#screen-workspace-' + Nimbus.Desktop.currentWorkspace).append(content);
 			if (view_id) {
 				$('#' + view_id).hide().fadeIn(500);
 			}
+		},
+		
+		unload: function(view_id){
+			$('#' + view_id).fadeOut(500);
 		},
 
 		/**
@@ -76,7 +80,5 @@
 				Nimbus.Desktop.currentBackgroundVisible = (Nimbus.Desktop.currentBackgroundVisible == 2) ? 1: 2;
 			});
 		}
-		
-		
 	}
 })();

@@ -95,8 +95,11 @@ class User extends Cloud {
 	public function login($username, $password){
 		$this->logout();
 		$result = $this->authenticate($username, $password, true);
-		$this->__setCurrentUser($result['account_id']);
-		return ($result) ? true: false;
+		if ($result) {
+			$this->__setCurrentUser($result['account_id']);
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -199,21 +202,24 @@ class User extends Cloud {
 	protected function __setCurrentUser($id){
 		$this->__information = new stdClass();
 		$result = $this->db->select("account_id=$id", null, 'accounts');
-		//Delegate the properties
-		$this->id = $id;
-		$this->username = $result[0]['username'];
-		//Assign to the information
-		foreach ($result[0] as $n => $v) {
-			$this->__information->$n = $v;
+		if ($result) {
+			//Delegate the properties
+			$this->id = $id;
+			$this->username = $result[0]['username'];
+			//Assign to the information
+			foreach ($result[0] as $n => $v) {
+				$this->__information->$n = $v;
+			}
+			$this->meta();
+			$this->personal();
+			define('CURRENT_USER_ID', $this->id);
+			unset($this->__information->password);
+			$this->session->set('user-information', $this->__information);
+			//Set a cookie to know that a session is active
+			setcookie('_nimbus_user', 1, time() + config('security'));
+			return true;
 		}
-		$this->meta();
-		$this->personal();
-		define('CURRENT_USER_ID', $this->id);
-		unset($this->__information->password);
-		$this->session->set('user-information', $this->__information);
-		//Set a cookie to know that a session is active
-		setcookie('_nimbus_user', 1, time() + config('security'));
-		return true;
+		return false;
 	}
 
 	/**
