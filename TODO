@@ -15,7 +15,7 @@ collaboration is achieved.
 This file contains tasks to be done upon release of
 the next version.
 
-Release Candidate 2
+Release Candidate 1
 TODO#	Description
 00001 - Implementation for providing numerical indices on request generation
 00002 - DB Support for sessions
@@ -25,4 +25,6 @@ TODO#	Description
 00006 - Note that $this->request is not visible in application classes
 00007 - Store Header information from a REST response and more Proper CURL handling
 00008 - 100% width is not 100% on the progressbar element in animate context. on progressbar::change
+00009 - Session does not Work
+00010 - Token does not work with Session, Generates every page load
 ---------------------------------------------------
