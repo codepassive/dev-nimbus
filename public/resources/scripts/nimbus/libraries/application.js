@@ -15,9 +15,10 @@
 (function(){
 	Application = Nimbus.Application = {
 		load: function(name, callback){
-			$.getScript(SERVER_URL + '/?app=' + name, function(){
-				callback();
-			});			
+			$.getScript(SERVER_URL + '/?app=' + name, function(result){
+				setTimeout(name +".init();", 0);
+				callback(result);
+			}, "json");			
 		},
 	}
 })();

@@ -135,7 +135,9 @@ class Application extends API {
 					$action = request('action');
 					if (!$action) {
 						$app->__init($app->force);
-						$app->view($app->main());
+						if (method_exists($app, 'main')) {
+							$app->view($app->main());
+						}
 						//Use the Native Script
 						$app->script($app->api_handle);
 						//Display the Events
@@ -179,7 +181,7 @@ class Application extends API {
 	 */
 	public function view($location = null){
 		//Check if the main window method is present and the location is null
-		if (!method_exists($this->name, 'main') && $location == null) {
+		if ((!method_exists($this->name, 'main') && $location != null) || !is_object($location) && (file_exists(APPLICATION_DIR . $this->name . DS . $location . '.php'))) {
 			$location = APPLICATION_DIR . $this->name . DS . $location . '.php';
 			if (file_exists($location) && is_readable($location)) {
 				ob_start();

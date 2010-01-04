@@ -269,7 +269,7 @@ class User extends Cloud {
 	 * @access	Public
 	 */
 	public function personal(){
-		$result = $this->db->select("SELECT * FROM accounts as u,personalize as p WHERE u.account_id=p.user_id AND u.account_id=" . $this->id);
+		$result = $this->db->select("SELECT p.* FROM accounts as u,personalize as p WHERE u.account_id=p.user_id AND u.account_id=" . $this->id);
 		if ($result) {
 			foreach ($result as $r) {
 				$this->__information->{$r['option_name']} = $this->_personal[$r['option_name']] = $r['option_value'];

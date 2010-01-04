@@ -92,6 +92,7 @@ var Nimbus,
 							Nimbus.Application.load('login', function(){
 								//Once the application has been loaded, Ease out the loading container
 								$('#loading-container').fadeOut(500);
+								setTimeout("$('#loading-container').fadeOut(500);", 2000);
 								$('.screen').show();
 							});
 						}

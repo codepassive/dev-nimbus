@@ -34,6 +34,7 @@
 		
 		unload: function(view_id){
 			$('#' + view_id).fadeOut(500);
+			setTimeout("$('#" + view_id + "').remove();", 500);
 		},
 
 		/**

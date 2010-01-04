@@ -25,3 +25,9 @@
 	width: 100%;
 	display: none;
 }
+.screen {
+	z-index: 500;
+}
+.screen-background {
+	z-index: 400;
+}

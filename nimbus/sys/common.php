@@ -23,57 +23,58 @@
  * Function to check compatibility for the environment
  */
 function checkCompatibility(){
+	global $language;
 	$incompatibilities = array();
 	$missing = array();
 
 	/**
 	 * Check PHP environment
 	 */
-	if (!version_compare(PHP_VERSION, '5.3', '>=')) {
-		$incompatibilities[] = array($language['compat_error_000A'], '000A');
+	if (!version_compare(PHP_VERSION, '5.2.5', '>=')) {
+		$incompatibilities[] = array($language['error_000A'], '000A');
 	}
 	if (!extension_loaded('sqlite') && !extension_loaded('pdo_sqlite')) {
-		$incompatibilities[] = array($language['compat_error_001A'], '001A');
+		$incompatibilities[] = array($language['error_001A'], '001A');
 	}
-	if ((!is_writable('/../.nimbus') && !is_readable('/../.nimbus')) && (!is_writable('../nimbus') && !is_readable('../nimbus'))) {
-		$incompatibilities[] = array($language['compat_error_002A'], '002A');
+	if ((!is_writable('/../.nimbus') && !is_readable('/../.nimbus')) && (!is_writable('/../.nimbus') && !is_readable('/../.nimbus'))) {
+		$incompatibilities[] = array($language['error_002A'], '002A');
 	}
 	if (!ini_get('file_uploads')) {
-		$incompatibilities[] = array($language['compat_error_003A'], '003A');
+		$incompatibilities[] = array($language['error_003A'], '003A');
 	}
 
 	/**
 	 * Check for Optional Extensions
 	 */
 	if (!extension_loaded('mbstring')) {
-		$missing[] = array($language['compat_error_000B'], '000B');
+		$missing[] = array($language['error_000B'], '000B');
 	}
 	if (!extension_loaded('ftp')) {
-		$missing[] = array($language['compat_error_001B'], '001B');
+		$missing[] = array($language['error_001B'], '001B');
 	}
 	if (!extension_loaded('json')) {
-		$missing[] = array($language['compat_error_002B'], '002B');
+		$missing[] = array($language['error_002B'], '002B');
 	}
 	if (!extension_loaded('soap')) {
-		$missing[] = array($language['compat_error_003B'], '003B');
+		$missing[] = array($language['error_003B'], '003B');
 	}
 	if (!extension_loaded('xml') && !extension_loaded('xmlreader') && !extension_loaded('xmlwriter')) {
-		$missing[] = array($language['compat_error_004B'], '004B');
+		$missing[] = array($language['error_004B'], '004B');
 	}
 	if (!extension_loaded('xmlrpc')) {
-		$missing[] = array($language['compat_error_005B'], '005B');
+		$missing[] = array($language['error_005B'], '005B');
 	}
 	if (!extension_loaded('zip')) {
-		$missing[] = array($language['compat_error_006B'], '006B');
+		$missing[] = array($language['error_006B'], '006B');
 	}
 	if (!extension_loaded('zlib')) {
-		$missing[] = array($language['compat_error_007B'], '007B');
+		$missing[] = array($language['error_007B'], '007B');
 	}
 	if (!function_exists('mail')) {
-		$missing[] = array($language['compat_error_008B'], '008B');
+		$missing[] = array($language['error_008B'], '008B');
 	}
 	if (!extension_loaded('curl')) {
-		$missing[] = array($language['compat_error_009B'], '009B');
+		$missing[] = array($language['error_009B'], '009B');
 	}
 
 	/**
