@@ -18,7 +18,7 @@
  * Class for accessing and creating sessions
  *
  * @category:   		Session
- * @source:			http://www.devshed.com/c/a/PHP/Storing-PHP-Sessions-in-a-Database/
+ * @source:				http://www.devshed.com/c/a/PHP/Storing-PHP-Sessions-in-a-Database/
  */
 class Session {
 
@@ -243,7 +243,8 @@ class Session {
 		$ip = $_SERVER['REMOTE_ADDR'];
 		$useragent = $_SERVER['HTTP_USER_AGENT'];
 		$uid = (defined('CURRENT_USER_ID')) ? CURRENT_USER_ID: 0;
-		$this->__db->query("INSERT INTO `sessions`(`session_id`, `session_data`, `expires`, `user_id`, `ip`, `useragent`) VALUES('$id', '$data', $time, $uid, '$ip', '$useragent')");
+		$this->__db->query("REPLACE INTO `sessions` (`session_id`, `session_data`, `expires`, `user_id`, `ip`, `useragent`) VALUES('$id', '$data', $time, $uid, '$ip', '$useragent')");
+		//$this->__db->query("INSERT INTO `sessions`(`session_id`, `session_data`, `expires`, `user_id`, `ip`, `useragent`) VALUES('$id', '$data', $time, $uid, '$ip', '$useragent')");
 		return true;
 	}
 

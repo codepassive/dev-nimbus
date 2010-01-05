@@ -102,6 +102,7 @@ var Nimbus,
 				$.each(BASE_SCRIPTS, function(i, o){
 					$.getScript(o.src, function(){
 						//Change the Progressbar width
+						jQuery = $ = window.jQuery = window.$;
 						progressbar.change(((current + 1) / max) * 100);
 						current += 1;
 					});
