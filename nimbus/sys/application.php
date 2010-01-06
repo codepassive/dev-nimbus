@@ -255,7 +255,12 @@ class Application extends API {
 		//Display the Output
 		echo $this->output;
 	}
-	
+
+	/**
+	 * Get the events of the application and output to stream
+	 * 
+	 * @access	Public
+	 */
 	public function events(){
 		$e = Registry::get($this->api_handle . '-events');
 		if ($e) {
@@ -266,7 +271,17 @@ class Application extends API {
 		}
 		return;
 	}
-	
+
+	/**
+	 * Binds an event to the event store of an application
+	 * 
+	 * @access	Public
+	 * @param	String $event the event identifier
+	 * @param	String $id the DOM ID of the element
+	 * @param	String $handle the javascript name of the function it resides in
+	 * @param	String $function a function name or a function altogether
+	 * @param	Boolean $isJS determines whether the function supplied is a function name or not
+	 */
 	public static function bindEvent($event, $id, $handle, $function, $isJS = false){
 		if (is_array($id)) {
 			foreach ($id as $i) {

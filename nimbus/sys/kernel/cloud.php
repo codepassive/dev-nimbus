@@ -37,6 +37,13 @@ class Cloud {
 	public $config;
 
 	/**
+	 * Modules placeholder
+	 *
+	 * @access	public
+	 */
+	public $modules;
+
+	/**
 	 * Holds the scripts that has been loaded onto the cloud
 	 *
 	 * @access	protected
@@ -83,7 +90,7 @@ class Cloud {
 		$this->db = new Dbo();
 		//Get configuration
 		$result = $this->db->select(null, null, 'options');
-		$this->config = new stdClass();
+		$this->config = $this->modules = new stdClass();
 		foreach ($result as $name) {
 			$this->config->{$name['option_name']} = $name['option_value'];
 		}
@@ -108,7 +115,7 @@ class Cloud {
 		//Load shell
 		Loader::shell('shell');
 		//Load the token and user manager
-		Loader::system(array('rpc', 'token', 'user'));
+		Loader::system(array('rpc', 'token', 'user', 'module'));
 		//Create the RPC property
 		$this->RPC = new RPC();
 		//Clear up the token store
@@ -116,11 +123,11 @@ class Cloud {
 		//load the API
 		Loader::kernel(array('api', 'elements'));
 		//load the interfaces
-		Loader::interfaces(array('services', 'application', 'elements'));
+		Loader::interfaces(array('services', 'application', 'module', 'elements'));
 		//Load the initial services
 		$this->service(array_merge(array('security'), unserialize($this->config->init_services)));
 		//Load the extensions
-		$this->module(unserialize($this->config->init_modules));
+		$this->module(array_merge(array('phpmailer', 'ftp', 'git', 'svn', 'openID'), unserialize($this->config->init_modules)));
 	}
 
 	/**
@@ -182,6 +189,13 @@ class Cloud {
 							$s = new $files();
 						}
 						return $s;
+					}
+					//Module assignments
+					if (class_exists($files . 'Module')) {
+						$module = $files . 'Module';
+						$module = new $module();
+						$this->modules->{$files} = $module;
+						$this->__loaded[$name][] = $files;
 					}
 				}
 			}

@@ -27,4 +27,5 @@ TODO#	Description
 00008 - 100% width is not 100% on the progressbar element in animate context. on progressbar::change
 00009 - Session does not Work
 00010 - Token does not work with Session, Generates every page load
+00011 - Modules that have base classes should automatically abstract methods to the usable class
 ---------------------------------------------------

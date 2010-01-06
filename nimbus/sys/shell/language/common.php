@@ -63,7 +63,12 @@ $language['run_applications'] = 'Run Applications';
 
 //Menu
 $language['search'] = 'Search';
+$language['advanced_search'] = 'Advanced Search';
 $language['search_more'] = 'Search files and folders';
 $language['quick_apps'] = 'Quick Apps';
+$language['applications'] = 'Applications';
+$language['system'] = 'System';
+$language['places'] = 'Places';
+$language['favorites'] = 'Favorites';
 
 ?>
