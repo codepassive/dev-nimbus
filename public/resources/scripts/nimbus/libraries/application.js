@@ -14,11 +14,16 @@
  */
 (function(){
 	Application = Nimbus.Application = {
+		loaded: [],
 		load: function(name, callback){
-			$.getScript(SERVER_URL + '/?app=' + name, function(result){
-				setTimeout(name +".init();", 0);
-				callback(result);
-			}, "json");			
+			if (!Nimbus.Application.loaded[name] == 1) {
+				$.getScript(SERVER_URL + '/?app=' + name, function(result){
+					//Flag a running instance of the application
+					Nimbus.Application.loaded[name] = true;
+					//Run the callback
+					callback(result);
+				}, "json");
+			}
 		},
 	}
 })();

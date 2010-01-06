@@ -244,7 +244,6 @@ class Session {
 		$useragent = $_SERVER['HTTP_USER_AGENT'];
 		$uid = (defined('CURRENT_USER_ID')) ? CURRENT_USER_ID: 0;
 		$this->__db->query("REPLACE INTO `sessions` (`session_id`, `session_data`, `expires`, `user_id`, `ip`, `useragent`) VALUES('$id', '$data', $time, $uid, '$ip', '$useragent')");
-		//$this->__db->query("INSERT INTO `sessions`(`session_id`, `session_data`, `expires`, `user_id`, `ip`, `useragent`) VALUES('$id', '$data', $time, $uid, '$ip', '$useragent')");
 		return true;
 	}
 

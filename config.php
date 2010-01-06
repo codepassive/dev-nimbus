@@ -13,6 +13,12 @@
  * @license:		GNU/GPLv3, see LICENSE
  * @version:		1.0.0 Alpha
  */
+//App Information
+define('SYS_NAME', 'Nimbus');
+define('SYS_MAJOR_VERSION', '1');
+define('SYS_MINOR_VERSION', '0.0a');
+define('SYS_BUILD', '08ad53e');
+define('SYS_BUILD_NAME', 'Aurora');
 
 //Paths
 define('DS', DIRECTORY_SEPARATOR);

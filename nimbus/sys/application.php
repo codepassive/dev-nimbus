@@ -267,13 +267,23 @@ class Application extends API {
 		return;
 	}
 	
-	public static function bindEvent($event, $id, $handle, $function){
-		$events = Registry::get($handle . '-events');
-		$script = "$('#{$id}').live('{$event}', function(){{$handle}.{$function}(this)});";
-		if (!in_array($script, $events)) {
-			$events[] = $script;
+	public static function bindEvent($event, $id, $handle, $function, $isJS = false){
+		if (is_array($id)) {
+			foreach ($id as $i) {
+				Application::bindEvent($event, $i, $handle, $function, $isJS);
+			}
+		} else {
+			$events = Registry::get($handle . '-events');
+			if ($isJS == false) {
+				$script = "$('#{$id}').live('{$event}', function(){{$handle}.{$function}(this);});";
+			} else {
+				$script = "$('#{$id}').live('{$event}', function(e){{$function}});";
+			}
+			if (!in_array($script, $events)) {
+				$events[] = $script;
+			}
+			Registry::set($handle . '-events', $events);
 		}
-		Registry::set($handle . '-events', $events);
 	}
 
 }

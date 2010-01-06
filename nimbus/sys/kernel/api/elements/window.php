@@ -131,7 +131,7 @@ class window extends Elements implements ElementInterface {
 					$hash = generateHash(microtime());
 					$id = $this->handle . '-button-' . $hash;
 					$output .= '<input type="button" value="' . $button[0] . '" id="' . $id . '" class="proceed"/>';
-					if ($button[1]) {
+					if (isset($button[1])) {
 						Application::bindEvent('click', $id, $this->handle, $button[1]);
 					}
 				}

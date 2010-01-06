@@ -22,7 +22,7 @@
 .window {
 	position: absolute;
 	border: 1px solid #333333;
-	background: rgba(255, 255, 255, 0.5) url('images/window.png') repeat-x center scroll;
+	background: url('images/window.png') repeat-x center scroll;
 	font-size: 11px;
 	-moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
@@ -30,12 +30,13 @@
 	-moz-box-shadow: 0 0 16px #000;
 	-webkit-box-shadow: 0 0 16px #000;
     -moz-user-select: -moz-none;
+	-webkit-user-select: none;
 }
 .window.modal {
 	z-index: 1000;
 }
 	.window .wrapper {
-		border: 1px solid rgba(255, 255, 255, 0.5);
+		border: 1px solid rgba(255, 255, 255, 0.1);
 		-moz-border-radius: 5px;
 		-webkit-border-radius: 5px;
 		-khtml-border-radius: 5px;
@@ -61,10 +62,10 @@
 	.window .outer {
 		clear: both;
 		margin: 4px;
-		border: 1px solid rgba(255, 255, 255, 0.5);
+		border: 1px solid rgba(255, 255, 255, 0.1);
 	}
 	.window .inner {
-		border: 1px solid rgba(0, 0, 0, 0.5);
+		border: 1px solid rgba(0, 0, 0, 1);
 		background: #ffffff;
 	}
 		.window .inner .content {
@@ -75,6 +76,7 @@
 				margin: 8px;
 				cursor: text;
 				-moz-user-select: text;
+				-webkit-user-select: text;
 			}
 			.window .inner .content .message.information, .window .inner .content .message.error, .window .inner .content .message.warning {
 				text-align: left;
@@ -90,8 +92,8 @@
 				background: url('../../images/icons/Tango/32/status/dialog-warning.png') no-repeat left center scroll;
 			}
 		.window .inner .buttons {
-			border-top: 1px solid #ccd9ea;
-			background: #f1f5fb;
+			border-top: 1px solid #a8a8a8;
+			background: #eaeaea;
 			padding: 8px 14px;
 		}
 			.window .inner .buttons a {
@@ -168,5 +170,5 @@ input[type=button], input[type=submit] {
 		.progressbar .inner .bar {
 			background: #babdb6 url('images/progressbar.png') repeat-x top left scroll;
 			width: 0%;
-			height: 12px;
+			height: 6px;
 		}

@@ -38,8 +38,8 @@ html {
 body {
 	background: #000;
 	line-height: 1.5;
-	font-family: 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Tahoma, Arial, Helvetica, Sans-serif;
-	font-size: 62.5%;
+	font-family: 'Segoe UI', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Tahoma, Arial, Helvetica, Sans-serif;
+	font-size: 11px;
 	cursor: default;
 	overflow: hidden;
 	height: 100%;
@@ -58,6 +58,7 @@ table, td, th {
 a {
 	color: #0066cc;
 	text-decoration: none;
+	cursor: default;
 }
 a img {
 	border: none;

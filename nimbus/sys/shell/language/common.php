@@ -24,6 +24,11 @@ $language['titlebar_outside'] = 'Welcome to %s | Open Source Cloud Desktop';
 $language['titlebar_inside'] = '%s@%s | Open Source Cloud Desktop';
 $language['javascript_disabled'] = 'Sorry, but you need to enable Javascript for Nimbus to work properly. Visit <a href="http://nimbusinitiative.org/">the Nimbus Development page</a> for more information.';
 
+//Watermark
+$language['watermark_p1'] = 'You are using a copy of Nimbus';
+$language['watermark_p2'] = SYS_MAJOR_VERSION . '.' . SYS_MINOR_VERSION . ' build ' . SYS_BUILD . ' "' . SYS_BUILD_NAME. '"';
+$language['watermark_p3'] = 'Copyright (c) 2010 Nimbus Development Group';
+
 //Error
 $language['critical_notice'] = 'Critical Notice';
 
@@ -49,6 +54,16 @@ $language['login_incorrect'] = 'You have supplied incorrect Login credentials. P
 $language['login_missing'] = 'Please fill In the required fields above. You cannot login if either the username or password is left blank';
 
 //Startup
-$language['boot_stopped'] = 'Nimbus is not loading normally<br/>Please check your connection or run the <a href="http://diagnose.nimbusinitiative.org/" target="_new">Nimbus diagnostic tool</a>'
+$language['boot_stopped'] = 'Nimbus is not loading normally<br/>Please check your connection or run the <a href="http://diagnose.nimbusinitiative.org/" target="_new">Nimbus diagnostic tool</a>';
+
+//Interface
+$language['nimbusbar_usermenu'] = 'Configure and Manage Users and User Profiles';
+$language['nimbusbar_thebutton'] = 'The button! Everything starts here...most of the time.';
+$language['run_applications'] = 'Run Applications';
+
+//Menu
+$language['search'] = 'Search';
+$language['search_more'] = 'Search files and folders';
+$language['quick_apps'] = 'Quick Apps';
 
 ?>
