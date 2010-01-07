@@ -87,6 +87,13 @@ function checkCompatibility(){
 }
 
 /**
+ * Deserialize serialized values from an array for use
+ */
+function deserialize($arr){
+	return array_map('unserialize', $arr);
+}
+
+/**
  * Function to implement a basic inflector
  *
  * @poram String $key the associative key for the language array

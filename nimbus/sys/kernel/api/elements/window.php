@@ -45,7 +45,7 @@ class window extends Elements implements ElementInterface {
 			'width' => 0,
 			'minWidth' => null,
 			'maxWidth' => null,
-			'icon' => config('appurl') . 'public/resources/images/icons/Tango/16/apps/accessories-text-editor.png',
+			'icon' => config('appurl') . 'public/resources/images/icons/Tango/16/actions/document-new.png',
 			'x' => 0,
 			'y' => 0,
 			'z' => 0,
@@ -82,16 +82,15 @@ class window extends Elements implements ElementInterface {
 		), $options);
 		//Render the position fix
 		$classes = $this->flag('classes');
-		if ($this->flag('x') == 'center') {
-			$classes = array_merge($classes, array('center-x'));
-		}
-		if ($this->flag('y') == 'center') {
-			$classes = array_merge($classes, array('center-y'));
-		}
-		if ($this->flag('modal') == true) {
-			$classes = array_merge($classes, array('modal'));
-		}
+		if ($this->flag('x') == 'center') $classes = array_merge($classes, array('center-x'));
+		if ($this->flag('y') == 'center') $classes = array_merge($classes, array('center-y'));
+		if ($this->flag('modal') == true) $classes = array_merge($classes, array('modal'));
+		if ($this->flag('draggable') == true) $classes = array_merge($classes, array('draggable'));
 		$this->flag('classes', $classes);
+		//Set the styles
+		$this->styles = '';
+		$this->styles .= ($this->flag('width') == 0) ? 'width:200px;': 'width:' . $this->flag('width') . ';';
+		$this->styles .= ($this->flag('height') == 0) ? '': 'height:' . $this->flag('height') . ';';
 	}
 
 	/**

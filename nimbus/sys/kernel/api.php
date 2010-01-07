@@ -132,8 +132,6 @@ class API extends Cloud {
 		//Set Proper Header
 		header('Content-Type: text/javascript');
 		header('HTTP/1.0 200 OK');
-		//Start Output Buffering
-		ob_start();
 		//Generate an ID for the message box
 		$id = 'message-box-' . generateHash(microtime());
 		//Create the Window
@@ -143,10 +141,9 @@ class API extends Cloud {
 		} else {
 			$windop = array_merge($windop, array('closable' => true));
 		}
-		$this->window($windop);
+		$window = $this->window($windop);
 		//Get the contents from the Output Buffer
-		$output = ob_get_contents();
-		ob_end_clean();
+		$output = $window->render();
 		//Echo out the msgbox script
 		if (isset($options['modal']) && $options['modal'] == true) {
 			echo "Nimbus.msgbox(" . json_encode(array('id' => $id, 'modal' => true, 'content' => $output)) . ");\n";

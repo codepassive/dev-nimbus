@@ -24,6 +24,9 @@
 	border: 1px solid #333333;
 	background: url('images/window.png') repeat-x center scroll;
 	font-size: 11px;
+	z-index: 550;
+	top: 70px;
+	left: 20px;
 	-moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
 	-khtml-border-radius: 6px;
@@ -32,6 +35,24 @@
     -moz-user-select: -moz-none;
 	-webkit-user-select: none;
 }
+.window.maximized {
+	top: 33px !important;
+	left: 0 !important;
+	width: 100%;
+	height: 100%;
+	border: 0;
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	-khtml-border-radius: 0;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+}
+	.window.maximized .wrapper {
+		border: 0;
+	}
+		.window .outer {
+			margin: 0;
+		}
 .window.modal {
 	z-index: 1000;
 }
@@ -51,9 +72,11 @@
 			/*width: 24px;
 			height: 24px;*/
 			margin-left: 6px;
+			margin-top: 3px;
 		}
 		.window .titlebar .title {
 			padding: 3px 6px;
+			color: #ffffff;
 			text-shadow: 0 0 5px #ffffff;
 		}
 		.window .titlebar .actions {

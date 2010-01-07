@@ -229,9 +229,11 @@ class User extends Cloud {
 	 * @param	String $object the handle name to an object
 	 */
 	public function isAllowed($object, $id = null){
-		$id = ($id != null) ? $id: '0';
+		if ($this->isLoggedIn()) {
+			$id = $this->id;
+		}
 		$object = strtolower($object);
-		$result = $this->db->select("SELECT * FROM accounts as u,acl as a WHERE $id=a.accessor_id AND a.resource_handle='$object'");
+		$result = $this->db->select("SELECT * FROM accounts as u,acl as a WHERE ($id=a.accessor_id OR 0=a.accessor_id) AND a.resource_handle='$object'");
 		if ($result) {
 			return ($result[0]['allow'] == 1);
 		}

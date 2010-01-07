@@ -13,7 +13,7 @@
 		<div class="outer">
 			<div class="inner">
 				<div class="toolbars-top"><?php $this->toolbars('top'); ?></div>
-				<div class="content">
+				<div class="content"<?php if (!empty($this->styles)) echo ' style="' . $this->styles . '"'; ?>>
 					<?php $this->content(); ?>
 				</div>
 				<?php echo ($this->flag('buttons')) ? '<div class="buttons">' . $this->buttons() . '</div>': '';  ?>

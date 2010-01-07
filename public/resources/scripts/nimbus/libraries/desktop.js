@@ -21,20 +21,76 @@
 		 * Current Workspace the user is on
 		 */
 		currentWorkspace: 1,
+		
+		cache: [],
 
 		/**
 		 * Add an element to the current workspace
 		 */
-		load: function(content, view_id){
+		load: function(content, view_id, options){
 			$('#screen-workspace-' + Nimbus.Desktop.currentWorkspace).append(content);
 			if (view_id) {
 				$('#' + view_id).hide().fadeIn(500);
+				if (options) {
+					$('.window.draggable').draggable({handle:'.window .titlebar .title', stack:{group:'window'}, start:function(){$('.window .content').css({visibility:'hidden'});}, drag:function(){$('.window .content').css({cursor:'move'});}, stop:function(){$('.window .content').css({cursor:'default',visibility:'visible'});}});
+					Nimbus.Desktop.cache[options.handle] = {maximized:false};
+					$('.window .titlebar').dblclick(function(){
+						var win = {};
+						if (Nimbus.Desktop.cache[options.handle].maximized == false) {
+							win = {
+								x: $(this).parents('.window').offset().left,
+								y: $(this).parents('.window').offset().top,
+								height: $(this).parents('.window').height(),
+								width: $(this).parents('.window').width(),
+								maximized: true
+							};		
+							$(this).parents('.window').height('100%'),
+							$(this).parents('.window').width('100%'),				 
+							Nimbus.Desktop.cache[options.handle] = win;
+							$(this).parents('.window').addClass('maximized');
+						} else {
+							win = Nimbus.Desktop.cache[options.handle];
+							Nimbus.Desktop.cache[options.handle].maximized = false;
+							$(this).parents('.window').removeClass('maximized').css({top:win.y,left:win.x,height:win.height,width:win.width});
+						}
+						setTimeout(options.handle + ".redraw();", 0);
+					});
+					//Check if it should be put to the taskbar
+					Nimbus.Application.addToTaskbar(options);
+				}
 			}
 		},
 		
 		unload: function(view_id){
 			$('#' + view_id).fadeOut(500);
 			setTimeout("$('#" + view_id + "').remove();", 500);
+		},
+		
+		addIcon: function(options, callback){
+			options.id = (options.id) ? 'icon-' + options.id: 'icon-' + Math.random();
+			options.name = (options.name) ? options.name: '';
+			options.path = (options.path) ? options.path: '';
+			$('.desktop-icons').prepend('<div class="item" id="' + options.id + '"><div class="icon-inner"><a href="javascript:;" title="' + options.title + '"><img src="' + options.path + '" border="0" alt="" /></a><a href="javascript:;" title="' + options.title + '">' + options.name + '</a></div></div>');
+			//Move if needed
+			if (options.x) { $('#' + options.id).css({left: options.x + 'px'}); }
+			if (options.y) { $('#' + options.id).css({top: options.y + 'px'}); }
+			//Bind the events
+			$('#' + options.id).dblclick(function(){
+				Nimbus.Application.start(options.handle);
+				if (callback != undefined) {
+					callback();				
+				}
+			});
+		},
+		
+		fixIcons: function(){
+			var moveBy = [80, 110];
+			var cur = [12, 54];
+			$('.desktop-icons .item').each(function(i, e){
+				$(this).css({left: cur[0] + 'px'});
+				$(this).css({top: cur[1] + 'px'});
+				cur[1] = cur[1] + moveBy[1];
+			});
 		},
 
 		/**

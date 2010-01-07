@@ -12,3 +12,8 @@
  * @license:		GNU/GPLv3, see LICENSE
  * @version:		1.0.0 Alpha
  */
+String.prototype.capitalize = function(){ //v1.0
+    return this.replace(/\w+/g, function(a){
+        return a.charAt(0).toUpperCase() + a.substr(1).toLowerCase();
+    });
+};

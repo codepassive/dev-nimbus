@@ -24,6 +24,7 @@
 	height: 100%;
 	width: 100%;
 	display: none;
+	overflow: hidden;
 }
 .screen {
 	z-index: 500;

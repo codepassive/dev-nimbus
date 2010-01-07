@@ -58,6 +58,13 @@ class Elements extends API {
 	public $handle;
 
 	/**
+	 * The Styles for the element
+	 *
+	 * @access:	Public
+	 */
+	public $styles;
+
+	/**
 	 * Class constructor
 	 *
 	 * @access:	Public
@@ -129,11 +136,15 @@ class Elements extends API {
 	 * @param:	String $id the option name
 	 * @param:	String $id the value of the option name
 	 */
-	public function flag($id, $value = null){
-		if ($value == null) {
-			return $this->__option($id);
+	public function flag($id = null, $value = null){
+		if ($id) {
+			if ($value == null) {
+				return $this->__option($id);
+			} else {
+				$this->__option($id, $value);
+			}
 		} else {
-			$this->__option($id, $value);
+			return $this->options;
 		}
 	}
 
