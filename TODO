@@ -28,4 +28,5 @@ TODO#	Description
 00009 - Session does not Work
 00010 - Token does not work with Session, Generates every page load
 00011 - Modules that have base classes should automatically abstract methods to the usable class
+00012 - Rewrite the whole JS class since EVERYTHING is not modular and orthagonal
 ---------------------------------------------------

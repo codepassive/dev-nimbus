@@ -27,7 +27,7 @@ $language['javascript_disabled'] = 'Sorry, but you need to enable Javascript for
 //Watermark
 $language['watermark_p1'] = 'You are using a copy of Nimbus';
 $language['watermark_p2'] = SYS_MAJOR_VERSION . '.' . SYS_MINOR_VERSION . ' build ' . SYS_BUILD . ' "' . SYS_BUILD_NAME. '"';
-$language['watermark_p3'] = 'Copyright (c) 2010 Nimbus Development Group';
+$language['watermark_p3'] = 'Copyright &#0169; 2010 Nimbus Development Group';
 
 //Error
 $language['critical_notice'] = 'Critical Notice';

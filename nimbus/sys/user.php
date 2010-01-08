@@ -232,8 +232,9 @@ class User extends Cloud {
 		if ($this->isLoggedIn()) {
 			$id = $this->id;
 		}
+		$id = ($id) ? $id: 0;
 		$object = strtolower($object);
-		$result = $this->db->select("SELECT * FROM accounts as u,acl as a WHERE ($id=a.accessor_id OR 0=a.accessor_id) AND a.resource_handle='$object'");
+		$result = $this->db->select("SELECT * FROM accounts as u,acl as a WHERE ($id=a.accessor_id AND a.resource_handle='$object') OR (0=a.accessor_id AND a.resource_handle='$object')");
 		if ($result) {
 			return ($result[0]['allow'] == 1);
 		}

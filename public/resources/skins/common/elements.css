@@ -24,9 +24,9 @@
 	border: 1px solid #333333;
 	background: url('images/window.png') repeat-x center scroll;
 	font-size: 11px;
-	z-index: 550;
 	top: 70px;
 	left: 20px;
+	z-index: 530;
 	-moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
 	-khtml-border-radius: 6px;
@@ -81,7 +81,39 @@
 		}
 		.window .titlebar .actions {
 			float: right;
+			margin-right: 4px;
 		}
+			.window .titlebar .actions .action {
+				margin-top: 4px;
+				height: 16px;
+				width: 16px;
+				float: left;
+				display: block;
+			}
+				.window .titlebar .actions .action-minimizable {
+					background: url('images/minimize.png') no-repeat center scroll;
+				}
+				.window .titlebar .actions .action-minimizable:hover {
+					background: url('images/minimize-hover.png') no-repeat center scroll;
+				}
+				.window .titlebar .actions .action-toggable{
+					background: url('images/toggable2.png') no-repeat center scroll;
+				}
+				.window .titlebar .actions .action-toggable:hover {
+					background: url('images/toggable2-hover.png') no-repeat center scroll;
+				}
+				.window.maximized .titlebar .actions .action-toggable{
+					background: url('images/toggable.png') no-repeat center scroll;
+				}
+				.window.maximized .titlebar .actions .action-toggable:hover {
+					background: url('images/toggable-hover.png') no-repeat center scroll;
+				}
+				.window .titlebar .actions .action-closable {
+					background: url('images/close.png') no-repeat center scroll;
+				}
+				.window .titlebar .actions .action-closable:hover {
+					background: url('images/close-hover.png') no-repeat center scroll;
+				}
 	.window .outer {
 		clear: both;
 		margin: 4px;

@@ -153,7 +153,12 @@ function generatePassword($password){
  */
 function request($name){
 	$user = Cloud::getInstance();
-	return (isset($user->request->items[$name])) ? $user->request->items[$name]: false;
+	if (isset($user->request->items[$name]) && empty($user->request->items[$name])) {
+		return true;
+	} else if(isset($user->request->items[$name]) && !empty($user->request->items[$name])) {
+		return $user->request->items[$name];
+	}
+	return false;
 }
 
 /**

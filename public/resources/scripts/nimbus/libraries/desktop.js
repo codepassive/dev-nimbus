@@ -32,33 +32,72 @@
 			if (view_id) {
 				$('#' + view_id).hide().fadeIn(500);
 				if (options) {
-					$('.window.draggable').draggable({handle:'.window .titlebar .title', stack:{group:'window'}, start:function(){$('.window .content').css({visibility:'hidden'});}, drag:function(){$('.window .content').css({cursor:'move'});}, stop:function(){$('.window .content').css({cursor:'default',visibility:'visible'});}});
-					Nimbus.Desktop.cache[options.handle] = {maximized:false};
-					$('.window .titlebar').dblclick(function(){
-						var win = {};
-						if (Nimbus.Desktop.cache[options.handle].maximized == false) {
-							win = {
-								x: $(this).parents('.window').offset().left,
-								y: $(this).parents('.window').offset().top,
-								height: $(this).parents('.window').height(),
-								width: $(this).parents('.window').width(),
-								maximized: true
-							};		
-							$(this).parents('.window').height('100%'),
-							$(this).parents('.window').width('100%'),				 
-							Nimbus.Desktop.cache[options.handle] = win;
-							$(this).parents('.window').addClass('maximized');
-						} else {
-							win = Nimbus.Desktop.cache[options.handle];
-							Nimbus.Desktop.cache[options.handle].maximized = false;
-							$(this).parents('.window').removeClass('maximized').css({top:win.y,left:win.x,height:win.height,width:win.width});
-						}
-						setTimeout(options.handle + ".redraw();", 0);
-					});
+					//Events
+					view_id = view_id.replace("view_", "");
+					Nimbus.Desktop.cache[view_id] = {maximized:false};
+					$('#' + view_id).click(function(){$(this).css({zIndex:($('.window').css('zIndex') + 50)});});
+					$('#' + view_id + '.draggable').draggable({opacity: 0.7, handle:'.titlebar', stack:{group:'.draggable', min: 550}, start:function(){$(this).find('.content').css({visibility:'hidden'});$(this).find('.titlebar .title').css({cursor:'move'});}, stop:function(){$(this).find('.content').css({visibility:'visible'});$(this).find('.titlebar .title').css({cursor:'default'});}});
+					$('#' + view_id + ' .action-minimizable').click(function(){Nimbus.Desktop.window.minimize(view_id);});
+					$('#' + view_id + ' .action-toggable').click(function(){Nimbus.Desktop.window.toggable(view_id, options.handle);});
+					$('#' + view_id + ' .titlebar').dblclick(function(){Nimbus.Desktop.window.toggable(view_id, options.handle);});
+					$('#' + view_id + ' .action-closable').click(function(){Nimbus.Desktop.window.close(view_id, options.handle);});
 					//Check if it should be put to the taskbar
 					Nimbus.Application.addToTaskbar(options);
 				}
 			}
+		},
+		
+		window: {
+			close: function(id, options){
+				Nimbus.Application.removeFromTaskbar(id);
+				Nimbus.Application.close(id, options);
+			},
+			minimize: function(window){
+				Nimbus.Desktop.window.hide(window);
+				$('#nimbusbar-taskbar .items .item').removeClass('active');
+			},
+			toggable: function(id, options){
+				var win = {};
+				if (Nimbus.Desktop.cache[id].maximized == false) {
+					win = {
+						x: $('#' + id).offset().left,
+						y: $('#' + id).offset().top,
+						height: $('#' + id).height(),
+						width: $('#' + id).width(),
+						maximized: true
+					};
+					$('#' + id).height('100%'),
+					$('#' + id).width('100%'),
+					Nimbus.Desktop.cache[id] = win;
+					$('#' + id).addClass('maximized');
+				} else {
+					win = Nimbus.Desktop.cache[id];
+					Nimbus.Desktop.cache[id].maximized = false;
+					$('#' + id).removeClass('maximized').css({top:win.y,left:win.x,height:win.height,width:win.width});
+				}
+			},
+			show: function(id){
+				$('#' + id).show(400, function(){
+					$(this).css({zIndex:($('.window').css('zIndex') + 50)});
+				});
+			},
+			hide: function(id){
+				$('#' + id).hide(400, function(){
+					$(this).hide(0);
+				});
+			},
+			toggle: function(id){
+				$('#' + id).toggle(400, function(){
+					$(this).css({zIndex:($('.window').css('zIndex') + 50)});
+				});
+			},
+		},
+		
+		notify: function(options){
+			options.message;
+			if (options.click) {
+				options.click();
+			}			
 		},
 		
 		unload: function(view_id){
@@ -70,27 +109,23 @@
 			options.id = (options.id) ? 'icon-' + options.id: 'icon-' + Math.random();
 			options.name = (options.name) ? options.name: '';
 			options.path = (options.path) ? options.path: '';
-			$('.desktop-icons').prepend('<div class="item" id="' + options.id + '"><div class="icon-inner"><a href="javascript:;" title="' + options.title + '"><img src="' + options.path + '" border="0" alt="" /></a><a href="javascript:;" title="' + options.title + '">' + options.name + '</a></div></div>');
+			$('.desktop-icons').prepend('<div class="icon"><div class="item" id="' + options.id + '"><div class="icon-inner"><a href="javascript:;" title="' + options.title + '"><img src="' + options.path + '" border="0" alt="" /></a><a href="javascript:;" title="' + options.title + '">' + options.name + '</a></div></div></div>');
 			//Move if needed
 			if (options.x) { $('#' + options.id).css({left: options.x + 'px'}); }
 			if (options.y) { $('#' + options.id).css({top: options.y + 'px'}); }
 			//Bind the events
+			$('.desktop-icons .item').draggable({delay:200,stack:{group:'.desktop-icons .item', min: 520}}).click(function(){
+				$('.desktop-icons .item').removeClass('active');
+				//$(this).addClass('selected');
+			});
+			//$('.desktop-icons .item a').click(function(){$(this).addClass('active');});
 			$('#' + options.id).dblclick(function(){
-				Nimbus.Application.start(options.handle);
+				Nimbus.Application.load(options.handle);
 				if (callback != undefined) {
 					callback();				
 				}
 			});
-		},
-		
-		fixIcons: function(){
-			var moveBy = [80, 110];
-			var cur = [12, 54];
-			$('.desktop-icons .item').each(function(i, e){
-				$(this).css({left: cur[0] + 'px'});
-				$(this).css({top: cur[1] + 'px'});
-				cur[1] = cur[1] + moveBy[1];
-			});
+			
 		},
 
 		/**

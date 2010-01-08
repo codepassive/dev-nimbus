@@ -72,6 +72,14 @@ class Application extends API {
 	public $styles = array();
 
 	/**
+	 * Determine whether an Application uses multiple instances
+	 *
+	 * @access	Public
+	 */
+	
+	public $multiple = false;
+
+	/**
 	 * Class constructor
 	 *
 	 * @access	Public
@@ -97,10 +105,6 @@ class Application extends API {
 		if ($this->user->isAllowed($this->name) || $force === true) {
 			//Register the instance onto the system
 			$this->instance = $this->register($this->name);
-			//Load View and set its style
-			foreach ($this->styles as $style) {
-				$this->html->link($this->config->appurl . '?res=' . $style);
-			}
 			//The actual output is generated with this internal method
 			$this->init();
 		} else {
@@ -134,16 +138,42 @@ class Application extends API {
 					$app = new $name();
 					$action = request('action');
 					if (!$action) {
-						$app->__init($app->force);
-						if (method_exists($app, 'main')) {
-							$app->view($app->main());
-						}
-						//Use the Native Script
-						$app->script($app->api_handle);
-						//Display the Events
-						$app->output .= $app->events();
-						if (!request('action')) {
-							$app->output .= "\n//Initialize the App\n" . $app->api_handle . ".init();";
+						if (!request('new')) {
+							//Load View and set its style
+							if ($app->user->isAllowed($app->name)) {
+								foreach ($app->styles as $style) {
+									$app->html->link($app->config->appurl . '?res=' . $style);
+								}
+							}
+							//Define the instance helper variables
+							$app->output .= 'var ' . $app->api_handle . ' = [];' . "\n";
+							$app->output .= 'var ' . $app->api_handle . '_instance = 0;' . "\n";
+							//Show the Instance
+							$app->__init($app->force);
+							if (method_exists($app, 'main')) {
+								$app->view($app->main());
+							}
+							//Use the Native Script
+							$app->script($app->api_handle);
+							//Display the Events
+							$app->output .= $app->events();
+							if (!request('action')) {
+								if ($app->multiple == true) {
+									$app->output .= "\n//Initialize the App\n" . $app->api_handle . "[0].init();" . 
+													"\n" . $app->api_handle . "[1] = " . $app->api_handle . "[0];" . 
+													"\n";
+								} else {
+									$app->output .= "\n//Initialize the App\n" . $app->api_handle . ".init();";
+								}
+							}
+						} else {
+							//Show the Instance
+							$app->__init($app->force);
+							if (method_exists($app, 'main')) {
+								$app->view($app->main());
+							}
+							//Use the Native Script
+							$app->script($app->api_handle);
 						}
 					} else {
 						$params = array();

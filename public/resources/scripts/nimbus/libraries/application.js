@@ -16,7 +16,7 @@
 	Application = Nimbus.Application = {
 		loaded: [],
 		load: function(name, callback){
-			if (!Nimbus.Application.loaded[name] == 1) {
+			if (Nimbus.Application.loaded[name] != true) {
 				$.getScript(SERVER_URL + '/?app=' + name, function(result){
 					//Flag a running instance of the application
 					Nimbus.Application.loaded[name] = true;
@@ -25,31 +25,36 @@
 						callback(result);
 					}
 				}, "json");
-			}
-		},
-		start: function(name, callback){
-			if (Nimbus.Application.loaded[name] == true) {
-				name = name.capitalize();
-				setTimeout(name + ".init();", 0);
 			} else {
-				Nimbus.Application.load(name, callback);
+				name = name.capitalize();
+				$.getScript(SERVER_URL + '/?app=' + name + '&new', function(result){
+					eval(name + "_instance++;if(" + name + "_instance > 0){" + name + "[" + name + "_instance].init();" + name + "[" + name + "_instance + 1] = " + name + "[0];}");
+				});
 			}
-		},		
-		addToTaskbar: function(options, callback){
-			options.id = (options.id) ? 'taskbar-instance-' + options.id: 'taskbar-instance-' + Math.random();
+		},	
+		addToTaskbar: function(options){
+			var id = 'taskbarinstance-' + options.id;
 			$('#nimbusbar-taskbar-noinstances:visible').hide(500);
 			$('#nimbusbar-taskbar .items .item').removeClass('active');
-			$('#nimbusbar-taskbar .items').append('<div class="item active" id="' + options.id + '"><a href="javascript:;" title="' + options.title + '"><span class="instance-name">' + options.title + '</span></a></div>');
-			$('#' + options.id + ' a').hide(0).fadeIn(500).css({backgroundImage:"url('" + options.icon + "')"});
+			$('#nimbusbar-taskbar .items').prepend('<div class="item active" id="' + id + '"><a href="javascript:;" title="' + options.title + '"><span class="instance-name">' + options.title + '</span></a></div>');
+			$('#' + id + ' a').hide(0).fadeIn(500).css({backgroundImage:"url('" + options.icon + "')"});
 			//Bind the events
-			$('#nimbusbar-taskbar .items .item').click(function(){
+			$('#' + id).click(function(){
+				var id = $(this).attr('id');
+				Nimbus.Desktop.window.toggle(id.replace("taskbarinstance-", ""));
 				$('#nimbusbar-taskbar .items .item').removeClass('active');
 				$(this).addClass('active');
-				/*Nimbus.Application.show(options.handle);
-				if (callback != undefined) {
-					callback();
-				}*/
 			});
 		},
+		removeFromTaskbar: function(id){
+			var id = '#taskbarinstance-' + id;
+			$(id).fadeOut(500);
+			setTimeout("$('" + id + "').remove()", 500);
+		},
+		close: function(id, options){
+			$('#' + id).fadeOut(500);
+			setTimeout("$('#" + id + "').remove();if ($('#nimbusbar-taskbar .items .item').length == 0){$('#nimbusbar-taskbar-noinstances:hidden').show(500);}", 500);
+			
+		}
 	}
 })();
