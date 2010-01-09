@@ -126,6 +126,10 @@
 		.window .inner .content {
 			text-align: left;
 		}
+			.window .inner .content .toolbar {
+				height: 26px;
+				width: 100%;
+			}
 			.window .inner .content .message {
 				padding: 8px 0px;
 				margin: 8px;

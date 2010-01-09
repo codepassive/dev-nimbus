@@ -127,6 +127,16 @@ class API extends Cloud {
 	public function window($options = array()){
 		return $this->element('window', $options);
 	}
+
+	/**
+	 * Get the Window toolbar
+	 *
+	 * @access:	Public
+	 * @param:	Array $options array of options for the element
+	 */
+	public function toolbar($options = array()){
+		return $this->element('toolbar', $options);
+	}
 	
 	public function msgbox($options = array()){
 		//Set Proper Header

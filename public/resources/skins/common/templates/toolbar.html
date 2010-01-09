@@ -1,0 +1,8 @@
+<div class="toolbar <?php $this->option('as'); ?>">
+	<ul class="items">
+	<?php
+		$items = $this->flag('items');
+		$this->recurse($items); 
+	?>
+	</ul>
+</div>

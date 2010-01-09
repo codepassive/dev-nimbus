@@ -110,7 +110,13 @@ class window extends Elements implements ElementInterface {
 	public function toolbars($id){
 		$toolbars = $this->flag('toolbars');
 		if (isset($toolbars[$id])) {
-			echo implode("", $toolbars[$id]);
+			foreach($toolbars[$id] as $toolbar){
+				if (is_object($toolbar)) {
+					echo $toolbar->render();
+				} else {
+					echo $toolbar;
+				}
+			}
 		}
 	}
 

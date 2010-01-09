@@ -135,7 +135,8 @@ function is_url($url){
  *
  * @poram String $input the string to be hashed
  */
-function generateHash($input){
+function generateHash($input = null){
+	$input = ($input == null) ? microtime(): $input;
 	return substr(sha1(md5($input)), 0, 9);
 }
 
