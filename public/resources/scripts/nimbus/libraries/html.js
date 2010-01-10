@@ -14,10 +14,14 @@
  */
 (function(){
 	HTML = Nimbus.HTML = {
+		loaded: [],
 		head: function(elem, type, src, rel){
 			switch (elem) {
 				case "link":
-					$('head').append('<link rel="' + rel + '" href="' + src + '" type="' + type + '" />');
+					if (!Nimbus.HTML.loaded[src]) {
+						$('head').append('<link rel="' + rel + '" href="' + src + '" type="' + type + '" />');
+						Nimbus.HTML.loaded[src] = src;
+					}
 				break;
 			}
 		}

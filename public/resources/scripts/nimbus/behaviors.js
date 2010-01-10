@@ -17,3 +17,12 @@ String.prototype.capitalize = function(){ //v1.0
         return a.charAt(0).toUpperCase() + a.substr(1).toLowerCase();
     });
 };
+
+$(function(){
+	$(window).resize(function(){
+		$('.window').each(function(){
+			var id = $(this).attr('id');
+			Nimbus.Desktop.window.redraw(id);
+		});
+	});
+});

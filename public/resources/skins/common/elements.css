@@ -41,6 +41,7 @@
 	width: 100%;
 	height: 100%;
 	border: 0;
+	z-index: 530;
 	-moz-border-radius: 0;
 	-webkit-border-radius: 0;
 	-khtml-border-radius: 0;
@@ -57,13 +58,17 @@
 	z-index: 1000;
 }
 	.window .wrapper {
-		border: 1px solid rgba(255, 255, 255, 0.1);
+		border: 1px solid rgba(255, 255, 255, 0.5);
 		-moz-border-radius: 5px;
 		-webkit-border-radius: 5px;
 		-khtml-border-radius: 5px;
 	}
-	.window .titlebar {
-		
+	.window.maximized .wrapper {
+		border: 0;
+	}
+	.window .titlebar {}
+	.window.maximized .titlebar {
+		padding: 4px 0;
 	}
 		.window .titlebar .icon, .window .titlebar .title {
 			float: left;
@@ -76,7 +81,7 @@
 		}
 		.window .titlebar .title {
 			padding: 3px 6px;
-			color: #ffffff;
+			color: #000000;
 			text-shadow: 0 0 5px #ffffff;
 		}
 		.window .titlebar .actions {
@@ -117,19 +122,122 @@
 	.window .outer {
 		clear: both;
 		margin: 4px;
-		border: 1px solid rgba(255, 255, 255, 0.1);
+		border: 1px solid rgba(255, 255, 255, 0.4);
+	}
+	.window.maximized .outer {
+		border: 0;
+		margin: 0;
 	}
 	.window .inner {
-		border: 1px solid rgba(0, 0, 0, 1);
+		border: 1px solid rgba(0, 0, 0, 0.8);
 		background: #ffffff;
+	}
+	.window.maximized .inner {
+		border: 0;
+		border-top: 1px solid rgba(0, 0, 0, 0.8);
 	}
 		.window .inner .content {
 			text-align: left;
 		}
-			.window .inner .content .toolbar {
-				height: 26px;
-				width: 100%;
+		.window .inner .toolbars-top {
+			background: #e1e6f6 url('images/toolbar.png') repeat-x top left scroll;
+			border: 1px solid #ffffff;
+			border-top: 0;
+		}
+		.window .inner .toolbar {
+			width: 100%;
+			border-top: 1px solid #ffffff;
+			border-bottom: 1px solid #b6bccc;
+		}
+			.window .toolbar .item {
+				float: left;
+				display: block;
 			}
+				.window .toolbar a {
+					display: block;
+					margin: 1px;
+					color: #000000;
+					text-shadow: 0 1px 0 #ffffff;
+					border: 1px solid transparent;
+				}
+					.window .toolbar a span {
+						display: block;
+						padding: 2px 6px;
+						border: 1px solid transparent;
+					}
+					.window .toolbar a:hover {
+						border: 1px solid rgba(0, 0, 0, 0.3);
+						-moz-border-radius: 3px;
+						-webkit-border-radius: 3px;
+						-khtml-border-radius: 3px;
+					}
+					.window .toolbar a:hover span {
+						border: 1px solid rgba(255, 255, 255, 0.5);
+						-moz-border-radius: 3px;
+						-webkit-border-radius: 3px;
+						-khtml-border-radius: 3px;
+					}
+				.window .toolbar .item .text {
+					float: left;
+					margin-right: 48px;
+					padding-left: 32px;
+				}
+				.window .toolbar .item .shortcut {
+					font-size: 90%;
+					float: right;
+					margin-right: 4px;
+					text-align: right;
+				}
+			.window .toolbar .item .child {
+				display: none;
+				position: absolute;
+				z-index: 700;
+				margin-top: -1px;
+				border: 1px solid #979797;
+				background: #f0f0f0 url('images/toolbarmenu.png') repeat-y top left scroll;
+				-moz-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+				-webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+			}
+				.window .toolbar .item .child ul {
+					border: 2px solid #f5f5f5;
+				}
+					.window .toolbar .item .child li, .window .toolbar .child.parent li {
+						clear: both;
+						display: block;
+					}
+					.window .toolbar .separator {
+						clear: both;
+						display: block;
+						height: 1px;
+						margin-left: 32px;
+						padding-left: 0;
+						border-top: 1px solid #e0e0e0;
+					}
+						.window .toolbar .separator span {
+							display: block;
+							border-bottom: 1px solid #ffffff;
+						}
+					.window .toolbar .item .child li.disabled a {
+						color: #6d6d6d;
+					}
+					.window .toolbar .item .child li:hover {
+						border: 1px solid #aecff7;
+						background: rgba(174, 207, 247, 0.1);
+						-moz-border-radius: 3px;
+						-webkit-border-radius: 3px;
+						-khtml-border-radius: 3px;
+					}
+						.window .toolbar .item .child li:hover a, .window .toolbar .item .child .separator:hover  {
+							border: 0;
+							background: transparent;
+						}
+						.window .toolbar .item .child .separator:hover span  {
+							border-top: 1px solid #e0e0e0;
+						}
+					.window .toolbar .item .child li.disabled:hover {
+						border: 1px solid transparent;
+						background: transparent;
+					}
 			.window .inner .content .message {
 				padding: 8px 0px;
 				margin: 8px;

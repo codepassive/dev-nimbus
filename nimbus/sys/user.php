@@ -67,6 +67,7 @@ class User extends Cloud {
 		if ($this->isLoggedIn()) {
 			$this->__information = (isset($this->__information->id)) ? $this->__information: $this->session->get('user-information');
 			$this->id = $this->__information->account_id;
+			$this->username = $this->__information->username;
 			$this->meta();
 			$this->personal();
 		}

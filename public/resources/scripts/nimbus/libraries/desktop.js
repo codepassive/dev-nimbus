@@ -38,9 +38,34 @@
 					$('#' + view_id).click(function(){$(this).css({zIndex:($('.window').css('zIndex') + 50)});});
 					$('#' + view_id + '.draggable').draggable({opacity: 0.7, handle:'.titlebar', stack:{group:'.draggable', min: 550}, start:function(){$(this).find('.content').css({visibility:'hidden'});$(this).find('.titlebar .title').css({cursor:'move'});}, stop:function(){$(this).find('.content').css({visibility:'visible'});$(this).find('.titlebar .title').css({cursor:'default'});}});
 					$('#' + view_id + ' .action-minimizable').click(function(){Nimbus.Desktop.window.minimize(view_id);});
-					$('#' + view_id + ' .action-toggable').click(function(){Nimbus.Desktop.window.toggable(view_id, options.handle);});
-					$('#' + view_id + ' .titlebar').dblclick(function(){Nimbus.Desktop.window.toggable(view_id, options.handle);});
+					$('#' + view_id + ' .action-toggable').click(function(){Nimbus.Desktop.window.toggable(view_id);});
+					$('#' + view_id + ' .titlebar').dblclick(function(){Nimbus.Desktop.window.toggable(view_id);});
 					$('#' + view_id + ' .action-closable').click(function(){Nimbus.Desktop.window.close(view_id, options.handle);});
+					//Toolbars
+					$('#' + view_id + ' .toolbar a.parent').each(function(){
+						$(this).toggle(function(){
+							$('.toolbar .child').hide();
+							$(this).next().show();
+							$('.toolbar a.parent').not('.parent-text').mouseover(function(){
+								var elem = this;
+								$('.toolbar .child').hide();
+								$(this).next().show();
+								$('body').click(function(e){if ($(e.target).parents('.toolbar').length == 0) {
+									$(elem).unbind('mouseover');
+								}});
+							});
+						}, function(){
+							$('.toolbar .child').hide();
+						});
+						$(this).find('a').each(function(){
+							$(this).hover(function(){
+								$(this).('.child').hide();
+								alert($(this).('.child').html());
+								$(this).('.child').next().show();
+							});
+						});
+					});
+					$('body').click(function(e){if ($(e.target).parents('.toolbar').length == 0) {$('.toolbar .child').hide();}});
 					//Check if it should be put to the taskbar
 					Nimbus.Application.addToTaskbar(options);
 				}
@@ -56,25 +81,41 @@
 				Nimbus.Desktop.window.hide(window);
 				$('#nimbusbar-taskbar .items .item').removeClass('active');
 			},
-			toggable: function(id, options){
+			redraw: function(window){
+				//Fix the window height
+				if ($('#' + window).hasClass('.maximized')) {
+					$('#' + window + ' .content').height($(document).height() - ($('#nimbusbar').height() + 56));
+				}
+				//Fix the Content Height
+				var height = $('#' + window + ' .toolbars-top').height() + $('#' + window + ' .toolbars-bottom').height() + $('#' + window + ' .buttons').height();
+				$('#' + window + ' .content').height(($('#' + window + ' .content').height() - ($('#' + window).height() - height)));
+				//Fix the FILL-AREA height
+				var height = $('#' + window + ' .content').height();
+				var width = $('#' + window + ' .inner').width();
+				$('#' + window + ' .fill-all').height((height - 2)).width((width - 2));
+				//Fix width? If not 100%
+			},
+			toggable: function(id){
 				var win = {};
 				if (Nimbus.Desktop.cache[id].maximized == false) {
 					win = {
 						x: $('#' + id).offset().left,
 						y: $('#' + id).offset().top,
-						height: $('#' + id).height(),
+						height: $('#' + id + ' .content').height(),
 						width: $('#' + id).width(),
 						maximized: true
 					};
-					$('#' + id).height('100%'),
+					$('#' + id + ' .content').height($(document).height() - ($('#nimbusbar').height() + 56)),
 					$('#' + id).width('100%'),
 					Nimbus.Desktop.cache[id] = win;
-					$('#' + id).addClass('maximized');
+					$('#' + id).addClass('maximized').removeClass('draggable');
 				} else {
 					win = Nimbus.Desktop.cache[id];
 					Nimbus.Desktop.cache[id].maximized = false;
-					$('#' + id).removeClass('maximized').css({top:win.y,left:win.x,height:win.height,width:win.width});
+					$('#' + id).removeClass('maximized').addClass('draggable').css({top:win.y,left:win.x,width:win.width});
+					$('#' + id + ' .content').height(win.height);
 				}
+				Nimbus.Desktop.window.redraw(id);
 			},
 			show: function(id){
 				$('#' + id).show(400, function(){

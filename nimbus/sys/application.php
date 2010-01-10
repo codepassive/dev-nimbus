@@ -174,6 +174,8 @@ class Application extends API {
 							}
 							//Use the Native Script
 							$app->script($app->api_handle);
+							//Display the Events
+							$app->output .= $app->events();
 						}
 					} else {
 						$params = array();
@@ -295,7 +297,6 @@ class Application extends API {
 		$e = Registry::get($this->api_handle . '-events');
 		if ($e) {
 			$output = "\n//Events\n";
-			unset($e[0]);
 			$output .= implode("\n", $e);
 			return $output;
 		}
