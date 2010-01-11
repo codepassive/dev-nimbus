@@ -103,6 +103,10 @@ function __($name, $replace = null, $echo = true) {
 	if (!is_array($replace)) {
 		$replace = array($replace);
 	}
+	if (strstr($name, "/")) {
+		$tree = explode("/", $name);
+		$language[$name] = $language[$tree[0]][$tree[1]];
+	}
 	if (isset($language[$name])) {
 		if (!empty($replace)) {
 			$lang = call_user_func_array('sprintf', array_merge(array($language[$name]), $replace));

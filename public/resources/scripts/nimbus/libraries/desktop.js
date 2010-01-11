@@ -35,11 +35,11 @@
 					//Events
 					view_id = view_id.replace("view_", "");
 					Nimbus.Desktop.cache[view_id] = {maximized:false};
-					$('#' + view_id).click(function(){$(this).css({zIndex:($('.window').css('zIndex') + 50)});});
+					$('#' + view_id).click(function(){var id = $('#' + view_id).attr('id');$('#nimbusbar-taskbar .items .item').removeClass('active');$('#taskbarinstance-' + view_id).addClass('active');$(this).css({zIndex:($('.window').css('zIndex') + 50)});});
 					$('#' + view_id + '.draggable').draggable({opacity: 0.7, handle:'.titlebar', stack:{group:'.draggable', min: 550}, start:function(){$(this).find('.content').css({visibility:'hidden'});$(this).find('.titlebar .title').css({cursor:'move'});}, stop:function(){$(this).find('.content').css({visibility:'visible'});$(this).find('.titlebar .title').css({cursor:'default'});}});
 					$('#' + view_id + ' .action-minimizable').click(function(){Nimbus.Desktop.window.minimize(view_id);});
 					$('#' + view_id + ' .action-toggable').click(function(){Nimbus.Desktop.window.toggable(view_id);});
-					$('#' + view_id + ' .titlebar').dblclick(function(){Nimbus.Desktop.window.toggable(view_id);});
+					$('#' + view_id + '.toggable .titlebar').dblclick(function(){Nimbus.Desktop.window.toggable(view_id);});
 					$('#' + view_id + ' .action-closable').click(function(){Nimbus.Desktop.window.close(view_id, options.handle);});
 					//Toolbars
 					$('#' + view_id + ' .toolbar a.parent').each(function(){
@@ -73,13 +73,17 @@
 		},
 		
 		window: {
+			title: function(id, title) {
+				$('#taskbarinstance-' + id + ' .instance-name').text(title);
+				$('#' + id + ' .title').text(title);
+			},
 			close: function(id, options){
 				Nimbus.Application.removeFromTaskbar(id);
 				Nimbus.Application.close(id, options);
 			},
 			minimize: function(window){
-				Nimbus.Desktop.window.hide(window);
 				$('#nimbusbar-taskbar .items .item').removeClass('active');
+				Nimbus.Desktop.window.hide(window);
 			},
 			redraw: function(window){
 				//Fix the window height
