@@ -33,9 +33,18 @@ $language['watermark_p3'] = 'Copyright &#0169; 2010 Nimbus Development Group';
 $language['critical_notice'] = 'Critical Notice';
 
 //Common
+$language['default'] = 'Default';
 $language['loading'] = 'Loading';
 $language['started'] = 'started';
 $language['stopped'] = 'stopped';
+$language['proceed'] = 'Proceed';
+$language['cancel'] = 'Cancel';
+$language['timezone'] = 'Timezone';
+$language['time'] = 'Time';
+$language['date'] = 'Date';
+$language['format'] = 'Format';
+$language['language'] = 'Language';
+$language['systempreferences'] = 'System Preferences';
 
 //Benchmark
 $language['benchmark_output'] = '"%s" generated in %d ms';
@@ -52,6 +61,7 @@ $language['password'] = 'Password';
 $language['language'] = 'Language';
 $language['login_incorrect'] = 'You have supplied incorrect Login credentials. Please make sure you have entered the correct Username and Password combination';
 $language['login_missing'] = 'Please fill In the required fields above. You cannot login if either the username or password is left blank';
+$language['logout_message'] = 'Are you sure you want to end your current session? Opened applications and instances will be saved.';
 
 //Startup
 $language['boot_stopped'] = 'Nimbus is not loading normally<br/>Please check your connection or run the <a href="http://diagnose.nimbusinitiative.org/" target="_new">Nimbus diagnostic tool</a>';
@@ -70,5 +80,17 @@ $language['applications'] = 'Applications';
 $language['system'] = 'System';
 $language['places'] = 'Places';
 $language['favorites'] = 'Favorites';
+//Usermenu
+$language['usermenu']['setstatus'] = 'Set Status';
+$language['usermenu']['lockscreen'] = 'Lock Screen';
+$language['usermenu']['logoff'] = 'Log off';
+$language['usermenu']['personalize'] = 'Personalize Nimbus';
+$language['usermenu']['personal'] = 'Personal Information';
+$language['usermenu']['configuserpermissions'] = 'Configure Users &amp; Permissions';
+$language['usermenu']['attachexternal'] = 'Attach external Accounts';
+$language['usermenu']['logintomessenger'] = 'Log into Messenger';
+$language['usermenu']['checkmail'] = 'Check Emails';
+$language['usermenu']['livenews'] = 'View Live News';
+
 
 ?>

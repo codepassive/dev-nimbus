@@ -155,11 +155,14 @@ class API extends Cloud {
 		//Get the contents from the Output Buffer
 		$output = $window->render();
 		//Echo out the msgbox script
+		$html = ($options['html'] == true) ? true: false;
 		if (isset($options['modal']) && $options['modal'] == true) {
-			echo "Nimbus.msgbox(" . json_encode(array('id' => $id, 'modal' => true, 'content' => $output)) . ");\n";
+			$options = array('id' => $id, 'modal' => true, 'content' => $output);
 		} else {
-			echo "Nimbus.msgbox(" . json_encode(array('id' => $id, 'content' => $output)) . ");\n";
+			$options = array('id' => $id, 'content' => $output);
 		}
+		$options['html'] = $html;
+		echo "Nimbus.msgbox(" . json_encode($options) . ");\n";
 	}
 
 }

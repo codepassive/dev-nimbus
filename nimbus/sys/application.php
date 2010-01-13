@@ -110,7 +110,7 @@ class Application extends API {
 		} else {
 			//Return a JSON code that permission check failed
 			global $language;
-			$this->msgbox(array('text' => $language['error_000G'] . ' #000G', 'type' => 'error', 'title' => $language['error_title'], 'noChoice' => true));
+			$this->msgbox(array('text' => $language['error_000G'] . ' #000G', 'type' => 'error', 'title' => $language['error_title'], 'html' => true, 'noChoice' => true));
 			exit();
 		}
 	}

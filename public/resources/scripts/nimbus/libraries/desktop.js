@@ -31,7 +31,7 @@
 			$('#screen-workspace-' + Nimbus.Desktop.currentWorkspace).append(content);
 			if (view_id) {
 				$('#' + view_id).hide().fadeIn(500);
-				if (options) {
+				if (options) {					
 					//Events
 					view_id = view_id.replace("view_", "");
 					Nimbus.Desktop.cache[view_id] = {maximized:false};
@@ -155,9 +155,6 @@
 			options.name = (options.name) ? options.name: '';
 			options.path = (options.path) ? options.path: '';
 			$('.desktop-icons').prepend('<div class="icon"><div class="item" id="' + options.id + '"><div class="icon-inner"><a href="javascript:;" title="' + options.title + '"><img src="' + options.path + '" border="0" alt="" /></a><a href="javascript:;" title="' + options.title + '">' + options.name + '</a></div></div></div>');
-			//Move if needed
-			if (options.x) { $('#' + options.id).css({left: options.x + 'px'}); }
-			if (options.y) { $('#' + options.id).css({top: options.y + 'px'}); }
 			//Bind the events
 			$('.desktop-icons .item').draggable({delay:200,stack:{group:'.desktop-icons .item', min: 520}}).click(function(){
 				$('.desktop-icons .item').removeClass('active');

@@ -26,7 +26,18 @@
 		/**
 		 * ID of the progressbar
 		 */
-		this.id = options.id; 
+		this.id = (options.id) ? options.id: 0; 
+		
+		if (options.html == true) {
+			/**
+			 * Get the element from the Server
+			 */
+			$.post(SERVER_URL + 'public/resources/skin/common/templates/window.js.html', options, function(result){
+				$('#screen-workspace-' + Nimbus.Desktop.currentWorkspace).before(result.html);
+				$('#' + result.id).hide().fadeIn(500);
+				this.id = result.id;
+			});
+		}
 
 		/**
 		 * Class fixes for the window

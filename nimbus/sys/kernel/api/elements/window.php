@@ -54,6 +54,7 @@ class window extends Elements implements ElementInterface {
 			'toolbars' => array(),
 			'content' => array(),
 			'buttons' => array(),
+			'showInTaskbar' => true,
 			'parent' => null,			
 			//Flags
 			'visible' => true,
@@ -133,10 +134,14 @@ class window extends Elements implements ElementInterface {
 		foreach ($buttons as $button) {
 			if (is_array($button)) {
 				//For the OK or proceed button
-				if ($i == 1) {
-					$hash = generateHash(microtime());
-					$id = $this->handle . '-button-' . $hash;
-					$output .= '<input type="button" value="' . $button[0] . '" id="' . $id . '" class="proceed"/>';
+				$hash = generateHash(microtime());
+				$id = $this->handle . '-button-' . $hash;
+				$output .= '<input type="button" value="' . $button[0] . '" id="' . $id . '" class="button"/>&nbsp;';
+				if (isset($button[2])) {
+					if (isset($button[1])) {
+						Application::bindEvent('click', $id, $this->handle, $button[1], true);
+					}
+				} else {
 					if (isset($button[1])) {
 						Application::bindEvent('click', $id, $this->handle, $button[1]);
 					}

@@ -263,6 +263,9 @@
 			background: #eaeaea;
 			padding: 8px 14px;
 		}
+			.window .inner .buttons .button {
+				margin-right: 4px;
+			}
 			.window .inner .buttons a {
 				color: #0066cc;
 			}
@@ -285,6 +288,9 @@ input[type=text], input[type=password] {
 input:focus {
 	background: #f1e691;
 }
+input.text.number {
+	width: 40px;
+}
 
 /**
  * Selectbox
@@ -298,6 +304,9 @@ select {
 	font-size: 11px;
 	text-shadow: 0 1px 1px #ffffff;
 }
+	select option {
+		padding: 2px;
+	}
 
 /**
  * Button
@@ -339,3 +348,61 @@ input[type=button], input[type=submit] {
 			width: 0%;
 			height: 6px;
 		}
+
+/**
+ * Tabs
+ */
+.tab-buttons {
+	height: 28px;
+	background: #e1e6f6 url('images/toolbar.png') repeat-x top left scroll;
+	border-bottom: 1px solid #b6bccc;
+}
+	.tab-button {
+		display: block;
+		float: left;
+		margin: 3px 1px 0;
+		background: #e1e6f6;
+		border: 1px solid #c0c0c0;
+		color: #c0c0c0;
+		text-shadow: 0 1px 0 #ffffff;
+		-moz-border-radius-topright: 3px;
+		-moz-border-radius-topleft: 3px;
+		-webkit-border-top-right-radius: 3px;
+		-webkit-border-top-left-radius: 3px;
+		-khtml-border-radius-topleft: 3px;
+		-khtml-border-radius-topright: 3px;
+	}
+		.tab-button span {
+			display: block;
+			padding: 4px 8px 3px;
+			border: 1px solid #ffffff;
+			border-bottom: 0;
+			-moz-border-radius-topright: 3px;
+			-moz-border-radius-topleft: 3px;
+			-webkit-border-top-right-radius: 3px;
+			-webkit-border-top-left-radius: 3px;
+			-khtml-border-radius-topleft: 3px;
+			-khtml-border-radius-topright: 3px;
+		}
+	.tab-button.focus {
+		background: #ffffff;
+		border: 1px solid #b6bccc;
+		border-bottom: 1px solid #ffffff;
+		color: #000000;
+	}
+	.tab-button:hover {
+		border: 1px solid #4d4d4d;
+		border-bottom: 1px solid #b6bccc;
+		color: #616161;
+	}
+	.tab-button.focus:hover {
+		border: 1px solid #4d4d4d;
+		border-bottom: 1px solid #ffffff;
+	}
+.tab-content {
+	display: none;
+	width: 100%;
+}
+.tab-content.focus {
+	display: block;
+}

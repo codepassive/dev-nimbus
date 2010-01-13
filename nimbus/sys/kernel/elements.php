@@ -144,7 +144,7 @@ class Elements extends API {
 				$this->__option($id, $value);
 			}
 		} else {
-			return $this->options;
+			return array_merge($this->_defaults, $this->options);
 		}
 	}
 

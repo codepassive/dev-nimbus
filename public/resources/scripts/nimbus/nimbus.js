@@ -138,13 +138,34 @@ var Nimbus,
 		 * Method that generates a seperate window without regard to the current environment
 		 */
 		msgbox: function(options){
-			$('#screen-workspace-' + Nimbus.Desktop.currentWorkspace).before(options.content);
-			//Create the window handle for use
-			var window = new Window({id:options.id});
+			if (options.html == true) {
+				$('#screen-workspace-' + Nimbus.Desktop.currentWorkspace).before(options.content);
+				//Create the window handle for use
+				var window = new Window({id:options.id});
+			} else {
+				var window = new Window({
+					html: true,
+					id: null,
+					classes: ['message-box'],
+					type: 1, 
+					x: 'center',
+					y: 'center',
+					title: Nimbus.language.information_title,
+					content: ['<div class="message information">' + options.message + '</div>'],
+					buttons: options.buttons,
+					visible: true,
+					resizable: false,
+					draggable: true,
+					pinnable: false,
+					minimizable: false,
+					toggable: false,
+					hasIcon: false
+				});
+			}
 			window.fix(); //and fix the position of the window
 			//Set the effect that makes the msgbox appear through a fadeIn
-			$('#' + options.id).hide();
-			$('#' + options.id).fadeIn(200);
+			$('#' + window.id).hide();
+			$('#' + window.id).fadeIn(200);
 		},
 		
 		/**
