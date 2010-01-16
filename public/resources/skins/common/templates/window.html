@@ -1,4 +1,9 @@
 <div id="<?php $this->option('id'); ?>" class="window <?php $this->classes(); ?>">
+	<?php if ($this->flag('resizable') === true) {  ?>
+		<div class="resizable_wrapper">
+			<div class="resizeSE"></div><div class="resizeE"></div><div class="resizeNE"></div><div class="resizeN"></div><div class="resizeNW"></div><div class="resizeW"></div><div class="resizeSW"></div><div class="resizeS"></div>
+		</div>
+	<?php }  ?>
 	<div class="wrapper" id="windowwrapper-<?php $this->option('id'); ?>">
 		<div class="titlebar">
 			<div class="icon"><?php echo ($this->flag('hasIcon') === true) ? '<img src="' . $this->flag('icon') . '" border="0" width="16" height="16" alt="' . $this->flag('title') . '" />': '';  ?></div>

@@ -166,6 +166,14 @@ function request($name){
 	return false;
 }
 
+function personal($name){
+	$personal = Session::get('user-information');
+	if (isset($personal->$name)) {
+		return $personal->$name;
+	}
+	return false;
+}
+
 /**
  * Get the configuration Value of the specified name
  */

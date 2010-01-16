@@ -87,6 +87,7 @@ class window extends Elements implements ElementInterface {
 		if ($this->flag('y') == 'center') $classes = array_merge($classes, array('center-y'));
 		if ($this->flag('modal') == true) $classes = array_merge($classes, array('modal'));
 		if ($this->flag('draggable') == true) $classes = array_merge($classes, array('draggable'));
+		if ($this->flag('resizable') == true) $classes = array_merge($classes, array('resizable'));
 		if ($this->flag('toggable') == true) $classes = array_merge($classes, array('toggable'));
 		$this->flag('classes', $classes);
 		//Set the styles

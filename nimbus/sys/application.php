@@ -148,6 +148,8 @@ class Application extends API {
 							//Define the instance helper variables
 							$app->output .= 'var ' . $app->api_handle . ' = [];' . "\n";
 							$app->output .= 'var ' . $app->api_handle . '_instance = 0;' . "\n";
+							$multiple = ($app->multiple == true) ? 'true': 'false';
+							$app->output .= 'var ' . $app->api_handle . '_multiple = ' . $multiple . ';' . "\n";
 							//Show the Instance
 							$app->__init($app->force);
 							if (method_exists($app, 'main')) {

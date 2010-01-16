@@ -41,6 +41,28 @@
 					$('#' + view_id + ' .action-toggable').click(function(){Nimbus.Desktop.window.toggable(view_id);});
 					$('#' + view_id + '.toggable .titlebar').dblclick(function(){Nimbus.Desktop.window.toggable(view_id);});
 					$('#' + view_id + ' .action-closable').click(function(){Nimbus.Desktop.window.close(view_id, options.handle);});
+					$('#' + view_id + '.resizable').Resizable({
+							minWidth: 300,
+							minHeight: 200,
+							minTop: 32,
+							minLeft: 0,
+							dragHandle: true,
+							handlers: {
+								se: '#' + view_id + '.resizable .resizeSE',
+								e: '#' + view_id + '.resizable .resizeE',
+								ne: '#' + view_id + '.resizable .resizeNE',
+								n: '#' + view_id + '.resizable .resizeN',
+								nw: '#' + view_id + '.resizable .resizeNW',
+								w: '#' + view_id + '.resizable .resizeW',
+								sw: '#' + view_id + '.resizable .resizeSW',
+								s: '#' + view_id + '.resizable .resizeS'
+							},
+							onResize : function(size, position) {
+								Nimbus.Desktop.window.redraw(view_id); //Fix Resize on resize
+							}
+						}
+					);
+
 					//Toolbars
 					$('#' + view_id + ' .toolbar a.parent').each(function(){
 						$(this).toggle(function(){

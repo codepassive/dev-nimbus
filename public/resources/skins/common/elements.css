@@ -273,6 +273,65 @@
 				text-decoration: underline;
 			}
 
+	.window .resizeSE, .window .resizeE, .window .resizeNE, .window .resizeN, .window .resizeNW, .window .resizeW, .window .resizeSW, .window .resizeS {
+		position: absolute;
+		width: 6px;
+		height: 6px;
+		overflow: hidden;
+	}
+	.window .resizeSE {
+		bottom: 0px;
+		right: 0px;
+		cursor: se-resize;
+		z-index: 531;
+	}
+	.window .resizeE {
+		top: 6px;
+		height: 98%;
+		right: 0px;
+		margin-top: -5px;
+		cursor: e-resize;
+	}
+	.window .resizeNE {
+		top: 0px;
+		right: 0px;
+		cursor: ne-resize;
+		z-index: 531;
+	}
+	.window .resizeN {
+		top: 0px;
+		left: 6px;
+		width: 98%;
+		margin-left: -5px;
+		cursor: n-resize;
+	}
+	.window .resizeNW {
+		top: 0px;
+		left: 0px;
+		cursor: nw-resize;
+		z-index: 531;
+	}
+	.window .resizeW {
+		top: 6px;
+		height: 98%;
+		left: 0px;
+		margin-top: -5px;
+		cursor: w-resize;
+	}
+	.window .resizeSW {
+		left: 0px;
+		bottom: 0px;
+		cursor: sw-resize;
+		z-index: 531;
+	}
+	.window .resizeS {
+		bottom: 0px;
+		left: 6px;
+		width: 98%;
+		margin-left: -5px;
+		cursor: s-resize;
+	}
+
 /**
  * Textbox
  */
@@ -304,9 +363,6 @@ select {
 	font-size: 11px;
 	text-shadow: 0 1px 1px #ffffff;
 }
-	select option {
-		padding: 2px;
-	}
 
 /**
  * Button

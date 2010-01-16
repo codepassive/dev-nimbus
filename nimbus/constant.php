@@ -39,4 +39,41 @@ define('RPC_METHOD_XMLRPC', 'XMLRPC');
 //Log Files
 define('ERROR_LOG_FILE', 'logs' . DS . 'error');
 define('DEBUG_LOG_FILE', 'logs' . DS . 'debug');
+
+//Defaults
+define('CONFIG_LANGUAGE', 'en-us');
+define('CONFIG_TIMEZONE', 'asia/manila');
+define('CONFIG_AUTOUPDATE', 1);
+define('CONFIG_UPDATESERVER', 'http://synapse.nimbusdesktop.org/');
+define('CONFIG_NAMESPACE', 'http://ns.nimbus.iamjamoy.com/');
+define('CONFIG_APPURL', 'http://thesis/');
+define('CONFIG_APPNAME', 'Nimbus');
+define('CONFIG_ALLOWREGISTRATION', 0);
+define('CONFIG_SMTP_URL', '');
+define('CONFIG_SMTP_LOGIN', '');
+define('CONFIG_SMTP_PASSWORD', '');
+define('CONFIG_SMTP_PORT', 110);
+define('CONFIG_ROOT_USER', 1);
+define('CONFIG_DATE_FORMAT', 'F j, Y');
+define('CONFIG_TIME_FORMAT', 'H:i a');
+define('CONFIG_PINGSERVER', 'http://ping.iamjamoy.com/');
+define('CONFIG_DEFAULT_THEME', 'default');
+define('CONFIG_SALT', '965dbaac085fc891bfbbd4f9d145bbc8');
+define('CONFIG_ACCOUNTBRIDGING', '1');
+define('CONFIG_TRANSPORT', 'xmlrpc');
+define('CONFIG_PARTITION', 1073741824);
+define('CONFIG_PARTITION_PER_USER', 1073741824);
+define('CONFIG_REFRESH_RATE', 5);
+define('CONFIG_BACKGROUND_WALLPAPER', 'img://wallpapers/default.jpg');
+define('CONFIG_INIT_MODULES', 'a:0:{}');
+define('CONFIG_INIT_SERVICES', 'a:0:{}');
+define('CONFIG_MULTIUSER', 0);
+define('CONFIG_CACHE', 0);
+define('CONFIG_INIT_SCRIPTS', 'a:0:{}');
+define('CONFIG_SECURITY', 900);
+define('CONFIG_LANGUAGES', 'a:1:{s:5:"en-us";s:10:"English-US";}');
+define('CONFIG_APPLICATIONS', '');
+define('CONFIG_THEMES', 'a:1:{i:0;s:7:"default";}');
+define('CONFIG_FONT_SIZE', 100);
+
 ?>
