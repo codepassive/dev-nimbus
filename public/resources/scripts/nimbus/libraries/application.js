@@ -16,6 +16,7 @@
 	Application = Nimbus.Application = {
 		loaded: [],
 		load: function(name, callback){
+			$('#loading-container-desktop').show();
 			if (Nimbus.Application.loaded[name] != true) {
 				$.getScript(SERVER_URL + '/?app=' + name, function(result){
 					//Flag a running instance of the application
@@ -24,11 +25,13 @@
 					if (callback) {
 						callback(result);
 					}
+					$('#loading-container-desktop').hide();
 				}, "json");
 			} else {
 				name = name.capitalize();
 				$.getScript(SERVER_URL + '/?app=' + name + '&new', function(result){
-					eval(name + "_instance++;if(" + name + "_instance > 0){" + name + "[" + name + "_instance].init();" + name + "[" + name + "_instance + 1] = " + name + "[0];}");
+					eval("if(" + name + "_multiple != false){" + name + "_instance++;if(" + name + "_instance > 0){" + name + "[" + name + "_instance].init();" + name + "[" + name + "_instance + 1] = " + name + "[0];}}else{" + name + ".init();}");
+					$('#loading-container-desktop').hide();
 				});
 			}
 		},	
@@ -45,6 +48,15 @@
 					Nimbus.Desktop.window.toggle(id.replace("taskbarinstance-", ""));
 					$('#nimbusbar-taskbar .items .item').removeClass('active');
 					$(this).addClass('active');
+					$('.window').removeClass('active');
+					$('#' + id.replace("taskbarinstance-", "")).addClass('active');
+					var zindex = 530;
+					$('.window').each(function(){
+						if ($(this).css('zIndex') >= zindex) {
+							zindex = $(this).css('zIndex') + 1;
+						}
+					});
+					$('#' + id.replace("taskbarinstance-", "")).css({zIndex: zindex});
 				});
 			}
 		},

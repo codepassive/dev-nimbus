@@ -35,18 +35,27 @@
 					//Events
 					view_id = view_id.replace("view_", "");
 					Nimbus.Desktop.cache[view_id] = {maximized:false};
-					$('#' + view_id).click(function(){var id = $('#' + view_id).attr('id');$('#nimbusbar-taskbar .items .item').removeClass('active');$('#taskbarinstance-' + view_id).addClass('active');$(this).css({zIndex:($('.window').css('zIndex') + 50)});});
+					$('#' + view_id).click(function(){
+						var id = $('#' + view_id).attr('id');
+						$('#nimbusbar-taskbar .items .item').removeClass('active');
+						$('#taskbarinstance-' + view_id).addClass('active');
+						$('.window').removeClass('active');
+						$(this).addClass('active');
+						var zindex = 530;
+						$('.window').each(function(){
+							if ($(this).css('zIndex') >= zindex) {
+								zindex = $(this).css('zIndex') + 1;
+							}
+						});
+						$(this).css({zIndex: zindex});
+					});
 					$('#' + view_id + '.draggable').draggable({opacity: 0.7, handle:'.titlebar', stack:{group:'.draggable', min: 550}, start:function(){$(this).find('.content').css({visibility:'hidden'});$(this).find('.titlebar .title').css({cursor:'move'});}, stop:function(){$(this).find('.content').css({visibility:'visible'});$(this).find('.titlebar .title').css({cursor:'default'});}});
 					$('#' + view_id + ' .action-minimizable').click(function(){Nimbus.Desktop.window.minimize(view_id);});
 					$('#' + view_id + ' .action-toggable').click(function(){Nimbus.Desktop.window.toggable(view_id);});
 					$('#' + view_id + '.toggable .titlebar').dblclick(function(){Nimbus.Desktop.window.toggable(view_id);});
 					$('#' + view_id + ' .action-closable').click(function(){Nimbus.Desktop.window.close(view_id, options.handle);});
 					$('#' + view_id + '.resizable').Resizable({
-							minWidth: 300,
-							minHeight: 200,
-							minTop: 32,
-							minLeft: 0,
-							dragHandle: true,
+							minWidth: 400, minHeight: 90, minTop: 32, minLeft: 0,
 							handlers: {
 								se: '#' + view_id + '.resizable .resizeSE',
 								e: '#' + view_id + '.resizable .resizeE',
@@ -58,7 +67,38 @@
 								s: '#' + view_id + '.resizable .resizeS'
 							},
 							onResize : function(size, position) {
-								Nimbus.Desktop.window.redraw(view_id); //Fix Resize on resize
+								$(this).find('.content').css({visibility:'hidden'});
+								$(this).css({opacity:0.7});
+								//Fix the Content Height
+								var height = $(this).find('.toolbars-top').height() + $(this).find('.toolbars-bottom').height() + $(this).find('.buttons').height();
+								$(this).find('.content').height($(this).height() - (32 + height));
+								//Fix the FILL-AREA height
+								height = $(this).find('.content').height();
+								var width = $(this).find('.inner').width();
+								if ($(this).find('.fill-all').length) {
+									$(this).find('.fill-all').height((height - 2));
+									$(this).find('.fill-all').width((width));
+								}
+								if ($(this).find('.buttons').length) {
+									$(this).find('.content').height(($(this).find('.content').height() + 7) - $(this).find('.buttons').height());
+								}
+							},
+							onStop: function(){
+								$(this).find('.content').css({visibility:'visible'});
+								$(this).css({opacity:1});
+								//Fix the Content Height
+								var height = $(this).find('.toolbars-top').height() + $(this).find('.toolbars-bottom').height() + $(this).find('.buttons').height();
+								$(this).find('.content').height($(this).height() - (32 + height));
+								//Fix the FILL-AREA height
+								height = $(this).find('.content').height();
+								var width = $(this).find('.inner').width();
+								if ($(this).find('.fill-all').length) {
+									$(this).find('.fill-all').height((height - 2));
+									$(this).find('.fill-all').width((width));
+								}
+								if ($(this).find('.buttons').length) {
+									$(this).find('.content').height(($(this).find('.content').height() + 7) - $(this).find('.buttons').height());
+								}
 							}
 						}
 					);
@@ -103,23 +143,30 @@
 				Nimbus.Application.removeFromTaskbar(id);
 				Nimbus.Application.close(id, options);
 			},
-			minimize: function(window){
+			minimize: function(wind){
 				$('#nimbusbar-taskbar .items .item').removeClass('active');
-				Nimbus.Desktop.window.hide(window);
+				Nimbus.Desktop.window.hide(wind);
 			},
-			redraw: function(window){
-				//Fix the window height
-				if ($('#' + window).hasClass('.maximized')) {
-					$('#' + window + ' .content').height($(document).height() - ($('#nimbusbar').height() + 56));
+			redraw: function(wind){
+				//Fix the wind height
+				if ($('#' + wind).hasClass('.maximized')) {
+					var height = $('#' + wind + ' .toolbars-top').height() + $('#' + wind + ' .toolbars-bottom').height() + $('#' + wind + ' .buttons').height();
+					$('#' + wind + ' .content').height($(document).height() - ($('#nimbusbar').height() + (height + 30)));
 				}
 				//Fix the Content Height
-				var height = $('#' + window + ' .toolbars-top').height() + $('#' + window + ' .toolbars-bottom').height() + $('#' + window + ' .buttons').height();
-				$('#' + window + ' .content').height(($('#' + window + ' .content').height() - ($('#' + window).height() - height)));
+				var height = $('#' + wind + ' .toolbars-top').height() + $('#' + wind + ' .toolbars-bottom').height() + $('#' + wind + ' .buttons').height();
+				$('#' + wind + ' .content').height(($('#' + wind + ' .content').height() - ($('#' + wind).height() - height)));
 				//Fix the FILL-AREA height
-				var height = $('#' + window + ' .content').height();
-				var width = $('#' + window + ' .inner').width();
-				$('#' + window + ' .fill-all').height((height - 2)).width((width - 2));
+				var height = $('#' + wind + ' .content').height();
+				var width = $('#' + wind + ' .inner').width();
+				if ($('#' + wind).find('.fill-all').length) {
+					$('#' + wind + ' .fill-all').height((height - 2));
+					$('#' + wind + ' .fill-all').width((width));
+				}
 				//Fix width? If not 100%
+				if ($('#' + wind + ' .buttons').length) {
+					$('#' + wind + ' .content').height(($('#' + wind + ' .content').height() + 8) - $('#' + wind + ' .buttons').height());
+				}
 			},
 			toggable: function(id){
 				var win = {};
@@ -127,21 +174,39 @@
 					win = {
 						x: $('#' + id).offset().left,
 						y: $('#' + id).offset().top,
-						height: $('#' + id + ' .content').height(),
+						height: $('#' + id + ' .inner').height(),
+						wheight: $('#' + id).height(),
 						width: $('#' + id).width(),
 						maximized: true
 					};
-					$('#' + id + ' .content').height($(document).height() - ($('#nimbusbar').height() + 56)),
+					var height = $('#' + id + ' .toolbars-top').height() + $('#' + id + ' .toolbars-bottom').height() + $('#' + id + ' .buttons').height();
+					$('#' + id).height('100%');
 					$('#' + id).width('100%'),
 					Nimbus.Desktop.cache[id] = win;
 					$('#' + id).addClass('maximized').removeClass('draggable');
+					$('#' + id + ' .resizable_wrapper').hide();
+					$('#' + id + ' .content').height($(document).height() - ($('#nimbusbar').height() + height)),
+					Nimbus.Desktop.window.redraw(id);
 				} else {
 					win = Nimbus.Desktop.cache[id];
 					Nimbus.Desktop.cache[id].maximized = false;
-					$('#' + id).removeClass('maximized').addClass('draggable').css({top:win.y,left:win.x,width:win.width});
-					$('#' + id + ' .content').height(win.height);
+					$('#' + id).removeClass('maximized').addClass('draggable resizable').css({top:win.y,left:win.x,width:win.width});
+					$('#' + id + ' .resizable_wrapper').show();
+					$('#' + id).height(win.wheight);
+					//Fix the Content Height
+					var height = $('#' + id).find('.toolbars-top').height() + $('#' + id).find('.toolbars-bottom').height() + $('#' + id).find('.buttons').height();
+					$('#' + id).find('.content').height(win.height - height);
+					//Fix the FILL-AREA height
+					height = $('#' + id).find('.content').height();
+					var width = $('#' + id).find('.inner').width();
+					if ($('#' + id).find('.fill-all').length) {
+						$('#' + id).find('.fill-all').height((height - 3));
+						$('#' + id + ' .fill-all').width((width));
+					}
+					if ($('#' + id + ' .buttons').length) {
+						$('#' + id + ' .content').height(($('#' + id + ' .content').height() + 7) - $('#' + id + ' .buttons').height());
+					}
 				}
-				Nimbus.Desktop.window.redraw(id);
 			},
 			show: function(id){
 				$('#' + id).show(400, function(){
@@ -154,7 +219,7 @@
 				});
 			},
 			toggle: function(id){
-				$('#' + id).toggle(400, function(){
+				$('#' + id).toggle(600, function(){
 					$(this).css({zIndex:($('.window').css('zIndex') + 50)});
 				});
 			},

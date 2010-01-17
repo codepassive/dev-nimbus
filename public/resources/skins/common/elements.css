@@ -30,10 +30,14 @@
 	-moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
 	-khtml-border-radius: 6px;
-	-moz-box-shadow: 0 0 16px #000;
-	-webkit-box-shadow: 0 0 16px #000;
+	-moz-box-shadow: 0 0 16px rgba(100, 100, 100, 0.5);
+	-webkit-box-shadow: 0 0 16px rgba(100, 100, 100, 0.5);
     -moz-user-select: -moz-none;
 	-webkit-user-select: none;
+}
+.window.active {
+	-moz-box-shadow: 0 0 16px #000;
+	-webkit-box-shadow: 0 0 16px #000;
 }
 .window.maximized {
 	top: 33px !important;
@@ -80,7 +84,10 @@
 			margin-top: 3px;
 		}
 		.window .titlebar .title {
+			position: absolute;
+			width: 50%;
 			padding: 3px 6px;
+			margin-left: 26px;
 			color: #000000;
 			text-shadow: 0 0 5px #ffffff;
 		}
@@ -462,3 +469,56 @@ input[type=button], input[type=submit] {
 .tab-content.focus {
 	display: block;
 }
+.tab-content {
+	width: 100%;
+}
+	.tab-content .frame {
+		margin: 4px;
+		padding: 4px;
+		padding-right: 0;
+		height: 386px;
+		border: 1px solid #b6bccc;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		-khtml-border-radius: 3px;
+		overflow: auto;
+	}
+	
+/**
+ * Table
+ */
+.table {
+	width: 99%;
+}
+	.table th {
+		background: #ffffff;
+		border: 1px solid transparent;
+		border-right: 1px solid #e0e9f4;
+		color: #4c607a;
+	}
+	.table td {
+		padding: 0 !important;
+	}
+	.table th span, .table td span, .table td .block {
+		padding: 4px;
+		display: block;
+		border: 1px solid #ffffff;
+	}
+	.table td .block {
+		text-align: center;
+	}
+	.table th:hover {
+		background: #f3f7fd;
+		border: 1px solid #e3e8ee;
+	}
+	.table tr {
+		background: #f2f8ff;
+		border: 1px solid #transparent;
+		border-bottom: 1px solid #7da2ce;
+	}
+	.table tr.odd {
+		background: #ebf4fd;
+	}
+	.table tr:hover {
+		background: #c1dbfc;
+	}

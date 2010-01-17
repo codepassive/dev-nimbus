@@ -18,7 +18,8 @@
 	 */
 	Connect = Nimbus.Connect = {
 		post: function(where, data, callback){
-			$.post(where, data, function(result){callback(result);}, "json");
+			$('#loading-container-desktop').show();
+			$.post(where, data, function(result){callback(result);$('#loading-container-desktop').hide();}, "json");
 		}
 	}
 })();

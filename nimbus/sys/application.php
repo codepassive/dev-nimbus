@@ -192,6 +192,27 @@ class Application extends API {
 						}
 						call_user_func_array(array($app, $action), $params);
 					}
+					//Register the Application as a something recently run
+					if (isset($app->user->id)) {
+						$recents = (trim(personal('recently_opened_applications'))) ? unserialize(personal('recently_opened_applications')): array();
+						$apps = unserialize(config('applications'));
+						if (array_key_exists($app->name, $apps)) {
+							if ($recents) {
+								if (in_array($app->name, $recents)) {
+									$index = array_search($app->name, $recents);
+									unset($recents[$index]);
+									array_unshift($recents, $app->name);
+								} else {
+									array_unshift($recents, $app->name);
+								}
+							} else {
+								$recents[] = $app->name;
+							}
+							$recents = serialize($recents);
+							$app->db->query("UPDATE personalize SET option_value='$recents' WHERE option_name='recently_opened_applications' AND user_id=" . $app->user->id);
+						}
+					}
+					//Display the application
 					echo $app->display();
 				} else {
 					//DO SOME MAGIC

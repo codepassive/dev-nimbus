@@ -20,7 +20,7 @@ String.prototype.capitalize = function(){ //v1.0
 
 $(function(){
 	$(window).resize(function(){
-		$('.window').each(function(){
+		$('.window').not('.static').each(function(){
 			var id = $(this).attr('id');
 			Nimbus.Desktop.window.redraw(id);
 		});
