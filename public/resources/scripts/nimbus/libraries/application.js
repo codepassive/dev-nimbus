@@ -30,7 +30,7 @@
 			} else {
 				name = name.capitalize();
 				$.getScript(SERVER_URL + '/?app=' + name + '&new', function(result){
-					eval("if(" + name + "_multiple != false){" + name + "_instance++;if(" + name + "_instance > 0){" + name + "[" + name + "_instance].init();" + name + "[" + name + "_instance + 1] = " + name + "[0];}}else{" + name + ".init();}");
+					eval("if(" + name + "_multiple != false){" + name + "_instance++;if(" + name + "_instance > 0){" + name + "[" + name + "_instance].init();" + name + "[" + name + "_instance + 1] = " + name + "[0];}}else{if($('." + name.toLowerCase() + "').length == 0){" + name + ".init();}}");
 					$('#loading-container-desktop').hide();
 				});
 			}
@@ -62,10 +62,11 @@
 		},
 		removeFromTaskbar: function(id){
 			var id = '#taskbarinstance-' + id;
-			$(id).fadeOut(500);
-			setTimeout("$('" + id + "').remove()", 500);
+			$(id).fadeOut(1000);
+			setTimeout("$('" + id + "').remove()", 100);
 		},
 		close: function(id, options){
+			Nimbus.Application.removeFromTaskbar(id);
 			$('#' + id).fadeOut(500);
 			setTimeout("$('#" + id + "').remove();if ($('#nimbusbar-taskbar .items .item').length == 0){$('#nimbusbar-taskbar-noinstances:hidden').fadeIn(500);}", 500);
 			

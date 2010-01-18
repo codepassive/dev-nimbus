@@ -31,7 +31,9 @@
 			$('#screen-workspace-' + Nimbus.Desktop.currentWorkspace).append(content);
 			if (view_id) {
 				$('#' + view_id).hide().fadeIn(500);
-				if (options) {					
+				if (options) {
+					var vid = view_id.replace("container-", "");
+					$('.active_instance .table tbody').prepend('<tr><td>' +  vid.replace("view_", "") + '</td><td style="text-align:center"><input type="button" value="Close" title="' + view_id.replace("view_", "") + '"/></td></tr>');		
 					//Events
 					view_id = view_id.replace("view_", "");
 					Nimbus.Desktop.cache[view_id] = {maximized:false};
@@ -140,7 +142,6 @@
 				$('#' + id + ' .title').text(title);
 			},
 			close: function(id, options){
-				Nimbus.Application.removeFromTaskbar(id);
 				Nimbus.Application.close(id, options);
 			},
 			minimize: function(wind){

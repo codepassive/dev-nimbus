@@ -85,7 +85,7 @@
 		}
 		.window .titlebar .title {
 			position: absolute;
-			width: 50%;
+			/*width: 50%;*/
 			padding: 3px 6px;
 			margin-left: 26px;
 			color: #000000;

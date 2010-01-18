@@ -102,6 +102,10 @@ class Cloud {
 		$this->_request();
 		//Create the session
 		$this->session = new Session();
+		//Load the language
+		if (file_exists(LANGUAGE_DIR . personal('language') . DS . 'index.php')) {
+			require_once LANGUAGE_DIR . personal('language') . DS . 'index.php';
+		}
 	}
 
 	/**
