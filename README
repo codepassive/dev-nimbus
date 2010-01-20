@@ -11,14 +11,12 @@ codebase. The application also has networking
 capabilities to make sure that efficiency in
 collaboration is achieved.
 ---------------------------------------------------
-If you are reading this document, you may be using
-the first prototype of Nimbus. You may find this
-build a bit unstable as it may contain experimental
-implementations of unfinished systems. this software
-is labeled as "ALPHA" as it is only available to a
-select few and to those belonging to the test group
-and the defense panel. The test group and the
-defense panel is in no way affiliated with Nimbus.
+Instructions
+1. Extract dev-nimbus to your server
+2. Extract dev-nimbus-appdir to your /../ relative to dev-nimbus
+3. Change the appurl value on table 'options' on the sqlite database on dev-nimbus-appdir/dat/system
+4. Login using admin/admin
+5. Enjoy
 ---------------------------------------------------
 Project Details
 Name:	  	Nimbus
