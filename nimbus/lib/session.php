@@ -222,8 +222,8 @@ class Session {
 		//Fetch session data from the selected database
 		$time = time();
 		$ip = $_SERVER['REMOTE_ADDR'];
-		$useragent = $_SERVER['HTTP_USER_AGENT'];
-		$result = $this->__db->select("SELECT `session_data` FROM `sessions` WHERE `session_id` = '$id' AND `expires` > $time AND `ip` = '$ip' AND `useragent` = '$useragent'");
+		//$useragent = $_SERVER['HTTP_USER_AGENT'];
+		$result = $this->__db->select("SELECT `session_data` FROM `sessions` WHERE `session_id` = '$id' AND `expires` > $time AND `ip` = '$ip'");
 		if ($result) {
 			$this->_session_data = $result[0]['session_data'];
 		}
@@ -241,9 +241,9 @@ class Session {
 		//Build query
 		$time = time() + $this->lifetime;
 		$ip = $_SERVER['REMOTE_ADDR'];
-		$useragent = $_SERVER['HTTP_USER_AGENT'];
+		//$useragent = $_SERVER['HTTP_USER_AGENT'];
 		$uid = (defined('CURRENT_USER_ID')) ? CURRENT_USER_ID: 0;
-		$this->__db->query("REPLACE INTO `sessions` (`session_id`, `session_data`, `expires`, `user_id`, `ip`, `useragent`) VALUES('$id', '$data', $time, $uid, '$ip', '$useragent')");
+		$this->__db->query("REPLACE INTO `sessions` (`session_id`, `session_data`, `expires`, `user_id`, `ip`) VALUES('$id', '$data', $time, $uid, '$ip')");
 		return true;
 	}
 

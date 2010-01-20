@@ -227,6 +227,24 @@ class Application extends API {
 			return false;
 		}
 	}
+	
+	public function info(){
+		$arr = array(
+					'name' => $this->name,
+					'description' => $this->description,
+					'app_url' => $this->app_url,
+					'author' => $this->author,
+					'author_url' => $this->author_url,
+					'update_url' => $this->update_url,
+					'version' => $this->version,
+					'api_handle' => $this->api_handle,
+				);
+		if (@$this->request->get['serialize'] == 1) {
+			echo serialize($arr);
+		} else {
+			return $arr;
+		}
+	}
 
 	/**
 	 * This function loads the main window method for output in an application
