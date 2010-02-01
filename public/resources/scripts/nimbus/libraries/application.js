@@ -67,9 +67,8 @@
 		},
 		close: function(id, options){
 			Nimbus.Application.removeFromTaskbar(id);
-			$('#' + id).fadeOut(500);
-			setTimeout("$('#" + id + "').remove();if ($('#nimbusbar-taskbar .items .item').length == 0){$('#nimbusbar-taskbar-noinstances:hidden').fadeIn(500);}", 500);
-			
+			$('#' + id + ', .child-' + id).fadeOut(500);
+			setTimeout("$('#" + id + ", .child-" + id + "').remove();if ($('#nimbusbar-taskbar .items .item').length == 0){$('#nimbusbar-taskbar-noinstances:hidden').fadeIn(500);}", 500);
 		}
 	}
 })();

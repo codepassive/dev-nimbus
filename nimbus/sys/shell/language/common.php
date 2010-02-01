@@ -33,6 +33,9 @@ $language['watermark_p3'] = 'Copyright &#0169; 2010 Nimbus Development Group';
 $language['critical_notice'] = 'Critical Notice';
 
 //Common
+$language['go'] = 'Go';
+$language['back'] = 'Back';
+$language['forward'] = 'Forward';
 $language['default'] = 'Default';
 $language['loading'] = 'Loading';
 $language['started'] = 'started';

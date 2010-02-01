@@ -44,7 +44,7 @@ define('DEBUG_LOG_FILE', 'logs' . DS . 'debug');
 define('CONFIG_LANGUAGE', 'en-us');
 define('CONFIG_TIMEZONE', 'asia/manila');
 define('CONFIG_AUTOUPDATE', 1);
-define('CONFIG_UPDATESERVER', 'http://synapse.nimbusdesktop.org/');
+define('CONFIG_UPDATESERVER', 'http://thesis/apps/');
 define('CONFIG_NAMESPACE', 'http://ns.nimbus.iamjamoy.com/');
 define('CONFIG_APPURL', 'http://thesis/');
 define('CONFIG_APPNAME', 'Nimbus');

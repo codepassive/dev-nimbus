@@ -17,6 +17,11 @@
 	 * Create the Desktop Object
 	 */
 	Desktop = Nimbus.Desktop = {
+	
+		refreshRate: 5,
+		
+		shortcuts: 1,
+	
 		/**
 		 * Current Workspace the user is on
 		 */
@@ -57,7 +62,7 @@
 					$('#' + view_id + '.toggable .titlebar').dblclick(function(){Nimbus.Desktop.window.toggable(view_id);});
 					$('#' + view_id + ' .action-closable').click(function(){Nimbus.Desktop.window.close(view_id, options.handle);});
 					$('#' + view_id + '.resizable').Resizable({
-							minWidth: 400, minHeight: 90, minTop: 32, minLeft: 0,
+							minWidth: 400, minHeight: 200, minTop: 32, minLeft: 0,
 							handlers: {
 								se: '#' + view_id + '.resizable .resizeSE',
 								e: '#' + view_id + '.resizable .resizeE',
@@ -272,6 +277,8 @@
 		 * The Current Background Screen visible
 		 */
 		currentBackgroundVisible: 1,
+		
+		currentBackgroundInt: 0,
 
 		/**
 		 * Change the Background of the current visible background screen
@@ -280,8 +287,9 @@
 			if (background.constructor == Array) {
 				Nimbus.Desktop.backgrounds = background;
 				Nimbus.Desktop._background(Nimbus.Desktop.backgrounds[Nimbus.Desktop.currentBackground]);
-				setInterval("Nimbus.Desktop._background()", (interval * 1000));
+				Nimbus.Desktop.currentBackgroundInt = setInterval("Nimbus.Desktop._background()", (interval * 1000));
 			} else {
+				clearTimeout(Nimbus.Desktop.currentBackgroundInt);
 				$('.screen-background').fadeOut(1000);
 				$('#screen-background-' + Nimbus.Desktop.currentBackgroundVisible).css({background:"url('" + background + "') no-repeat center scroll"}).fadeIn(1000);
 			}

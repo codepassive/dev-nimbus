@@ -84,6 +84,7 @@ class Shell extends Cloud {
 					'jquery-ui' => array('src' => $this->config->path['scripts'] . 'jquery/jquery-ui.js', 'version' => JQUERY_UI_JS_VER),
 					'jquery-interface' => array('src' => $this->config->path['scripts'] . 'jquery/interface.js', 'version' => JQUERY_INTERFACE_JS_VER),
 					'jquery-plugin-hotkeys' => array('src' => $this->config->path['scripts'] . 'jquery/plugins/hotkeys.js', 'version' => JQUERY_PLUGIN_HOTKEYS_JS_VER),
+					'jquery-plugin-tree' => array('src' => $this->config->path['scripts'] . 'jquery/plugins/tree.js', 'version' => JQUERY_PLUGIN_HOTKEYS_JS_VER),
 					'tinymce' => array('src' => $this->config->path['scripts'] . 'tinymce/tinymce.js', 'version' => TINYMCE_JS_VER),
 					'swfupload' => array('src' => $this->config->path['scripts'] . 'swfupload/swfupload.js', 'version' => SWFUPLOAD_JS_VER),
 					'behaviors' => array('src' => $this->config->path['scripts'] . 'nimbus/behaviors.js', 'version' => NIMBUS_BEHAVIORS_JS_VER),

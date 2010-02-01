@@ -148,9 +148,11 @@
 		}
 		.window .inner .toolbars-top {
 			background: #e1e6f6 url('images/toolbar.png') repeat-x top left scroll;
-			border: 1px solid #ffffff;
-			border-top: 0;
 		}
+			.window .inner .toolbars-top .toolbar-row {
+				border: 1px solid #ffffff;
+				border-bottom: 1px solid #c0c0c0;
+			}
 		.window .inner .toolbar {
 			width: 100%;
 			border-top: 1px solid #ffffff;
@@ -252,7 +254,7 @@
 				-moz-user-select: text;
 				-webkit-user-select: text;
 			}
-			.window .inner .content .message.information, .window .inner .content .message.error, .window .inner .content .message.warning {
+			.window .inner .content .message, .window .inner .content .message, .window .inner .content .message {
 				text-align: left;
 				padding-left: 40px;
 			}
@@ -261,6 +263,9 @@
 			}
 			.window .inner .content .message.error {
 				background: url('../../images/icons/Tango/32/status/dialog-error.png') no-repeat left center scroll;
+			}
+			.window .inner .content .message.help {
+				background: url('../../images/icons/Tango/32/apps/help-browser.png') no-repeat left center scroll;
 			}
 			.window .inner .content .message.warning {
 				background: url('../../images/icons/Tango/32/status/dialog-warning.png') no-repeat left center scroll;
@@ -472,7 +477,44 @@ input[type=button], input[type=submit] {
 .tab-content {
 	width: 100%;
 }
+.tab-content h2 {
+	font-size: 16px;
+	font-weight: bold;
+	font-style: italic;
+}
 
+/**
+ * Vertical Tabs
+ */
+.vertical-tabs {
+	height: 100%;
+	background: #e7f3ff;
+	border-right: 1px solid #b9d7f7;
+	float: left;
+	width: 100px;
+}
+	.vertical-tabs ul li a {
+		display: block;
+		padding: 8px 16px;
+	}
+	.vertical-tabs ul li a.selected {
+		background: #ffffff;
+		border-top: 1px solid #b9d7f7;
+		border-bottom: 1px solid #b9d7f7;
+		border-right: 1px solid #ffffff;
+		margin-right: -1px;
+	}
+	.vertical-tabs .tab-content {
+		display: none;
+		height: 100%;
+		width: 100%;
+		float: left;
+		margin-right: 100px;
+	}
+	.vertical-tabs .tab-content.focus {
+		display: block;
+	}
+ 
 /**
  * Frame
  */
@@ -492,6 +534,7 @@ input[type=button], input[type=submit] {
  */
 .table {
 	width: 99%;
+	border: 1px solid #e0e9f4;
 }
 	.table th {
 		background: #ffffff;
@@ -525,3 +568,95 @@ input[type=button], input[type=submit] {
 	.table tr:hover {
 		background: #c1dbfc;
 	}
+	
+/**
+ * Icon Grid
+ */
+.grid {
+	padding: 8px;
+}
+.grid .icon {
+	height: 80px;
+	clear: both;
+}
+.grid .item {
+	/*position: absolute;*/
+	float: left;
+	padding: 0 !important;
+	margin-right: 8px;
+	text-align: center;
+	border: 1px solid transparent;
+	text-align: center;
+	word-wrap: break-word;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	-khtml-border-radius: 8px;
+}
+.grid .item .icon-inner { 
+	border: 1px solid transparent;
+	padding: 4px;
+	width: 64px;
+}
+	.grid .item:hover .icon-inner, .grid .item:active .icon-inner { 
+		border: 1px solid rgba(255, 255, 255, 0.4);
+		border-top: 1px solid rgba(255, 255, 255, 0.7);
+		-moz-border-radius: 7px;
+		-webkit-border-radius: 7px;
+		-khtml-border-radius: 7px;
+	}
+	.grid .item:hover, .grid .item.selected {
+		border: 1px solid rgba(0, 0, 0, 0.4);
+		background: url('?res=app://desktop/shell/images/icon-hover.png') repeat-x bottom left scroll;
+		-moz-box-shadow: 0 0 5px #c0c0c0;
+		-webkit-box-shadow: 0 0 5px #c0c0c0;
+	}
+	.grid .item.selected:hover, .grid .item:active {
+		border: 1px solid rgba(0, 0, 0, 0.7);
+	}
+	.grid .item:active {
+		background: url('?res=app://desktop/shell/images/icon-click.png') repeat-x top left scroll;
+	}
+	.grid a {
+		text-shadow: 0 0 2px #000000;
+		color: #ffffff;
+	}
+	.grid a img {
+		display: block;
+		margin: 0 AUTO;
+		width: 32px;
+	}
+
+/**
+ * Sidebar
+ */
+.window .sidebar {
+	height: 100%;
+	background: #e7f3ff;
+	border-right: 1px solid #b9d7f7;
+	float: left;
+	width: 190px;
+}
+	.window .sidebar .sidebar_inner {
+		height: 100%;
+		padding: 0 12px;
+		border-right: 1px solid #ffffff;
+	}
+	.window .sidebar .sidebar_inner h2 {
+		font-size: 16px;
+		font-weight: bold;
+		padding: 12px 0;
+	}
+	.window .sidebar .sidebar_inner ul li{
+		
+	}
+	
+/**
+ * Tree
+ */
+.tree ins.jpg { background:url("/public/resources/images/icons/Tango/16/mimetypes/image-x-generic.png") no-repeat center scroll;}
+.tree ins.gif { background:url("/public/resources/images/icons/Tango/16/mimetypes/image-x-generic.png") no-repeat center scroll;}
+.tree ins.png { background:url("/public/resources/images/icons/Tango/16/mimetypes/image-x-generic.png") no-repeat center scroll;}
+.tree ins.bmp { background:url("/public/resources/images/icons/Tango/16/mimetypes/image-x-generic.png") no-repeat center scroll;}
+
+
+

@@ -115,9 +115,9 @@ class window extends Elements implements ElementInterface {
 		if (isset($toolbars[$id])) {
 			foreach($toolbars[$id] as $toolbar){
 				if (is_object($toolbar)) {
-					echo $toolbar->render();
+					echo '<div class="toolbar-row">' . $toolbar->render() . '</div>';
 				} else {
-					echo $toolbar;
+					echo '<div class="toolbar-row">' . $toolbar . '</div>';
 				}
 			}
 		}

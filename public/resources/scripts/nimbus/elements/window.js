@@ -38,17 +38,22 @@
 				this.id = result.id;
 			});
 		}
+		if (options.thtml) {
+			$('#screen-workspace-' + Nimbus.Desktop.currentWorkspace).before(options.thtml);
+			$('#' + options.id).hide().fadeIn(500);
+			this.id = options.id;
+		}
 
 		/**
 		 * Class fixes for the window
 		 */
 		this.fix = function(){			
 			//Window Position Fix
-			$('.center-x').each(function(){
+			$('#' + this.id + '.center-x').each(function(){
 				var width = $(this).width() / -2;
 				$(this).css({left:'50%', marginLeft: width + 'px'});
 			});
-			$('.center-y').each(function(){
+			$('#' + this.id + '.center-y').each(function(){
 				var height = $(this).height() / -2;
 				$(this).css({top:'50%', marginTop: height + 'px'});
 			});

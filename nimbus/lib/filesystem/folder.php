@@ -197,6 +197,63 @@ class Folder extends Filesystem {
 			return $filedata;
 		}
 	}
+	
+	public function generate($allow = array()){
+		if (!empty($allow) && !is_array($allow)) {
+			$allow = explode(",", $allow);
+		}
+		$this->allow = $allow;
+		return $this->generateList($this->path);
+	}
+	
+	public function generateList($path, $level = 0){
+		$ignore = array('cgi-bin', '.', '..');
+		$dh = @opendir($path);
+		$f = array();
+		while( false !== ( $file = readdir( $dh ) ) ){
+			if( !in_array( $file, $ignore ) ){
+				if (is_dir($path . DS . $file)) {;
+					$d = getDirectorySize($path . DS . $file);
+					$y = explode(str_replace('\\..\\', '', USER_DIR), $path . DS . $file);
+					$f[] = array(
+								'name' => $file,
+								'type' => 'dir',
+								'size' => $d['size'],
+								'path' => $y[1],
+								'sub' => $this->generateList($path . DS . $file, ($level+1))
+							);
+				} else {
+					$info = pathinfo($path . DS . $file);
+					$mimetype = 'unknown';
+					$ext = 'unknown';
+					if (isset($info['extension'])) {
+						require_once SYSTEM_DIR . 'shell' . DS . 'mimes.php';
+						$ext = strtolower($info['extension']);
+						if (isset($mimes)) {
+							if (array_key_exists($ext, $mimes)) {
+								if (is_array($mimes[$ext])) {
+									$mimetype = $mimes[$ext][0];
+								} else {
+									$mimetype = $mimes[$ext];
+								}
+							}
+						}
+					}
+					if (empty($this->allow) || in_array($info['extension'], $this->allow)) {
+						$y = explode(str_replace('\\..\\', '', USER_DIR), $path . DS . $file);
+						$f[] = array(
+								'name' => $file,
+								'type' => $ext,
+								'size' => sprintf("%u", filesize($path . DS . $file)),
+								'path' => $y[1],
+							);
+					}
+				}
+			}
+		}
+		closedir( $dh );
+		return $f; 
+	}
 
 	/**
 	 * Abstraction to the Folder::__recursive method
