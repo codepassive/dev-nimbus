@@ -142,7 +142,7 @@ class User extends Cloud {
 	public function register(){
 		$meta = array();
 		$personal = array();
-		$default = array(
+		$defaults = array(
 				'username' => '',
 	            'password' => '',
 	            'created' => time(),
@@ -173,25 +173,28 @@ class User extends Cloud {
 		$created = time();
 		$this->db->query("INSERT INTO accounts(`username`, `password`, `created`, `online`) VALUES('$username', '$password', '$created', 0)");
 		$id = $this->db->insertID;
-		//Go through the request
-		foreach ($this->default as $default) {
-			if (isset($this->request->post['meta_' . $default])) {
-				$meta[$default] = $this->request->post['meta_' . $default];
+		if ($id) {
+			//Go through the request
+			foreach ($defaults as $default => $value) {
+				if (isset($this->request->post['meta_' . $default])) {
+					$meta[$default] = $this->request->post['meta_' . $default];
+				}
+				if (isset($this->request->post['personal_' . $default])) {
+					$personal[$default] = $this->request->post['personal_' . $default];
+				}
 			}
-			if (isset($this->request->post['personal_' . $default])) {
-				$personal[$default] = $this->request->post['personal_' . $default];
+			//Meta
+			foreach ($meta as $m => $v) {
+				$this->db->query("INSERT INTO meta(`meta_name`, `meta_value`, `meta_owner`, `meta_table`) VALUES('$m', '$v', $id, 'accounts');");
 			}
+			//Personal
+			foreach ($personal as $p => $v) {
+				$this->db->query("INSERT INTO personalize(`user_id`, `option_name`, `option_value`) VALUES($id, '$p', '$v');");
+			}
+			//return the ID
+			return $id;
 		}
-		//Meta
-		foreach ($meta as $m => $v) {
-			$this->db->query("INSERT INTO meta(`meta_name`, `meta_value`, `meta_owner`, `meta_table`) VALUES('$m', '$v', '$id', 'accounts')");
-		}
-		//Personal
-		foreach ($personal as $p => $v) {
-			$this->db->query("INSERT INTO personalize(`user_id`, `option_name`, `option_value`) VALUES($id, '$p', '$v')");
-		}
-		//return the ID
-		return $id;
+		return 0;
 	}
 
 	/**
