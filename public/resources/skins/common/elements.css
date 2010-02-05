@@ -660,3 +660,8 @@ input[type=button], input[type=submit] {
 
 
 
+
+.dialog_content {
+	display: none;
+}
+

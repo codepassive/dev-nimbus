@@ -136,14 +136,86 @@ var Nimbus,
 		
 		Dialog: {
 			open: function(option, callback){
+				var tab = 'one';
 				var ret = []
 				if (!$('.window.confirm.dialog.message-box').length) {
 					var parent = option.parent;
-					var html = '<div id="' + option.id + '" class="window confirm dialog message-box draggable center-x center-y child-' + parent + '"><div class="wrapper" id="windowwrapper"><div class="titlebar"><div class="title" style="margin-left:0px;">Open File Location</div><div class="actions"><a href="javascript:void(0);" class="action action-closable"></a><div class="clear"></div></div></div><div class="outer"><div class="inner"><div class="content" style="height:300px;width:400px;">';
+					var html = '<div id="' + option.id + '" class="static window confirm dialog message-box draggable center-x center-y child-' + parent + '"><div class="wrapper" id="windowwrapper"><div class="titlebar"><div class="title" style="margin-left:0px;">Open File Location</div><div class="actions"><a href="javascript:void(0);" class="action action-closable"></a><div class="clear"></div></div></div><div class="outer"><div class="inner"><div class="content" style="height:300px;width:400px;">';
 					html += '<div style="float:left;" class="vertical-tabs"><ul><li><a href="javascript:;" class="selected" name="one">External URL</a></li><li><a href="javascript:;" name="two">Upload File</a></li><li><a href="javascript:;" name="three">User Directory</a></li></ul></div>';
-					html += '<div class="tab-content one focus" style="text-align:center;padding:90px 0;"><h2>Use an External Resource</h2><p>Input a URL of the resource you wish to use</p><input type="text" class="text dialog-external" value="http://" style="width:250px;"/></div><div class="tab-content two" style="text-align:center;padding:90px 0 180px;"><h2>Upload a file</h2><p>Select a file or Drag it onto this window.</p><input type="file" class="text fileupload"/></div>';
+					html += '<div class="tab-content one focus" style="text-align:center;padding:90px 0;"><h2>Use an External Resource</h2><p>Input a URL of the resource you wish to use</p><input type="text" class="text dialog-external" value="http://" style="width:250px;"/></div><div class="tab-content two" style="text-align:center;padding:90px 0 50px;"><h2>Upload a file</h2><p>Select a file or Drag it onto this window.</p><div class="swfupload-control"><span id="spanButtonPlaceholder-' + option.id + '"></span></div><div style="padding:24px;" class="upload_message"></div><div style="height:68px;padding:0 12px;text-align:left;overflow:auto;" class="uploaded_message"></div><input type="hidden" value="" id="upload_hidden" /></div>';
 					html += '<div class="tab-content three" style="overflow:auto;padding:8px;"><div class="tree" style="padding:8px;height:266px;width:268px;overflow:auto;"></div></div>';
 					html += '</div><div class="clear"></div><div class="buttons"><input type="button" value="Cancel" class="button"/>&nbsp;<input type="button" value="Save" class="button"/></div></div></div></div></div>';
+					var window = new Window({thtml: html,id: option.id, parent: option.parent});
+					window.fix();
+					$('#' + option.id).hide();
+					$('#' + option.id).fadeIn(200);
+					$('#' + option.id + ' .vertical-tabs a').click(function(){
+						tab = $(this).attr('name');
+						$('#' + option.id + ' .vertical-tabs a').removeClass('selected');
+						$(this).addClass('selected');
+						$('#' + option.id + ' .tab-content').hide();
+						$('#' + option.id + ' .' + tab).show();
+					});
+					$('#' + option.id + ' .action-closable').click(function(){$('#' + option.id).remove();});
+					$('#' + option.id + '.draggable').draggable({opacity: 0.7, handle:'.titlebar', stack:{group:'.draggable', min: 550}, start:function(){$(this).find('.content').css({visibility:'hidden'});$(this).find('.titlebar .title').css({cursor:'move'});}, stop:function(){$(this).find('.content').css({visibility:'visible'});$(this).find('.titlebar .title').css({cursor:'default'});}});
+					$('#' + option.id + ' .buttons .button:eq(0)').click(function(){
+						$('#' + option.id).remove();
+					})
+					$.getScript(SERVER_URL + 'public/resources/scripts/swfupload/jquery/vendor/swfupload/swfupload.js', function(){
+						$.getScript(SERVER_URL + 'public/resources/scripts/swfupload/jquery/src/jquery.swfupload.js', function(){
+							var a = option.allow;
+							var allow = [];
+							$.each(a, function(i, e){
+								allow[i] = "*." + e;
+							});
+							$('#' + option.id + ' .swfupload-control').swfupload({
+								upload_url: SERVER_URL + '?service=uploader&path=root\Uploads&PHPSESSID=' + $('#session_id').val() + '&username=' + $('.userbutton').text(), // Relative to the SWF file (or you can use absolute paths)
+								file_post_name: "file",
+								file_size_limit : "2147483647", // 100MB
+								file_types : allow.join(";"),
+								file_types_description : "Open Files",
+								file_upload_limit : "99",
+								file_queue_limit : "0",
+								button_image_url : SERVER_URL + "public/resources/scripts/swfupload/jquery/vendor/swfupload/XPButtonUploadText_61x22.png", // Relative to the SWF file
+								button_placeholder_id : 'spanButtonPlaceholder-' + option.id,
+								button_width: 61,
+								button_height: 22,
+								flash_url : SERVER_URL + "public/resources/scripts/swfupload/jquery/vendor/swfupload/swfupload.swf"
+							});
+							// assign our event handlers
+							$('.swfupload-control')
+								.bind('fileQueued', function(event, file){
+									// start the upload once a file is queued
+									$(this).swfupload('startUpload');
+								})
+								.bind('uploadProgress', function(file, bytes, total){
+									var percentage = Math.round((bytes * 100) / total);
+									$('#' + option.id + ' .upload_message').html('Uploading: ' + percentage + '%');
+								})
+								.bind('uploadError', function(file, code, message){
+									//alert('error' + message);
+								})
+								.bind('uploadSuccess', function(file, data, response){
+									ret = [];
+									txt = eval(response);
+									$.each(txt, function(i, e){
+										$('#' + option.id + ' .uploaded_message').append('<p>' + e.name + ' uploaded successfully</p>');
+										var title = e.path;
+										var username = $('.userbutton').text();
+										title = title.replace(/\\/g, "/");
+										title = title.replace(username + '/drives/', '');
+										ret[i] = SERVER_URL + '?res=user://' + title;
+									});
+									$('#' + option.id + ' #upload_hidden').val(str.join(","));
+								})
+								.bind('uploadComplete', function(event, file){
+									//alert('Upload completed - '+ file.name +'!');
+									$('#' + option.id + ' .upload_message').html('No items in queue...');
+									$(this).swfupload('startUpload');
+								});
+
+						});						
+					});
 					Nimbus.Connect.post(SERVER_URL + '?app=fileexplorer&action=grid', {allow:option.allow.join(","), serialize:1}, function(result){
 						$('#' + option.id + ' .tab-content.three .tree').html(Nimbus.Dialog.grid(result));
 						$.getScript(SERVER_URL + 'public/resources/scripts/jquery/plugins/tree/jquery.tree.js', function(){
@@ -159,97 +231,101 @@ var Nimbus,
 									multiple: option.multiple
 								}
 							});
-							$('#' + option.id + ' .buttons .button:eq(1)').click(function(){
-								switch (tab) {
-									case "three":
-										var string = [];
-										var ref = $.tree.reference('#' + option.id + ' .tab-content.three .tree').selected_arr;
-										var o = 0;
-										for(var key in ref){
-											var node = ref[key];
-											var username = $('.userbutton').text();
-											var title =  $.tree.reference('#' + option.id + ' .tab-content.three .tree').get_node(node).find('a').attr("title");
-											title = title.replace(/\\/g, "/");
-											title = title.replace(username + '/drives/', '');
-											ret[o] = SERVER_URL + '?res=user://' + title;
-											o++;
-										}
-										$('#' + option.id + ', .child-' + option.id).remove();
-									break;
-								}
-								if (callback) {
-									callback(ret);
-								}
-							});
 						});
 					});
-					var window = new Window({thtml: html,id: option.id, parent: option.parent});
-					window.fix();
-					$('#' + option.id).hide();
-					$('#' + option.id).fadeIn(200);
-					var tab = 'one';
-					$('#' + option.id + ' .vertical-tabs a').click(function(){
-						tab = $(this).attr('name');
-						$('#' + option.id + ' .vertical-tabs a').removeClass('selected');
-						$(this).addClass('selected');
-						$('#' + option.id + ' .tab-content').hide();
-						$('#' + option.id + ' .' + tab).show();
-					});
-					$('#' + option.id + ' .action-closable').click(function(){$('#' + option.id).remove();});
-					$('#' + option.id + '.draggable').draggable({opacity: 0.7, handle:'.titlebar', stack:{group:'.draggable', min: 550}, start:function(){$(this).find('.content').css({visibility:'hidden'});$(this).find('.titlebar .title').css({cursor:'move'});}, stop:function(){$(this).find('.content').css({visibility:'visible'});$(this).find('.titlebar .title').css({cursor:'default'});}});
-					$('#' + option.id + ' .buttons .button:eq(0)').click(function(){
-						$('#' + option.id).remove();
-					})
-					$.getScript(SERVER_URL + 'public/resources/scripts/swfupload/jquery/vendor/swfupload/swfupload.js', function(){
-						$.getScript(SERVER_URL + 'public/resources/scripts/swfupload/jquery/src/jquery.swfupload.js', function(){
-							
-						});						
-					});
+					$('#' + option.id + ' .upload_message').html('No items in queue...');
 					$.getScript(SERVER_URL + 'public/resources/scripts/swfupload/dnd_uploader.js', function(){
 						$('#' + option.id + ' .two').upload5({
 							beforeLoad:function() {
-								this.gate = SERVER_URL + '?app=uploader';
+								this.gate = SERVER_URL + '?service=uploader&path=root\Uploads';
 							},
 							onProgress: function(event) {
 								if (event.lengthComputable) {
 									var percentage = Math.round((event.loaded * 100) / event.total);
-									if (percentage > 100) {
-										$('#some_progress_div').html('Uploading file..'+percentage+'%');
-									}
+									$('#' + option.id + ' .upload_message').html('Uploading: ' + percentage + '%');
 								}
 							}, onComplete:function(event,txt) {
-								alert(event);
+								txt = eval(txt);
+								$.each(txt, function(i, e){
+									$('#' + option.id + ' .uploaded_message').append('<p>' + e.name + ' uploaded successfully</p>');
+									var title = e.path;
+									var username = $('.userbutton').text();
+									title = title.replace(/\\/g, "/");
+									title = title.replace(username + '/drives/', '');
+									ret[i] = SERVER_URL + '?res=user://' + title;
+									
+								});
+								//$('#' + option.id + ' #upload_hidden').val(str.join(","));
+								$('#' + option.id + ' .upload_message').html('No items in queue...');
 							}
 						});
 							
 					});
-					$('#' + option.id + ' .buttons .button:eq(1)').click(function(){
+					$('#' + option.id + ' .buttons .button:eq(1)').live('click', function(){
 						switch (tab) {
 							case "one":
+								ret = [];
 								ret[0] = SERVER_URL + '?res=' + $('#' + option.id + ' .dialog-external').val();
 							break;
-							case "two":
-							
+							case "three":
+								ret = [];
+								var ref = $.tree.reference('#' + option.id + ' .tab-content.three .tree').selected_arr;
+								var o = 0;
+								if (option.multiple) {
+									for(var key in ref){
+										var node = ref[key];
+										var username = $('.userbutton').text();
+										var title =  $.tree.reference('#' + option.id + ' .tab-content.three .tree').get_node(node).find('a').attr("title");
+										title = title.replace(/\\/g, "/");
+										title = title.replace(username + '/drives/', '');
+										ret[o] = SERVER_URL + '?res=user://' + title;
+										o++;
+									}
+								} else {
+									ref = $.tree.reference('#' + option.id + ' .tab-content.three .tree').selected;
+									var node = ref;
+									var username = $('.userbutton').text();
+									var title =  $.tree.reference('#' + option.id + ' .tab-content.three .tree').get_node(node).find('a').attr("title");
+									title = title.replace(/\\/g, "/");
+									title = title.replace(username + '/drives/', '');
+									ret[o] = SERVER_URL + '?res=user://' + title;
+								}
+								$.tree.reference('#' + option.id + ' .tab-content.three .tree').destroy();
 							break;
 						}
-						$('#' + option.id + ', .child-' + option.id).remove();
 						if (callback) {
+							$('#' + option.id + ' .buttons .button:eq(1)').die();
 							callback(ret);
 						}
+						$('#' + option.id + ', .child-' + option.id).remove();
 					});
 				}
 			},
-			saveFile: function(){
-			
+			saveFile: function(option, callback){
 			},
-			saveAsFile: function(){
-			
-			},
-			newFile: function(){
-			
-			},
-			custom: function(){
-			
+			custom: function(option, callback){
+				var tab = 'one';
+				var ret = []
+				if (!$('.window.confirm.dialog.message-box').length) {
+					var parent = option.parent;
+					var html = '<div id="' + option.id + '" class="static window confirm dialog message-box draggable center-x center-y child-' + parent + '"><div class="wrapper" id="windowwrapper"><div class="titlebar"><div class="title" style="margin-left:0px;">' + option.title + '</div><div class="actions"><a href="javascript:void(0);" class="action action-closable"></a><div class="clear"></div></div></div><div class="outer"><div class="inner"><div class="content" style="height:' + option.height + ';width:' + option.width + ';overflow:auto;"></div><div class="clear"></div><div class="buttons"><input type="button" value="Cancel" class="button"/>&nbsp;<input type="button" value="Save" class="button"/></div></div></div></div></div>';
+					var window = new Window({thtml: html,id: option.id, parent: option.parent});
+					window.fix();
+					$('#' + option.id).hide();
+					$('#' + option.id).fadeIn(200);
+					$('#' + option.id + ' .action-closable').click(function(){$('#' + option.id).remove();});
+					$('#' + option.id + '.draggable').draggable({opacity: 0.7, handle:'.titlebar', stack:{group:'.draggable', min: 550}, start:function(){$(this).find('.content').css({visibility:'hidden'});$(this).find('.titlebar .title').css({cursor:'move'});}, stop:function(){$(this).find('.content').css({visibility:'visible'});$(this).find('.titlebar .title').css({cursor:'default'});}});
+					$('#' + option.id + ' .buttons .button:eq(0)').click(function(){
+						$('#' + option.id).remove();
+					});
+					$('#' + option.id + ' .content').html($('#' + option.content_id).html());
+					$('#' + option.id + ' .buttons .button:eq(1)').click(function(){if (option.save) {option.save();}if (callback) {callback();}});
+					$('#' + option.id + ' .buttons .button:eq(0)').click(function(){if (option.cancel) {option.cancel();}if (callback) {callback();}});
+					$('#' + option.id + ' .buttons .button:eq(1)').die();
+					if (option.load) {
+						option.load();
+					}
+				}
 			},
 			grid: function(ob){
 				var string = '<ul>';
@@ -292,19 +368,21 @@ var Nimbus,
 		
 		
 		msgbox2: function(option, okay){
-			var html = '<div id="' + option.id + '" class="window msgbox dialog message-box draggable center-x center-y"><div class="wrapper" id="windowwrapper"><div class="titlebar"><div class="title" style="margin-left:0px;">' + option.title + '</div><div class="actions"><a href="javascript:void(0);" class="action action-closable"></a><div class="clear"></div></div></div><div class="outer"><div class="inner"><div class="content"><div class="message help">' + option.content + '</div></div><div class="buttons"><input type="button" value="OK" class="button"/></div></div></div></div></div>';
-			var window = new Window({thtml: html,id: option.id});
-			window.fix();
-			$('#' + option.id).hide();
-			$('#' + option.id).fadeIn(200);
-			$('#' + option.id + ' .buttons .button:eq(0)').click(function(){
-				$('#' + option.id).remove();
-				if (okay) {
-					okay();
-				}
-			})
-			$('#' + option.id + ' .action-closable').click(function(){$('#' + option.id).remove();});
-			$('#' + option.id + '.draggable').draggable({opacity: 0.7, handle:'.titlebar', stack:{group:'.draggable', min: 550}, start:function(){$(this).find('.content').css({visibility:'hidden'});$(this).find('.titlebar .title').css({cursor:'move'});}, stop:function(){$(this).find('.content').css({visibility:'visible'});$(this).find('.titlebar .title').css({cursor:'default'});}});
+			if ($('#' + option.id).length == 0) {
+				var html = '<div id="' + option.id + '" class="window msgbox dialog message-box draggable center-x center-y"><div class="wrapper" id="windowwrapper"><div class="titlebar"><div class="title" style="margin-left:0px;">' + option.title + '</div><div class="actions"><a href="javascript:void(0);" class="action action-closable"></a><div class="clear"></div></div></div><div class="outer"><div class="inner"><div class="content"><div class="message help">' + option.content + '</div></div><div class="buttons"><input type="button" value="OK" class="button"/></div></div></div></div></div>';
+				var window = new Window({thtml: html,id: option.id});
+				window.fix();
+				$('#' + option.id).hide();
+				$('#' + option.id).fadeIn(200);
+				$('#' + option.id + ' .buttons .button:eq(0)').click(function(){
+					$('#' + option.id).remove();
+					if (okay) {
+						okay();
+					}
+				})
+				$('#' + option.id + ' .action-closable').click(function(){$('#' + option.id).remove();});
+				$('#' + option.id + '.draggable').draggable({opacity: 0.7, handle:'.titlebar', stack:{group:'.draggable', min: 550}, start:function(){$(this).find('.content').css({visibility:'hidden'});$(this).find('.titlebar .title').css({cursor:'move'});}, stop:function(){$(this).find('.content').css({visibility:'visible'});$(this).find('.titlebar .title').css({cursor:'default'});}});
+			}
 		},
 		
 		/**

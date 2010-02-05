@@ -324,7 +324,9 @@ class Application extends API {
 	 */
 	public function display(){
 		//Set the Header
-		header('Content-Type: text/javascript');
+		if (!headers_sent()){
+			header('Content-Type: text/javascript');
+		}
 		//Display the Output
 		echo $this->output;
 	}
