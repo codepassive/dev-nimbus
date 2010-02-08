@@ -134,7 +134,7 @@
 							});
 						});
 					});
-					$('body').click(function(e){if ($(e.target).parents('.toolbar').length == 0) {$('.toolbar .child').hide();}});
+					$(document).click(function(e){if ($(e.target).parents('.toolbar').length == 0) {$('.toolbar .child').hide();}});
 					//Check if it should be put to the taskbar
 					Nimbus.Application.addToTaskbar(options);
 				}

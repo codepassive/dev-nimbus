@@ -301,7 +301,36 @@ var Nimbus,
 					});
 				}
 			},
-			saveFile: function(option, callback){
+			save: function(option, callback){
+				var ret = {}
+				if (!$('.window.confirm.dialog.message-box').length) {
+					var parent = option.parent;
+					var html = '<div id="' + option.id + '" class="static window confirm dialog message-box draggable center-x center-y child-' + parent + '"><div class="wrapper" id="windowwrapper"><div class="titlebar"><div class="title" style="margin-left:0px;">Save File</div><div class="actions"><a href="javascript:void(0);" class="action action-closable"></a><div class="clear"></div></div></div><div class="outer"><div class="inner"><div class="content">';
+					html += '<div style="margin:8px;"><table cellspacing="0" cellpadding="0" border="0"><tr><td>Path&nbsp;</td><td><input type="text" class="path" value="drives/root/Documents" style="width:200px"/></td></tr><tr><td>Filename&nbsp;</td><td><input type="text" value="file.txt" class="filename" style="width:140px"/></td></tr></table></div>';
+					html += '</div><div class="clear"></div><div class="buttons"><input type="button" value="Cancel" class="button"/>&nbsp;<input type="button" value="Save" class="button"/></div></div></div></div></div>';
+					var window = new Window({thtml: html,id: option.id, parent: option.parent});
+					window.fix();
+					$('#' + option.id).hide();
+					$('#' + option.id).fadeIn(200);
+					$('#' + option.id + ' .action-closable').click(function(){$('#' + option.id).remove();});
+					$('#' + option.id + '.draggable').draggable({opacity: 0.7, handle:'.titlebar', stack:{group:'.draggable', min: 550}, start:function(){$(this).find('.content').css({visibility:'hidden'});$(this).find('.titlebar .title').css({cursor:'move'});}, stop:function(){$(this).find('.content').css({visibility:'visible'});$(this).find('.titlebar .title').css({cursor:'default'});}});
+					$('#' + option.id + ' .buttons .button:eq(0)').click(function(){
+						$('#' + option.id).remove();
+					});
+					$('#' + option.id + ' .buttons .button:eq(1)').click(function(){
+						ret.path = $('#' + option.id + ' .path').val();
+						ret.filename = $('#' + option.id + ' .filename').val();
+						Nimbus.Connect.post(option.save, {filename: ret.filename, content: option.content, path: ret.path}, function(result){
+							Nimbus.msgbox2({id:'closedialog-' + option.id,title:'File Save Action', content: result.message});	
+							ret.response = result.response;
+							$('#' + option.id).remove();
+							if (callback) {
+								callback(ret);
+							}
+						});
+					});
+					$('#' + option.id + ' .buttons .button:eq(1)').die();
+				}
 			},
 			custom: function(option, callback){
 				var tab = 'one';
@@ -322,6 +351,28 @@ var Nimbus,
 					$('#' + option.id + ' .buttons .button:eq(1)').click(function(){if (option.save) {option.save();}if (callback) {callback();}});
 					$('#' + option.id + ' .buttons .button:eq(0)').click(function(){if (option.cancel) {option.cancel();}if (callback) {callback();}});
 					$('#' + option.id + ' .buttons .button:eq(1)').die();
+					if (option.load) {
+						option.load();
+					}
+				}
+			},
+			justOk: function(option, callback){
+				var tab = 'one';
+				var ret = []
+				if (!$('.window.confirm.dialog.message-box').length) {
+					var parent = option.parent;
+					var html = '<div id="' + option.id + '" class="static window confirm dialog message-box draggable center-x center-y child-' + parent + '"><div class="wrapper" id="windowwrapper"><div class="titlebar"><div class="title" style="margin-left:0px;">' + option.title + '</div><div class="actions"><a href="javascript:void(0);" class="action action-closable"></a><div class="clear"></div></div></div><div class="outer"><div class="inner"><div class="content" style="height:' + option.height + ';width:' + option.width + ';overflow:auto;"></div><div class="clear"></div><div class="buttons"><input type="button" value="Ok" class="button"/></div></div></div></div></div>';
+					var window = new Window({thtml: html,id: option.id, parent: option.parent});
+					window.fix();
+					$('#' + option.id).hide();
+					$('#' + option.id).fadeIn(200);
+					$('#' + option.id + ' .action-closable').click(function(){$('#' + option.id).remove();});
+					$('#' + option.id + '.draggable').draggable({opacity: 0.7, handle:'.titlebar', stack:{group:'.draggable', min: 550}, start:function(){$(this).find('.content').css({visibility:'hidden'});$(this).find('.titlebar .title').css({cursor:'move'});}, stop:function(){$(this).find('.content').css({visibility:'visible'});$(this).find('.titlebar .title').css({cursor:'default'});}});
+					$('#' + option.id + ' .buttons .button:eq(0)').click(function(){
+						$('#' + option.id).remove();
+					});
+					$('#' + option.id + ' .content').html($('#' + option.parent + ' .' + option.content_id).html());
+					$('#' + option.id + ' .buttons .button:eq(0)').click(function(){if (callback) {callback();}});
 					if (option.load) {
 						option.load();
 					}
