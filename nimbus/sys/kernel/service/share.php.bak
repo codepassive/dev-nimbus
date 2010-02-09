@@ -25,7 +25,7 @@ class shareService extends API {
 			$request = $this->db->query("SELECT * FROM share WHERE key='" . $key . "'");
 			if (!empty($request)) {
 				include_once 'nimbus/sys/resource.php';
-				new Resource($request[0]['resource'], true);
+				new Resource($request[0]['resource']);
 			}
 		}
 	}

@@ -28,6 +28,8 @@ class Resource extends API {
 	 * @access	Public
 	 */
 	public $path = null;
+	
+	public $force = false;
 
 	/**
 	 * Class constructor. accepts a path to a specific resource
@@ -35,9 +37,10 @@ class Resource extends API {
 	 * @access	Public
 	 * @param	String $where path to a resource
 	 */
-	public function __construct($where = null){
+	public function __construct($where = null, $force = false){
 		parent::__construct();
 		$this->path = ($where) ? $where: $this->request->items[0]['value'];
+		$this->force = $force;
 		$this->fetch();
 	}
 
@@ -66,7 +69,7 @@ class Resource extends API {
 				$appname = $appname[0];
 				$id = $this->user->current('id');
 				$id = ($id) ? $id: null;;
-				if ($this->user->isAllowed($appname)) {
+				if ($this->user->isAllowed($appname) || $this->force == true) {
 					if (file_exists(APPLICATION_DIR . $path[1])) {
 						$info = pathinfo(APPLICATION_DIR . $path[1]);
 						$ext = $info['extension'];
@@ -126,10 +129,15 @@ class Resource extends API {
 				}
 			break;
 			//Fetch resources from a users folder
+			case "usr":
 			case "user":
-				if ($this->user->isLoggedIn()) {
+				if ($this->user->isLoggedIn() || $this->force == true) {
 					$username = $this->user->current('username');
-					$path = USER_DIR . $username . DS . 'drives' . DS . $path[1];
+					if (stristr($path[1], $username . '/drives/')) {
+						$path = USER_DIR . $path[1];
+					} else {
+						$path = USER_DIR . $username . DS . 'drives' . DS . $path[1];
+					}
 					if (file_exists($path)) {
 						$info = pathinfo($path);
 						$ext = $info['extension'];

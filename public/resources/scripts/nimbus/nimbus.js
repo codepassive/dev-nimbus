@@ -206,7 +206,7 @@ var Nimbus,
 										title = title.replace(username + '/drives/', '');
 										ret[i] = SERVER_URL + '?res=user://' + title;
 									});
-									$('#' + option.id + ' #upload_hidden').val(str.join(","));
+									//$('#' + option.id + ' #upload_hidden').val(str.join(","));
 								})
 								.bind('uploadComplete', function(event, file){
 									//alert('Upload completed - '+ file.name +'!');
@@ -468,6 +468,10 @@ var Nimbus,
 			//Set the effect that makes the msgbox appear through a fadeIn
 			$('#' + window.id).hide();
 			$('#' + window.id).fadeIn(200);
+			$('#' + window.id + ' .buttons .button:eq(0)').click(function(){
+				$('#' + window.id).remove();
+				Nimbus.modal(false);
+			});
 		},
 		
 		/**

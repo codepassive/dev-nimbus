@@ -145,7 +145,7 @@ class API extends Cloud {
 		//Generate an ID for the message box
 		$id = 'message-box-' . generateHash(microtime());
 		//Create the Window
-		$windop = array('id' => $id, 'classes' => array('message-box'), 'type' => 1, 'x' => 'center', 'y' => 'center', 'width' => '300px', 'name' => $id, 'title' => $options['title'], 'content' => array('<div class="message ' . $options['type'] . '">' . $options['text'] . '</div>'), 'visible' => true, 'resizable' => false, 'draggable' => false, 'pinnable' => false, 'minimizable' => false, 'toggable' => false, 'hasIcon' => true);
+		$windop = array('id' => $id, 'classes' => array('message-box'), 'type' => 1, 'x' => 'center', 'y' => 'center', 'width' => '300px', 'name' => $id, 'title' => $options['title'], 'content' => array('<div class="message ' . $options['type'] . '">' . $options['text'] . '</div>'),'buttons' => array(array('OK', 'oK')), 'visible' => true, 'resizable' => false, 'draggable' => false, 'pinnable' => false, 'minimizable' => false, 'toggable' => false, 'hasIcon' => true);
 		if ($options['noChoice'] == true) {
 			$windop = array_merge($windop, array('closable' => false, 'modal' => true));
 		} else {
