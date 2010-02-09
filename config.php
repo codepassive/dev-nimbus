@@ -16,7 +16,7 @@
 //App Information
 define('SYS_NAME', 'Nimbus');
 define('SYS_MAJOR_VERSION', '1');
-define('SYS_MINOR_VERSION', '0.74b');
+define('SYS_MINOR_VERSION', '0.92b');
 define('SYS_BUILD', 'eb29006'); //change this
 define('SYS_BUILD_NAME', 'Aurora');
 
