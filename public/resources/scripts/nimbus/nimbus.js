@@ -144,7 +144,7 @@ var Nimbus,
 					html += '<div style="float:left;" class="vertical-tabs"><ul><li><a href="javascript:;" class="selected" name="one">External URL</a></li><li><a href="javascript:;" name="two">Upload File</a></li><li><a href="javascript:;" name="three">User Directory</a></li></ul></div>';
 					html += '<div class="tab-content one focus" style="text-align:center;padding:90px 0;"><h2>Use an External Resource</h2><p>Input a URL of the resource you wish to use</p><input type="text" class="text dialog-external" value="http://" style="width:250px;"/></div><div class="tab-content two" style="text-align:center;padding:90px 0 50px;"><h2>Upload a file</h2><p>Select a file or Drag it onto this window.</p><div class="swfupload-control"><span id="spanButtonPlaceholder-' + option.id + '"></span></div><div style="padding:24px;" class="upload_message"></div><div style="height:68px;padding:0 12px;text-align:left;overflow:auto;" class="uploaded_message"></div><input type="hidden" value="" id="upload_hidden" /></div>';
 					html += '<div class="tab-content three" style="overflow:auto;padding:8px;"><div class="tree" style="padding:8px;height:266px;width:268px;overflow:auto;"></div></div>';
-					html += '</div><div class="clear"></div><div class="buttons"><input type="button" value="Cancel" class="button"/>&nbsp;<input type="button" value="Save" class="button"/></div></div></div></div></div>';
+					html += '</div><div class="clear"></div><div class="buttons"><input type="button" value="Cancel" class="button"/>&nbsp;<input type="button" value="Open" class="button"/></div></div></div></div></div>';
 					var window = new Window({thtml: html,id: option.id, parent: option.parent});
 					window.fix();
 					$('#' + option.id).hide();
@@ -305,8 +305,10 @@ var Nimbus,
 				var ret = {}
 				if (!$('.window.confirm.dialog.message-box').length) {
 					var parent = option.parent;
+					path = option.path ? option.path: 'drives/root/Documents';
+					filename = option.filename ? option.filename: 'file.txt';
 					var html = '<div id="' + option.id + '" class="static window confirm dialog message-box draggable center-x center-y child-' + parent + '"><div class="wrapper" id="windowwrapper"><div class="titlebar"><div class="title" style="margin-left:0px;">Save File</div><div class="actions"><a href="javascript:void(0);" class="action action-closable"></a><div class="clear"></div></div></div><div class="outer"><div class="inner"><div class="content">';
-					html += '<div style="margin:8px;"><table cellspacing="0" cellpadding="0" border="0"><tr><td>Path&nbsp;</td><td><input type="text" class="path" value="drives/root/Documents" style="width:200px"/></td></tr><tr><td>Filename&nbsp;</td><td><input type="text" value="file.txt" class="filename" style="width:140px"/></td></tr></table></div>';
+					html += '<div style="margin:8px;"><table cellspacing="0" cellpadding="0" border="0"><tr><td>Path&nbsp;</td><td><input type="text" class="path" value="' + path + '" style="width:200px"/></td></tr><tr><td>Filename&nbsp;</td><td><input type="text" value="' + filename + '" class="filename" style="width:140px"/></td></tr></table></div>';
 					html += '</div><div class="clear"></div><div class="buttons"><input type="button" value="Cancel" class="button"/>&nbsp;<input type="button" value="Save" class="button"/></div></div></div></div></div>';
 					var window = new Window({thtml: html,id: option.id, parent: option.parent});
 					window.fix();

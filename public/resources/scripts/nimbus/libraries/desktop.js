@@ -153,7 +153,7 @@
 				$('#nimbusbar-taskbar .items .item').removeClass('active');
 				Nimbus.Desktop.window.hide(wind);
 			},
-			redraw: function(wind){
+			redraw: function(wind, callback){
 				//Fix the wind height
 				if ($('#' + wind).hasClass('.maximized')) {
 					var height = $('#' + wind + ' .toolbars-top').height() + $('#' + wind + ' .toolbars-bottom').height() + $('#' + wind + ' .buttons').height();
@@ -172,6 +172,9 @@
 				//Fix width? If not 100%
 				if ($('#' + wind + ' .buttons').length) {
 					$('#' + wind + ' .content').height(($('#' + wind + ' .content').height() + 8) - $('#' + wind + ' .buttons').height());
+				}
+				if (callback) {
+					callback($('#' + wind));
 				}
 			},
 			toggable: function(id){
