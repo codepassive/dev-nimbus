@@ -30,3 +30,8 @@
 		color: #ffffff;
 		font-style: italic;
 	}
+#loadinglogo {
+	background: url('?res=img://favico.png') no-repeat center scroll;
+	height: 32px;
+	width: 32px;
+}

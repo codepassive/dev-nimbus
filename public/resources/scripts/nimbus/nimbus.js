@@ -73,6 +73,8 @@ var Nimbus,
 			//The current scripts loaded in percent
 			var percent = 0;
 			
+			var opacity = 0;
+
 			//Load the language for use in the javascript API
 			$.getScript(SERVER_URL + '/?service=language');
 			
@@ -337,9 +339,9 @@ var Nimbus,
 			custom: function(option, callback){
 				var tab = 'one';
 				var ret = []
-				if (!$('.window.confirm.dialog.message-box').length) {
+				if (!$('#' + option.id).length) {
 					var parent = option.parent;
-					var html = '<div id="' + option.id + '" class="static window confirm dialog message-box draggable center-x center-y child-' + parent + '"><div class="wrapper" id="windowwrapper"><div class="titlebar"><div class="title" style="margin-left:0px;">' + option.title + '</div><div class="actions"><a href="javascript:void(0);" class="action action-closable"></a><div class="clear"></div></div></div><div class="outer"><div class="inner"><div class="content" style="height:' + option.height + ';width:' + option.width + ';overflow:auto;"></div><div class="clear"></div><div class="buttons"><input type="button" value="Cancel" class="button"/>&nbsp;<input type="button" value="Save" class="button"/></div></div></div></div></div>';
+					var html = '<div id="' + option.id + '" class="static window confirm dialog message-box draggable center-x center-y child-' + parent + '"><div class="wrapper" id="windowwrapper"><div class="titlebar"><div class="title" style="margin-left:0px;">' + option.title + '</div><div class="actions"><a href="javascript:void(0);" class="action action-closable"></a><div class="clear"></div></div></div><div class="outer"><div class="inner"><div class="content" style="height:' + option.height + ';width:' + option.width + ';overflow:auto;"></div><div class="clear"></div><div class="buttons"><input type="button" value="Cancel" class="button"/>&nbsp;<input type="button" value="Ok" class="button"/></div></div></div></div></div>';
 					var window = new Window({thtml: html,id: option.id, parent: option.parent});
 					window.fix();
 					$('#' + option.id).hide();

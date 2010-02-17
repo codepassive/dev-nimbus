@@ -659,7 +659,9 @@ input[type=button], input[type=submit] {
 .tree ins.bmp { background:url("/public/resources/images/icons/Tango/16/mimetypes/image-x-generic.png") no-repeat center scroll;}
 
 
-
+.message-box {
+	z-index: 1400;
+}
 
 .dialog_content {
 	display: none;
