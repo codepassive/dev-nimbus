@@ -140,8 +140,36 @@ class User extends Cloud {
 	 * @access	Public
 	 */
 	public function register(){
-		$meta = array();
-		$personal = array();
+		$meta = array(
+	            'email' => '',
+	            'first_name' => '',
+	            'last_name' => '',
+	            'nick_name' => '',
+	            //'website' => '',
+	            //'AIM' => '',
+	            //'Yahoo' => '',
+	            //'Gtalk' => '',
+	            //'Skype' => '',
+	            'Description' => '',
+			);
+		$personal = array(
+	            'theme' => 'default',
+	            'language' => 'en-us',
+	            'background' => 'a:0:{}',
+	            'desktop' => 'a:0:{}',
+	            'startup' => 'a:0:{}',
+	            'active_apps' => 'a:0:{}',
+	            'refresh_rate' => 5,
+	            'window' => 'a:0:{}',
+	            'shortcuts' => 1,
+	            'developer' => 1,
+	            'desktop_icons' => 'a:0:{}',
+	            'font_size' => '100%',
+	            'timezone' => 'Asia/Manila',
+	            'recently_opened_applications' => 'a:0:{}',
+				'datetime_format' => 'F j, Y H:i a',
+	            'background_position' => 'center',
+			);
 		$defaults = array(
 				'username' => '',
 	            'password' => '',
@@ -151,11 +179,11 @@ class User extends Cloud {
 	            'first_name' => '',
 	            'last_name' => '',
 	            'nick_name' => '',
-	            'website' => '',
-	            'AIM' => '',
-	            'Yahoo' => '',
-	            'Gtalk' => '',
-	            'Skype' => '',
+	            //'website' => '',
+	            //'AIM' => '',
+	            //'Yahoo' => '',
+	            //'Gtalk' => '',
+	            //'Skype' => '',
 	            'Description' => '',
 	            'theme' => 'default',
 	            'language' => 'en-us',
@@ -165,34 +193,48 @@ class User extends Cloud {
 	            'active_apps' => 'a:0:{}',
 	            'refresh_rate' => 5,
 	            'window' => 'a:0:{}',
-	            'shortcuts' => 1
+	            'shortcuts' => 1,
+	            'developer' => 1,
+	            'desktop_icons' => 'a:0:{}',
+	            'font_size' => '100%',
+	            'timezone' => 'Asia/Manila',
+	            'recently_opened_applications' => 'a:0:{}',
+				'datetime_format' => 'F j, Y H:i a',
+	            'background_position' => 'center',
 			);
 		//Insert the User
 		$username = $this->request->post['username'];
-		$password = generatePassword($this->request->post['password']);
-		$created = time();
-		$this->db->query("INSERT INTO accounts(`username`, `password`, `created`, `online`) VALUES('$username', '$password', '$created', 0)");
-		$id = $this->db->insertID;
-		if ($id) {
-			//Go through the request
-			foreach ($defaults as $default => $value) {
-				if (isset($this->request->post['meta_' . $default])) {
-					$meta[$default] = $this->request->post['meta_' . $default];
+		$check = $this->db->query("SELECT * FROM accounts WHERE username='$username'");
+		if (!count($check)) {
+			$password = generatePassword($this->request->post['password']);
+			$created = time();
+			$this->db->query("INSERT INTO accounts(`username`, `password`, `created`, `online`) VALUES('$username', '$password', '$created', 0)");
+			$id = $this->db->insertID;
+			if ($id) {
+				//Go through the request
+				foreach ($defaults as $default => $value) {
+					if (isset($this->request->post['meta_' . $default])) {
+						$meta[$default] = $this->request->post['meta_' . $default];
+					}
+					if (isset($this->request->post['personal_' . $default])) {
+						$personal[$default] = $this->request->post['personal_' . $default];
+					}
 				}
-				if (isset($this->request->post['personal_' . $default])) {
-					$personal[$default] = $this->request->post['personal_' . $default];
+				//Meta
+				foreach ($meta as $m => $v) {
+					$this->db->query("INSERT INTO meta(`meta_name`, `meta_value`, `meta_owner`, `meta_table`) VALUES('$m', '$v', $id, 'accounts');");
 				}
+				//Personal
+				foreach ($personal as $p => $v) {
+					$this->db->query("INSERT INTO personalize(`user_id`, `option_name`, `option_value`) VALUES($id, '$p', '$v');");
+				}
+				//Copy the usr template directory with the username
+				$folder = new Folder(DB_DIR . 'userdir' . DS . 'usr');
+				$folder->copy(array('to' => USER_DIR . $username));
+				
+				//return the ID
+				return $id;
 			}
-			//Meta
-			foreach ($meta as $m => $v) {
-				$this->db->query("INSERT INTO meta(`meta_name`, `meta_value`, `meta_owner`, `meta_table`) VALUES('$m', '$v', $id, 'accounts');");
-			}
-			//Personal
-			foreach ($personal as $p => $v) {
-				$this->db->query("INSERT INTO personalize(`user_id`, `option_name`, `option_value`) VALUES($id, '$p', '$v');");
-			}
-			//return the ID
-			return $id;
 		}
 		return 0;
 	}
