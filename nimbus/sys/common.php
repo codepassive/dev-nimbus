@@ -36,7 +36,7 @@ function checkCompatibility(){
 	if (!extension_loaded('sqlite') && !extension_loaded('pdo_sqlite')) {
 		$incompatibilities[] = array($language['error_001A'], '001A');
 	}
-	if ((!is_writable('/../.nimbus') && !is_readable('/../.nimbus')) && (!is_writable('/../.nimbus') && !is_readable('/../.nimbus'))) {
+	if ((!is_writable(DATA_DIR) && !is_readable(DATA_DIR)) && (!is_writable(DATA_DIR) && !is_readable(DATA_DIR))) {
 		$incompatibilities[] = array($language['error_002A'], '002A');
 	}
 	if (!ini_get('file_uploads')) {
@@ -69,9 +69,6 @@ function checkCompatibility(){
 	}
 	if (!extension_loaded('zlib')) {
 		$missing[] = array($language['error_007B'], '007B');
-	}
-	if (!function_exists('mail')) {
-		$missing[] = array($language['error_008B'], '008B');
 	}
 	if (!extension_loaded('curl')) {
 		$missing[] = array($language['error_009B'], '009B');
